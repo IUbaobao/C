@@ -1,0 +1,3 @@
+﻿  file.c
+D:\C语言\the-way-of-learning\文件操作实际应用1\File operations\File operations\file.c(61,3): warning C4550: 表达式计算为缺少参数列表的函数
+  File operations.vcxproj -> D:\C语言\the-way-of-learning\文件操作实际应用1\File operations\Debug\File operations.exe
