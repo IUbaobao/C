@@ -54,6 +54,7 @@ void SeqListCheckCapacity(SL* ps)
 //尾插
 void SeqListPushBack(SL* ps, SLDateType x)
 {
+	//进行尾插时间要检查容量是否满了，不然容易越界访问
 	SeqListCheckCapacity(ps);
 	ps->a[ps->size] = x;
 	ps->size++;
@@ -105,12 +106,12 @@ int  SeqListFind(SL* ps,SLDateType x)
 {
 	assert(ps->a != NULL && ps->size != 0);
 	int i = 0;
-	//挪动数据
+	//遍历顺序表
 	for (i = 0; i < ps->size; i++)
 	{
 		if (ps->a[i] == x)
 		{
-			return i;
+			return 1;
 		}
 	}
 	return -1;
@@ -134,7 +135,7 @@ void SeqListInsert(SL* ps,int pos,SLDateType x)
 	ps->size++;
 }
 
-//删除pos位置的数据 
+//删除指定pos位置的数据 
 void SeqListErase(SL* ps, int pos)
 {
 	assert(pos < ps->size&& pos >= 0);

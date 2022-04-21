@@ -4,11 +4,13 @@
 #include<malloc.h>
 #include<assert.h>
 
-typedef int SLDateType;
+typedef int SLDateType;//可能有时候要存储的数据类型不一样
+						//这样做可以更容易修改
+
 //动态顺序表
 typedef struct SeqList
 {
-	SLDateType* a;
+	SLDateType* a;	//用来存放顺序表的地址
 	int size;		//表示数组存了多少个有效数据
 	int capacity;	//数组实际能存多少个数据
 }SL;
