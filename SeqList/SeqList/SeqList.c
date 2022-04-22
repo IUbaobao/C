@@ -111,7 +111,7 @@ int  SeqListFind(SL* ps,SLDateType x)
 	{
 		if (ps->a[i] == x)
 		{
-			return 1;
+			return i;
 		}
 	}
 	return -1;

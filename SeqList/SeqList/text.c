@@ -141,7 +141,7 @@ void menuText()
 			printf("请输入你要查找的数据\n");
 			scanf("%d", &x1);
 			int ret=SeqListFind(&s1, x1);
-			if (ret == 1)
+			if (ret != -1)
 			{
 				printf("查到了，下标为%d\n", ret);
 			}
