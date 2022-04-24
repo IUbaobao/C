@@ -4,7 +4,7 @@
 
 void SListText1()
 {
-	SList* list=NULL;
+	SLNode* list=NULL;
 	SListPushBack(&list, 1);
 	SListPushBack(&list, 2);
 	SListPushBack(&list, 3);
@@ -21,7 +21,7 @@ void SListText1()
 
 void SListText2()
 {
-	SList* list = NULL;
+	SLNode* list = NULL;
 	SListPushFront(&list, 1);
 	SListPushFront(&list, 2);
 	SListPushFront(&list, 3);
@@ -29,7 +29,7 @@ void SListText2()
 	SListPushFront(&list, 5);
 	SListPrint(list);
 	int i = 1;
-	SList* pos = SListFind(list, 2);
+	SLNode* pos = SListFind(list, 2);
 	SListEraseAfter(pos);
 	SListPrint(list);
 	//while (pos)
