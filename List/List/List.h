@@ -42,3 +42,6 @@ void ListInsert(LTNode* pos, LTDateType x);
 
 //删除指定位置
 void ListErase(LTNode* pos);
+
+//销毁链表
+void ListDestroy(LTNode* phead);

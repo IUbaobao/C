@@ -1,7 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include"List.h"
 
-
+//初始化
 LTNode* ListInit()
 {
 	LTNode* phead = BuyListNode(0);
@@ -11,7 +11,7 @@ LTNode* ListInit()
 	
 	return phead;
 }
-
+//打印
 void ListPrint(LTNode* phead)
 {
 	LTNode* cur = phead->next;
@@ -23,15 +23,15 @@ void ListPrint(LTNode* phead)
 	printf("\n");
 }
 
-
+//尾插
 void ListPushBack(LTNode* phead,LTDateType x)
 {
 	assert(phead);
 	//新节点
 	//LTNode* newNode = BuyListNode(x);
-	////找尾
+	//找尾
 	//LTNode* tail = phead->prev;
-	////连接
+	//连接
 	//tail->next = newNode;
 	//newNode->prev = tail;
 	//newNode->next = phead;
@@ -40,7 +40,7 @@ void ListPushBack(LTNode* phead,LTDateType x)
 	//可用插入函数代替尾插
 	ListInsert(phead, x);
 }
-
+//尾删
 void ListPopBack(LTNode* phead)
 {
 	assert(phead);
@@ -55,41 +55,43 @@ void ListPopBack(LTNode* phead)
 	ListErase(phead->prev);
 }
 
+//头插
 void ListPushFront(LTNode* phead, LTDateType x)
 {
 	assert(phead);
-	////LTNode* newNode = BuyListNode(x);
-	////连接
-	////LTNode* next = phead->next;
-	////phead->next = newNode;
-	////newNode->prev = phead;
+	LTNode* newNode = BuyListNode(x);
+	//连接
+	LTNode* next = phead->next;
+	phead->next = newNode;
+	newNode->prev = phead;
 
-	////newNode->next = next;
-	////next->prev = newNode;
+	newNode->next = next;
+	next->prev = newNode;
 
 	//可用插入函数代替头插
-	ListInsert(phead->next, x);
+	//ListInsert(phead->next, x);
 
 }
 
+//头删
 void ListPopFront(LTNode* phead)
 {
 	assert(phead);
 	//链表为空
 	assert(phead->next != phead);
 
-	//LTNode* next = phead->next;
-	//LTNode* nextNext = next->next;
-	//free(next);
-	//phead->next = nextNext;
-	//nextNext->prev = phead;
+	LTNode* next = phead->next;
+	LTNode* nextNext = next->next;
+	free(next);
+	phead->next = nextNext;
+	nextNext->prev = phead;
 
 	//可用删除函数代替头删
-	ListErase(phead->next);
+	//ListErase(phead->next);
 
 }
 
-
+//查找
 LTNode* ListFind(LTNode* phead, LTDateType x)
 {
 	assert(phead);
@@ -103,7 +105,7 @@ LTNode* ListFind(LTNode* phead, LTDateType x)
 	return NULL;
 }
 
-
+//插入
 void ListInsert(LTNode* pos, LTDateType x)
 {
 	assert(pos);
@@ -118,7 +120,7 @@ void ListInsert(LTNode* pos, LTDateType x)
 	newNode->next = pos;
 	pos->prev = newNode;
 }
-
+//删除
 void ListErase(LTNode* pos)
 {
 	assert(pos);
@@ -130,7 +132,7 @@ void ListErase(LTNode* pos)
 	posNext->prev = posPrev;
 	free(pos);
 }
-
+//创建新节点
 LTNode* BuyListNode(LTDateType x)
 {
 	LTNode* newNode = (LTNode*)malloc(sizeof(LTNode));
@@ -143,4 +145,18 @@ LTNode* BuyListNode(LTDateType x)
 	newNode->prev = NULL;
 
 	return newNode;
+}
+
+//销毁链表
+void ListDestroy(LTNode* phead)
+{
+	LTNode* cur = phead->next;
+
+	while (cur != phead)
+	{
+		LTNode* next = cur->next;
+		free(cur);
+		cur = next;
+	}
+	free(phead);
 }
