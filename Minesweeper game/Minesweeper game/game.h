@@ -3,12 +3,13 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
+#include<windows.h>
 #define ROW 10
 #define COL 10
 
 #define ROWS ROW+2
 #define COLS COL+2
-#define EASY_COUNT 10
+#define EASY_COUNT 30
 //≥ı ºªØ∆Â≈Ã
 void BoardInit(char board[ROWS][COLS], int rows, int cols, char set);
 

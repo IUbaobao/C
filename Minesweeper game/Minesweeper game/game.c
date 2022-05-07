@@ -135,3 +135,6 @@ void FindMine(char mine[ROWS][COLS], char show[ROWS][COLS], int row, int col)
 
 
 
+
+
+

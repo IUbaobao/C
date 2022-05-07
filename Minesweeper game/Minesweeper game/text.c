@@ -36,6 +36,7 @@ void game()
 
 int main()
 {
+	system("color 2");
 	srand((unsigned int)time(NULL));
 	int input = 0;
 	do
