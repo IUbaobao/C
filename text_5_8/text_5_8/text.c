@@ -135,29 +135,46 @@
 //
 //}
 //XÐÎÍ¼°¸
+//
+//#include<stdio.h>
+//
+//int main()
+//{
+//    int n = 0;
+//
+//    int i = 0;
+//    int j = 0;
+//    while (scanf("%d", &n) != EOF)
+//    {
+//        for (i = 0; i < n; i++)
+//        {
+//            for (j = 0; j < n; j++)
+//            {
+//                if (j == i || j == n - i - 1)
+//                    printf("*");
+//                else
+//                    printf(" ");
+//            }
+//            printf("\n");
+//        }
+//    }
+//
+//    return 0;
+//}
+
+
 
 #include<stdio.h>
+int add(int x, int y)
+{
 
+	return x+y;
+}
 int main()
 {
-    int n = 0;
-
-    int i = 0;
-    int j = 0;
-    while (scanf("%d", &n) != EOF)
-    {
-        for (i = 0; i < n; i++)
-        {
-            for (j = 0; j < n; j++)
-            {
-                if (j == i || j == n - i - 1)
-                    printf("*");
-                else
-                    printf(" ");
-            }
-            printf("\n");
-        }
-    }
-
-    return 0;
+	int a = 10;
+	int b = 20;
+	int c = add(a, b);
+	printf("%d\n", c);
+	return 0;
 }
