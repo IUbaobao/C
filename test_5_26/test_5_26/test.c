@@ -60,3 +60,35 @@
 //    printf("%d", strlen(a));
 //    return 0;
 //}
+
+
+
+
+
+//#include<stdio.h>
+//int main()
+//{
+//	int a = 20;
+//	int b = -10;
+//	return 0;
+//}
+
+
+////下面程序输出上面？
+//#include <stdio.h>
+//int main()
+//{
+//    char a = -128;
+//    printf("%u\n", a);
+//    return 0;
+//}
+
+//#include <stdio.h>
+//int main()
+//{
+//    char a = -1;
+//    signed char b = -1;
+//    unsigned char c = -1;
+//    printf("a=%d,b=%d,c=%d", a, b, c);
+//    return 0;
+//}
