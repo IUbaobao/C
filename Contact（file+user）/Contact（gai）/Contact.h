@@ -136,3 +136,6 @@ void ContactLoad(Contact* pc);
 
 //检测内存是否满了
 void CheckCapacity(Contact* pc);
+
+//按名字排序通讯录
+int cmp_name(const void* e1, const void* e2);

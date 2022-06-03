@@ -814,4 +814,9 @@ int UserLongsonSystem(user* user1)
 	return pos1;
 }
 
+//按名字排序通讯录
+int cmp_name(const void* e1, const void* e2)
+{
+	return strcmp(((people*)e1)->name, ((people*)e2)->name);
+}
 

@@ -42,6 +42,7 @@ int main()
 			 if (flag == 0)
 			 {
 				 input = 0;
+				 qsort(pc.data, pc.size, sizeof(pc.data[0]), cmp_name);//按名字排序通讯录
 				 ContactSave(&pc);		//用户选择退出，就先把通讯录的信息保存在文件中
 				 UserSave(&user1);
 				 ContactDestroy(&pc);
@@ -63,6 +64,7 @@ int main()
 		 case Print:  //打印全部联系人信息
 			 system("cls");  //清屏
 			 Print1(7);    //换行美观
+			 qsort(pc.data, pc.size, sizeof(pc.data[0]), cmp_name);//按名字排序通讯录
 			 ContactPrint(&pc);  
 			 break;
 		 case Add:   //增加联系人
@@ -115,6 +117,7 @@ int main()
 
 		 case Save:  //用户也可以手动保存信息到文件
 			 system("cls");
+			 qsort(pc.data, pc.size, sizeof(pc.data[0]), cmp_name);//按名字排序通讯录
 			 ContactSave(&pc);
 			 UserSave(&user1);
 			 printf("\t\t\t\t\t保存成功\n");
