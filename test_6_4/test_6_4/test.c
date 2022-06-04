@@ -210,68 +210,104 @@
 //输出：
 //c b e g d f a
 
-#include<stdio.h>
-#include<stdlib.h>
+//#include<stdio.h>
+//#include<stdlib.h>
+//
+//typedef struct TreeNode
+//{
+//    char val;
+//    struct TreeNode* left;
+//    struct TreeNode* right;
+//}TNode;
+//
+//TNode* ConstTree(char* a, int* i)
+//{
+//    if (a[*i] == '#')
+//    {
+//        ++(*i);
+//        return NULL;
+//    }
+//    TNode* root = (TNode*)malloc(sizeof(TNode));
+//    if (root == NULL)
+//    {
+//        printf("malloc fail\n");
+//        exit(-1);
+//    }
+//    root->val = a[*i];
+//    ++(*i);
+//
+//    root->left = ConstTree(a, i);
+//    root->right = ConstTree(a, i);
+//
+//    return root;
+//
+//}
+//
+//void Inorder(TNode* root)
+//{
+//    if (root == NULL)
+//        return;
+//    Inorder(root->left);
+//    printf("%c ", root->val);
+//    Inorder(root->right);
+//}
+//int main()
+//{
+//    char arr[100];
+//    while (scanf("%s", arr) != EOF)
+//    {
+//        int i = 0;
+//        TNode* root = ConstTree(arr, &i);
+//
+//        Inorder(root);
+//    }
+//
+//
+//    return 0;
+//}
+//
+//
+//给定一个二叉树，找出其最大深度。
+//
+//二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。
+//
+//说明 : 叶子节点是指没有子节点的节点。
+//
+//示例：
+//给定二叉树[3, 9, 20, null, null, 15, 7]
+//
+//来源：力扣（LeetCode）
+//链接：https ://leetcode.cn/problems/maximum-depth-of-binary-tree
+//著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+//int maxDepth(struct TreeNode* root) {
+//
+//    if (root == NULL)
+//        return 0;
+//
+//    int Tleft = maxDepth(root->left);
+//    int Tright = maxDepth(root->right);
+//
+//    return Tleft > Tright ? Tleft + 1 : Tright + 1;
+//
+//}
+//
+//
+// 给定一个二叉树，判断它是否是高度平衡的二叉树。
 
-typedef struct TreeNode
-{
-    char val;
-    struct TreeNode* left;
-    struct TreeNode* right;
-}TNode;
-
-TNode* ConstTree(char* a, int* i)
-{
-    if (a[*i] == '#')
-    {
-        ++(*i);
-        return NULL;
-    }
-    TNode* root = (TNode*)malloc(sizeof(TNode));
-    if (root == NULL)
-    {
-        printf("malloc fail\n");
-        exit(-1);
-    }
-    root->val = a[*i];
-    ++(*i);
-
-    root->left = ConstTree(a, i);
-    root->right = ConstTree(a, i);
-
-    return root;
-
-}
-
-void Inorder(TNode* root)
-{
-    if (root == NULL)
-        return;
-    Inorder(root->left);
-    printf("%c ", root->val);
-    Inorder(root->right);
-}
-int main()
-{
-    char arr[100];
-    while (scanf("%s", arr) != EOF)
-    {
-        int i = 0;
-        TNode* root = ConstTree(arr, &i);
-
-        Inorder(root);
-    }
-
-
-    return 0;
-}
-
-
-
-
-
-
-
-
+//bool isBalanced(struct TreeNode* root) {
+//
+//    if (root == NULL)
+//        return true;
+//
+//    int  rootLeft = maxDepth(root->left);
+//    int  rootright = maxDepth(root->right);
+//
+//
+//    return  abs(rootLeft - rootright) < 2
+//        && isBalanced(root->left)
+//        && isBalanced(root->right);
+//
+//}
+//
 
 
