@@ -502,8 +502,10 @@ void UserLoad(user* pu)
 	}
 	//读文件信息
 	int i = 0;
-	while (fread(&pu->val[i], sizeof(personnel), 1, pf))
+	personnel tem = {0};
+	while (fread(&tem, sizeof(personnel), 1, pf))
 	{
+		pu->val[i] = tem;
 		i++;
 		pu->begin++;
 	}

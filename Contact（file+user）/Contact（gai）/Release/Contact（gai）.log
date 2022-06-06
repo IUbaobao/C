@@ -1,7 +1,8 @@
-﻿  Contact.c
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: 中间目录(Release\)包含从另一个项目(Contact（gai）.vcxproj)共享的文件。   这会导致错误的清除和重新生成行为。
+  Contact.c
   test.c
   正在生成代码
   Previous IPDB not found, fall back to full compilation.
-  All 32 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  All 33 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   已完成代码的生成
-  Contact（gai）.vcxproj -> D:\C语言\the-way-of-learning\Contact（file）\Release\Contact（gai）.exe
+  Contact（gai）.vcxproj -> D:\C语言\the-way-of-learning\Contact（file+user）\Release\Contact（file+user）.exe
