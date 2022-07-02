@@ -159,3 +159,61 @@
 //    printf("sorted\n");
 //    return 0;
 //
+//
+//编一个程序，读入用户输入的一串先序遍历字符串，根据此字符串建立一个二叉树（以指针方式存储）。
+//例如如下的先序遍历字符串： ABC##DE#G##F### 其中“#”表示的是空格，空格字符代表空树。建立起此二叉树以后，
+//再对二叉树进行中序遍历，输出遍历结果。
+
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct BTNode
+{
+    struct BTNode* left;
+    struct BTNode* right;
+    char val;
+}node;
+
+node* BuildTree(char* a, int* i)
+{
+    if (a[*i] == '#')
+    {
+        (*i)++;
+        return NULL;
+    }
+    node* root = (node*)malloc(sizeof(node));
+    if (root == NULL)
+    {
+        printf("malloc file\n");
+        exit(-1);
+    }
+    root->val = a[*i];
+    (*i)++;
+    root->left = BuildTree(a, i);
+    root->right = BuildTree(a, i);
+    return root;
+}
+
+void InorderTree(node* root)
+{
+    if (root == NULL)
+        return;
+    InorderTree(root->left);
+    printf("%c ", root->val);
+    InorderTree(root->right);
+
+}
+int main()
+{
+
+    char a[101];
+    while (scanf("%s", a) != EOF)
+    {
+
+        int i = 0;
+        node* root = BuildTree(a, &i);
+
+        InorderTree(root);
+    }
+
+    return 0;
+}
