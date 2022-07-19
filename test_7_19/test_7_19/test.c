@@ -37,22 +37,54 @@
 //    return 0;
 //}
 
+//
+//#include<stdio.h>
+//test()
+//{
+//	printf("haha\n");
+//	return 2.1;
+// }
+//int main()
+//{
+//	int i = 0;
+//	//	for (i = 0; i || i++ < 5;);
+//	do {
+//		printf("hehe\n");
+//	} while (0);
+//	i=test();
+//	printf("%d", i);
+//	return 0;
+//
+//}
+//给你一个整数数组 nums ，其中总是存在 唯一的 一个最大整数 。
+//
+//请你找出数组中的最大元素并检查它是否 至少是数组中每个其他数字的两倍 。如果是，则返回 最大元素的下标 ，否则返回 - 1 。
+//
+//
+//
+//来源：力扣（LeetCode）
+//链接：https ://leetcode.cn/problems/largest-number-at-least-twice-of-others
+//著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+int dominantIndex(int* nums, int numsSize) {
 
-#include<stdio.h>
-test()
-{
-	printf("haha\n");
-	return 2.1;
- }
-int main()
-{
-	int i = 0;
-	//	for (i = 0; i || i++ < 5;);
-	do {
-		printf("hehe\n");
-	} while (0);
-	i=test();
-	printf("%d", i);
-	return 0;
-
+    int i = 0;
+    int max = 0;
+    int j = 0;
+    for (i = 0; i < numsSize; i++)
+    {
+        if (max < nums[i])
+        {
+            max = nums[i];
+            j = i;//记录它的下标
+        }
+    }
+    for (i = 0; i < numsSize; i++)
+    {
+        if (i != j)//依次将非最大值*2与max比较
+        {
+            if (nums[i] * 2 > max)
+                return -1;
+        }
+    }
+    return j;
 }
