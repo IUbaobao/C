@@ -86,38 +86,118 @@
 //}
 
 //求中心坐标，左边和等于右边和（中间那个不用加）
-#include<stdio.h>
-int pivotIndex(int* nums, int numsSize) {
+//#include<stdio.h>
+//int pivotIndex(int* nums, int numsSize) {
+//
+//    if (nums == NULL || numsSize == 0)
+//        return -1;
+//    int i = 0;
+//    int sum = 0;
+//    //先求总和
+//    for (i = 0; i < numsSize; i++)
+//    {
+//        sum += nums[i];
+//    }
+//    int lsum = 0;
+//    int rsum = 0;
+//    //求中心下标
+//    for (i = 0; i < numsSize; i++)
+//    {
+//        rsum = sum - lsum - nums[i];//右总和
+//        if (rsum == lsum)
+//            return i;
+//        else
+//        {
+//            lsum += nums[i];
+//        }
+//
+//    }
+//
+//    return -1;
+//}
+//int main()
+//{
+//    int arr[] = { 1,7,3,6,5,6 };
+//    int a=pivotIndex(arr, 6);
+//	return 0;
+//}
 
-    if (nums == NULL || numsSize == 0)
-        return -1;
-    int i = 0;
-    int sum = 0;
-    //先求总和
-    for (i = 0; i < numsSize; i++)
-    {
-        sum += nums[i];
-    }
-    int lsum = 0;
-    int rsum = 0;
-    //求中心下标
-    for (i = 0; i < numsSize; i++)
-    {
-        rsum = sum - lsum - nums[i];//右总和
-        if (rsum == lsum)
-            return i;
-        else
-        {
-            lsum += nums[i];
-        }
 
-    }
+//#include<stdio.h>
+//int main()
+//{
+//	char arr[] = { 'a','b','a' };
+//	char a[11] = "a+b=5.";
+//	int n['a'];
+//#define size 1
+//	int aa[size], b[size + 2];
+//	printf("%s\n", a);
+//	return 0;
+//}
 
-    return -1;
-}
-int main()
-{
-    int arr[] = { 1,7,3,6,5,6 };
-    int a=pivotIndex(arr, 6);
-	return 0;
-}
+
+
+
+
+//
+//
+//
+//编写一个函数，计算字符串中含有的不同字符的个数。字符在 ASCII 码范围内(0~127 ，包括 0 和 127)，换行表示结束符，不算在字符里。不在范围内的不作统计。多个相同的字符只计算一次
+//例如，对于字符串 abaca 而言，有 a、b、c 三种不同的字符，因此输出 3 。
+//
+//#include<stdio.h>
+//#include<stdlib.h>
+//#include<string.h>
+//
+//int cmp(void* e1, void* e2)
+//{
+//	return *(char*)e1 - *(char*)e2;
+//}
+//int main()
+//{
+//	char a[501];
+//	scanf("%s", a);
+//	qsort(a, strlen(a), sizeof(char), cmp);//排序
+//	int count = 1;
+//	for (int i = 1; i < strlen(a); i++)
+//	{
+//		if (a[i] != a[i - 1] && a[i] >= 0 && a[i] <= 127)//满足条件+1
+//			count++;
+//	}
+//	printf("%d\n", count);
+//	return 0;
+//}
+
+
+
+
+
+
+//
+//
+//给定一个大小为 n 的数组?nums ，返回其中的多数元素。多数元素是指在数组中出现次数 大于?? n / 2 ??的元素。
+//
+//你可以假设数组是非空的，并且给定的数组总是存在多数元素。
+//
+//
+//
+//示例?1：
+//
+//输入：nums = [3, 2, 3]
+//输出：3
+//
+//来源：力扣（LeetCode）
+//链接：https ://leetcode.cn/problems/majority-element
+//int cmp(void* e1, void* e2)
+//{
+//    return *(int*)e1 - *(int*)e2;
+//}
+//int majorityElement(int* nums, int numsSize) {
+//
+//    if (numsSize == 1)
+//        return nums[0];
+//
+//    qsort(nums, numsSize, 4, cmp);//排序
+//    //因为存在出现次数大于n/2的数，则排序后，此数一定在中间
+//    return nums[numsSize / 2];
+//}
