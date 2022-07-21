@@ -72,14 +72,54 @@
 
 
 //写一个宏，可以将一个整数的二进制位的奇数位和偶数位交换。
+//
+//#include<stdio.h>
+//
+//#define SWAP_bit(n)   (((n&0x55555555)<<1)+((n&0xaaaaaaaa)>>1))
+//
+//int main()
+//{
+//	int a = 1;
+//	printf("%d\n", SWAP_bit(a));
+//	return 0;
+//}
 
+//请实现一个函数，将一个字符串中的每个空格替换成“ % 20”。例如，当字符串为We Are Happy.则经过替换之后的字符串为We % 20Are % 20Happy。
 #include<stdio.h>
+#include<string.h>
 
-#define SWAP_bit(n)   (((n&0x55555555)<<1)+((n&0xaaaaaaaa)>>1))
+void replaceSpace(char* str, int length) {
+    int space_num = 0;
+    char* cur = str;
+    while (*cur != '\0')
+    {
+        if (*cur == ' ')
+            space_num++;
+        cur++;
+    }
+    int end2 = length + space_num * 2 - 1;
+    int end1 = length - 1;
+    while (end1 != end2)
+    {
+        if (str[end1] != ' ')
+        {
+            str[end2--] = str[end1--];
+        }
+        else
+        {
+            end1--;
+            str[end2--] = '0';
+            str[end2--] = '2';
+            str[end2--] = '%';
+        }
+    }
+
+}
 
 int main()
 {
-	int a = 1;
-	printf("%d\n", SWAP_bit(a));
-	return 0;
+    char arr[20] = "hello world!";
+    replaceSpace(arr, strlen(arr));
+    printf("%s", arr);
+    return 0;
 }
