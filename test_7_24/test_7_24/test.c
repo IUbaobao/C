@@ -62,3 +62,40 @@
 //    }
 //    return 0;
 //}
+
+
+//输入: nums = [1, 2, 3, 4, 5, 6, 7], k = 3
+//输出 : [5, 6, 7, 1, 2, 3, 4]
+//解释 :
+//    向右轮转 1 步 : [7, 1, 2, 3, 4, 5, 6]
+//    向右轮转 2 步 : [6, 7, 1, 2, 3, 4, 5]
+//    向右轮转 3 步 : [5, 6, 7, 1, 2, 3, 4]
+//
+//    来源：力扣（LeetCode）
+//    链接：https ://leetcode.cn/problems/rotate-array
+//
+
+void Reverse(int* a, int left, int right)
+{
+    while (left < right)
+    {
+        int tem = a[left];
+        a[left] = a[right];
+        a[right] = tem;
+        left++;
+        right--;
+    }
+}
+
+
+void rotate(int* nums, int numsSize, int k) {
+
+    k %= numsSize;
+
+    //先逆置前n-k个
+    Reverse(nums, 0, numsSize - k - 1);
+    //再逆置最后k个
+    Reverse(nums, numsSize - k, numsSize - 1);
+    //整体再逆置
+    Reverse(nums, 0, numsSize - 1);
+}
