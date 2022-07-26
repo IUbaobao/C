@@ -89,43 +89,63 @@
 //I am a student
 //输出：
 //student a am I
+//#include<stdio.h>
+//#include<string.h>
+//void revese(char* a, int left, int right)
+//{
+//    while (left < right)
+//    {
+//        char tem = a[left];
+//        a[left] = a[right];
+//        a[right] = tem;
+//        --right;
+//        ++left;
+//    }
+//}
+//
+//int main()
+//{
+//    char arr[10001];
+//    gets(arr);
+//    int len = strlen(arr);
+//    for (int i = 0; i < len; i++)
+//    {
+//        if ('A' <= arr[i] && arr[i] <= 'z')
+//            continue;
+//        else
+//            arr[i] = ' ';  //清除不为英文字符的字符
+//    }
+//    revese(arr, 0, len - 1);//先把整个字符串逆置
+//    int prev = 0;
+//    for (int i = 0; i < len; i++)
+//    {
+//        if (arr[i] == ' ')
+//        {
+//            revese(arr, prev, i - 1);//再逐个单词逆置
+//            prev = i + 1;
+//        }
+//    }
+//    revese(arr, prev, len - 1); //把最后一个单词逆置
+//    printf("%s\n", arr);
+//    return 0;
+//}
+
+
+
 #include<stdio.h>
-#include<string.h>
-void revese(char* a, int left, int right)
-{
-    while (left < right)
-    {
-        char tem = a[left];
-        a[left] = a[right];
-        a[right] = tem;
-        --right;
-        ++left;
-    }
-}
 
 int main()
 {
-    char arr[10001];
-    gets(arr);
-    int len = strlen(arr);
-    for (int i = 0; i < len; i++)
-    {
-        if ('A' <= arr[i] && arr[i] <= 'z')
-            continue;
-        else
-            arr[i] = ' ';  //清除不为英文字符的字符
-    }
-    revese(arr, 0, len - 1);//先把整个字符串逆置
-    int prev = 0;
-    for (int i = 0; i < len; i++)
-    {
-        if (arr[i] == ' ')
-        {
-            revese(arr, prev, i - 1);//再逐个单词逆置
-            prev = i + 1;
-        }
-    }
-    revese(arr, prev, len - 1); //把最后一个单词逆置
-    printf("%s\n", arr);
-    return 0;
+	//以写的方式打开一个当前目录下的test.txt文件
+	FILE* pf = fopen("test.txt", "w");
+	if (pf == NULL)
+	{
+		printf("fopen fail\n");
+		return 1;   //文件打开失败退出程序
+	}
+	//....对文件一系列操作后
+
+	fclose(pf);//将文件关闭
+	pf = NULL;
+	return 0;
 }
