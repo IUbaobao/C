@@ -101,3 +101,51 @@
 //    }
 //    return false;
 //}
+
+
+
+//
+//#include<stdio.h>
+//
+//int main()
+//{
+//	printf("%s\n", __DATE__);//文件被编译的日期
+//	printf("%d\n", __LINE__);//输入当前行号
+//	return 0;
+//}
+
+
+//#define MAX 10000
+//#define CASE break; case //在写case语句的时候自动把 break写上
+//#define reg register //为 register这个关键字，创建一个简短的名字
+
+//#define PRINT(FORMAT, VAL)\
+//		printf("the value of " #VAL  "is " FORMAT "\n", VAL);
+//#include<stdio.h>
+//
+//
+//int main()
+//{
+//	int i = 10;
+//
+//	PRINT("%d", i + 6);
+//	return 0;
+//}
+
+
+
+#include <stdio.h>
+#define __DEBUG__
+int main()
+{
+	int i = 0;
+	int arr[10] = { 0 };
+	for (i = 0; i < 10; i++)
+	{
+		arr[i] = i;
+#ifdef __DEBUG__
+		printf("%d\n", arr[i]);//为了观察数组是否赋值成功。
+#endif //__DEBUG__
+	}
+	return 0;
+}
