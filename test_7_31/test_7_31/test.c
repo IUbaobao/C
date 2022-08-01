@@ -78,34 +78,36 @@ struct ListNode {
 };
 
 struct ListNode* partition(struct ListNode* pHead, int x) {
-    // write code here
+        // write code here
         //设置两个哨兵位,head1存比x大的，head2存比x小的进行尾插
-    struct ListNode* head1 = (struct ListNode*)malloc(sizeof(struct ListNode));
-    struct ListNode* head2 = (struct ListNode*)malloc(sizeof(struct ListNode));
-    struct ListNode* cur = pHead, * tail1 = head1, * tail2 = head2;
-    while (cur)
-    {
-        if (cur->val < x)//取小的尾插到head2中
+        struct ListNode* head1 = (struct ListNode*)malloc(sizeof(struct ListNode));
+        struct ListNode* head2 = (struct ListNode*)malloc(sizeof(struct ListNode));
+        head1->next = NULL, head2->next = NULL;
+        struct ListNode* cur = pHead, * tail1 = head1, * tail2 = head2;
+        while (cur)
         {
-            tail2->next = cur;
-            tail2 = tail2->next;
+            if (cur->val < x)//取小的尾插到head2中
+            {
+                tail2->next = cur;
+                tail2 = tail2->next;
+            }
+            else//取大的尾插到head1中
+            {
+                tail1->next = cur;
+                tail1 = tail1->next;
+            }
+            cur = cur->next;
         }
-        else//取大的尾插到head1中
-        {
-            tail1->next = cur;
-            tail1 = tail1->next;
-        }
-        cur = cur->next;
-    }
-    //将两部分连接，并将尾节点的next置空
-    tail2->next = head1->next;
-    tail1->next = NULL;
-    cur = head2->next;
-    free(head1);
-    free(head2);
+        //将两部分连接，并将尾节点的next置空
+        tail2->next = head1->next;
+        tail1->next = NULL;
+        pHead = head2->next;
+        free(head1);
+        free(head2);
 
-    return cur;
-}
+        return pHead;
+    }
+
 
 int main()
 {
