@@ -187,27 +187,24 @@
 //Á´½Ó£ºhttps ://leetcode.cn/problems/implement-stack-using-queues
 //
 
-//
-//#include<stdio.h>
-//#include<stdlib.h>
-//#include<assert.h>
-//#include<stdbool.h>
-//
-//
+
 //typedef int QDataType;
+//
 //
 //typedef struct QueueNode
 //{
-//	QDataType data;
-//	struct QueueNode* next;
+//    QDataType data;
+//    struct QueueNode* next;
 //}QueueNode;
+//
 //
 //typedef struct Queue
 //{
-//	QueueNode* head;
-//	QueueNode* tail;
-//	int size;
+//    QueueNode* head;
+//    QueueNode* tail;
+//    int size;
 //}Queue;
+//
 //
 //void QueueInit(Queue* q);
 //void QueuePush(Queue* q, QDataType x);
@@ -219,100 +216,115 @@
 //void QueueDestroy(Queue* q);
 //
 //
+//
+//
+//
+//
+//
+//
 //typedef struct {
-//	Queue queue1;
-//	Queue queue2;
+//    Queue queue1;
+//    Queue queue2;
 //} MyStack;
+//
 //
 //
 //void QueueInit(Queue* q)
 //{
-//	assert(q);
-//	q->head = q->tail = NULL;
-//	q->size = 0;
+//    assert(q);
+//    q->head = q->tail = NULL;
+//    q->size = 0;
 //}
+//
 //
 //void QueuePush(Queue* q, QDataType x)
 //{
-//	assert(q);
-//	QueueNode* newNode = (QueueNode*)malloc(sizeof(QueueNode));
-//	if (newNode == NULL)
-//	{
-//		perror("malloc fail");
-//		exit(-1);
-//	}
-//	if (q->tail == NULL)
-//	{
-//		q->tail = q->head = newNode;
-//	}
-//	else
-//	{
-//		q->tail->next = newNode;
-//		q->tail = newNode;
-//	}
-//	newNode->data = x;
-//	newNode->next = NULL;
-//	q->size++;
+//    assert(q);
+//    QueueNode* newNode = (QueueNode*)malloc(sizeof(QueueNode));
+//    if (newNode == NULL)
+//    {
+//        perror("malloc fail");
+//        exit(-1);
+//    }
+//    if (q->tail == NULL)
+//    {
+//        q->tail = q->head = newNode;
+//    }
+//    else
+//    {
+//        q->tail->next = newNode;
+//        q->tail = newNode;
+//    }
+//    newNode->data = x;
+//    newNode->next = NULL;
+//    q->size++;
 //}
+//
 //
 //void QueuePop(Queue* q)
 //{
-//	assert(q);
-//	assert(!QueueEmpty(q));
-//	if (q->head->next == NULL)
-//	{
-//		free(q->head);
-//		q->head = q->tail = NULL;
-//	}
-//	else
-//	{
-//		QueueNode* del = q->head;
-//		q->head = q->head->next;
-//		free(del);
-//	}
-//	q->size--;
+//    assert(q);
+//    assert(!QueueEmpty(q));
+//    if (q->head->next == NULL)
+//    {
+//        free(q->head);
+//        q->head = q->tail = NULL;
+//    }
+//    else
+//    {
+//        QueueNode* del = q->head;
+//        q->head = q->head->next;
+//        free(del);
+//    }
+//    q->size--;
 //}
+//
 //
 //QDataType QueueFront(Queue* q)
 //{
-//	assert(q);
-//	assert(!QueueEmpty(q));
-//	return q->head->data;
+//    assert(q);
+//    assert(!QueueEmpty(q));
+//    return q->head->data;
 //}
+//
 //
 //QDataType QueueBack(Queue* q)
 //{
-//	assert(q);
-//	assert(!QueueEmpty(q));
-//	return q->tail->data;
+//    assert(q);
+//    assert(!QueueEmpty(q));
+//    return q->tail->data;
 //
 //}
+//
 //
 //bool QueueEmpty(Queue* q)
 //{
-//	assert(q);
-//	return q->head == NULL;
+//    assert(q);
+//    return q->head == NULL;
 //}
+//
 //
 //int QueueSize(Queue* q)
 //{
-//	assert(q);
-//	return q->size;
+//    assert(q);
+//    return q->size;
 //}
+//
 //
 //void QueueDestroy(Queue* q)
 //{
-//	assert(q);
+//    assert(q);
 //
-//	while (q->head)
-//	{
-//		QueueNode* del = q->head;
-//		q->head = q->head->next;
-//		free(del);
-//	}
-//	q->head = q->tail = NULL;
-//	q->size = 0;
+//    while (q->head)
+//    {
+//        QueueNode* del = q->head;
+//        q->head = q->head->next;
+//        free(del);
+//    }
+//    q->head = q->tail = NULL;
+//    q->size = 0;
 //}
+//
 //
 //
 //
@@ -320,86 +332,73 @@
 //
 //
 //MyStack* myStackCreate() {
-//	MyStack* ret = (MyStack*)malloc(sizeof(MyStack));
-//	QueueInit(&ret->queue1);
-//	QueueInit(&ret->queue2);
-//	return ret;
+//    MyStack* ret = (MyStack*)malloc(sizeof(MyStack));
+//    QueueInit(&ret->queue1);
+//    QueueInit(&ret->queue2);
+//    return ret;
 //}
+//
 //
 //void myStackPush(MyStack* obj, int x) {
-//	QueuePush(&obj->queue1, x);
+//    if (!QueueEmpty(&obj->queue1))
+//    {
+//        QueuePush(&obj->queue1, x);
+//    }
+//    else
+//    {
+//        QueuePush(&obj->queue2, x);
+//    }
 //}
+//
 //
 //int myStackPop(MyStack* obj) {
-//	int pop = 0;
-//	while (!QueueEmpty(&obj->queue1))
-//	{
-//		if (QueueSize(&obj->queue1) == 1)
-//		{
-//			pop = QueueFront(&obj->queue1);
-//			QueuePop(&obj->queue1);
-//		}
-//		else
-//		{
-//			QueuePush(&obj->queue2, QueueFront(&obj->queue1));
-//			QueuePop(&obj->queue1);
-//		}
-//	}
-//	while (!QueueEmpty(&obj->queue2))
-//	{
-//		QueuePush(&obj->queue1, QueueFront(&obj->queue2));
-//		QueuePop(&obj->queue2);
-//	}
-//	return pop;
+//    Queue* empty = &obj->queue1;
+//    Queue* noempty = &obj->queue2;
+//    if (QueueEmpty(&obj->queue2))
+//    {
+//        empty = &obj->queue2;
+//        noempty = &obj->queue1;
+//    }
+//    while (QueueSize(noempty) > 1)
+//    {
+//        QueuePush(empty, QueueFront(noempty));
+//        QueuePop(noempty);
+//    }
+//    int top = QueueFront(noempty);
+//    QueuePop(noempty);
+//    return top;
 //}
 //
+//
 //int myStackTop(MyStack* obj) {
-//	int top = 0;
-//	while (!QueueEmpty(&obj->queue1))
-//	{
-//		if (QueueSize(&obj->queue1) == 1)
-//		{
-//			top = QueueFront(&obj->queue1);
-//			QueuePush(&obj->queue2, QueueFront(&obj->queue1));
-//			QueuePop(&obj->queue1);
-//		}
-//		else
-//		{
-//			QueuePush(&obj->queue2, QueueFront(&obj->queue1));
-//			QueuePop(&obj->queue1);
-//		}
-//	}
-//	while (!QueueEmpty(&obj->queue2))
-//	{
-//		QueuePush(&obj->queue1, QueueFront(&obj->queue2));
-//		QueuePop(&obj->queue2);
-//	}
-//	return top;
+//    Queue* empty = &obj->queue1;
+//    Queue* noempty = &obj->queue2;
+//    if (QueueEmpty(&obj->queue2))
+//    {
+//        empty = &obj->queue2;
+//        noempty = &obj->queue1;
+//    }
+//    return QueueBack(noempty);
 //}
+//
 //
 //bool myStackEmpty(MyStack* obj) {
 //
-//	return QueueEmpty(&obj->queue1);
+//
+//    return QueueEmpty(&obj->queue1) && QueueEmpty(&obj->queue2);
 //}
+//
 //
 //void myStackFree(MyStack* obj) {
-//	QueueDestroy(&obj->queue1);
+//
+//
+//    QueueDestroy(&obj->queue1);
+//    QueueDestroy(&obj->queue2);
+//    free(obj);
+//
 //
 //}
 
-/**
- * Your MyStack struct will be instantiated and called as such:
- * MyStack* obj = myStackCreate();
- * myStackPush(obj, x);
-
- * int param_2 = myStackPop(obj);
-
- * int param_3 = myStackTop(obj);
-
- * bool param_4 = myStackEmpty(obj);
-
- * myStackFree(obj);
-*/
 
 
 
@@ -576,6 +575,7 @@ bool myQueueEmpty(MyQueue* obj) {
 void myQueueFree(MyQueue* obj) {
     StackDestroy(&obj->s1);
     StackDestroy(&obj->s2);
+    free(obj);
 }
 
 /**
