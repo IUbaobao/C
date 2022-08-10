@@ -4,7 +4,10 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<assert.h>
-typedef int BTDataType;
+
+
+
+typedef char BTDataType;
 typedef struct BTNode
 {
 	struct BTNode* left;
@@ -12,8 +15,10 @@ typedef struct BTNode
 	BTDataType data;
 }BTNode;
 
+#include"Queue.h"
+
 // 通过前序遍历的数组"ABD##E#H##CF##G##"构建二叉树
-BTNode* BinaryTreeCreate(BTDataType* a, int n, int* pi);
+BTNode* BinaryTreeCreate(BTDataType* a,  int* pi);
 // 二叉树销毁
 void BinaryTreeDestory(BTNode** root);
 // 二叉树节点个数
@@ -36,3 +41,4 @@ void BinaryTreeLevelOrder(BTNode* root);
 int BinaryTreeComplete(BTNode* root);
 
 int BinaryTreeDepth(BTNode* root);
+

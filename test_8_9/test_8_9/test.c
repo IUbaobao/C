@@ -49,17 +49,29 @@ BTNode* CreateTree()
 
 int main()
 {
-	BTNode* root = CreateTree();
+	//BTNode* root = CreateTree();
 	//BinaryTreePrevOrder(root);
 	//BinaryTreeInOrder(root);
 	//BinaryTreePostOrder(root);
-	int size=BinaryTreeSize(root);
-	printf("%d\n", size);
-	int leaf = BinaryTreeLeafSize(root);
-	printf("%d\n", leaf);
-	int depth = BinaryTreeDepth(root);
-	printf("%d\n", depth);
+	//int size=BinaryTreeSize(root);
+	//printf("%d\n", size);
+	//int leaf = BinaryTreeLeafSize(root);
+	//printf("%d\n", leaf);
+	//int depth = BinaryTreeDepth(root);
+	//printf("%d\n", depth);
+	char arr[] = "ABD##E#H##CF##G##";
+	int i = 0;
+	BTNode* root = BinaryTreeCreate(arr,&i);
+	//BinaryTreePrevOrder(root);
+	//BTNode* pos=BinaryTreeFind(root, 'P');
+	//if (pos != NULL)
+	//	printf("%c\n", pos->data);
+	//else
+	//	printf("²»´æÔÚ\n");
+	//int n = BinaryTreeLevelKSize(root, 4);
+	//printf("%d\n", n);
 
+	BinaryTreeLevelOrder(root);
 	BinaryTreeDestory(&root);
 	return 0;
 }
