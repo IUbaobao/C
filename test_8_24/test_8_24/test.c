@@ -91,9 +91,44 @@ void SelectSort(int* a, int n)
 		end--;
 	}
 }
+//向下调整算法
+void AdjustDwon(int* a, int n, int parent)
+{
+	int child = parent * 2 + 1;
+	while (child < n)
+	{
+		if (child + 1 < n && a[child] < a[child + 1])//升序建大堆
+		{
+			child++;
+		}
+		if (a[child] > a[parent])
+		{
+			Swap(&a[child], &a[parent]);
+			parent = child;
+			child = parent * 2 + 1;
+		}
+		else
+		{
+			break;
+		}
+	}
+}
 // 堆排序
-void AdjustDwon(int* a, int n, int root);
-void HeapSort(int* a, int n);
+void HeapSort(int* a, int n)
+{
+	//建堆
+	for (int i = (n - 2) / 2; i >= 0; i--)
+	{
+		AdjustDwon(a, n, i);
+	}
+
+	//排序
+	for (int i = 0; i < n; i++)
+	{
+		Swap(&a[0], &a[n-i-1]);//把大的放到后面
+		AdjustDwon(a, n - i-1, 0);//重新调整堆
+	}
+}
 // 冒泡排序
 void BubbleSort(int* a, int n);
 // 快速排序递归实现
@@ -211,10 +246,18 @@ void TestSelectSort()
 }
 
 
+void TestHeapSort()
+{
+	int a[] = { 30,60,12,40,8,10,70 };
+	int n = sizeof(a) / sizeof(a[0]);
+	HeapSort(a, n);
+	Print(a, n);
+}
+
 int main()
 {
 
-	TestSelectSort();
+	TestHeapSort();
 	//TestOP();
 	return 0;
 }
