@@ -483,4 +483,5 @@ void CountSort(int* a, int n)
 		a[j++] = i + min;
 		tmp[i]--;
 	}
+	free(tmp);
 }
