@@ -476,6 +476,7 @@ void CountSort(int* a, int n)
 		a[j++] = i + min;
 		count[i]--;
 	}
+	free(count);
 }
 
 // 测试排序的性能对比
@@ -672,7 +673,7 @@ void TestCountSort()
 int main()
 {
 
-	//TestCountSort();
-	TestOP();
+	TestCountSort();
+	//TestOP();
 	return 0;
 }
