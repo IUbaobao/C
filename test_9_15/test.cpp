@@ -74,6 +74,38 @@ void swap(int& e1, int& e2)
 	e2 = tmp;
 }
 
+//
+////错误用法
+//int& f()
+//{
+//	int n = 0;
+//	n++;
+//	return n;
+//}
+
+int f1(int& a)
+{
+	return 1;
+}
+
+////////////////////////////////
+//正确用法    用引用作返回要保证该返回值出了作用域还存在
+int& f()
+{
+	 static int n = 0;
+	n++;
+	return n;
+}
+
+
+int f2(const int& a)
+{
+	return 1;
+}
+
+
+
+
 int main()
 {
 
@@ -97,5 +129,10 @@ int main()
 	//权限缩小
 	const int& rrb = b;
 
+	//f(ra);
+	
+	//还是权限问题,权限不能扩大
+	//f1(ra);
+	f2(ra);
 	return 0;
 }
