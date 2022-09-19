@@ -322,8 +322,8 @@
 
 
 
-#include<iostream>
-using namespace std;
+//#include<iostream>
+//using namespace std;
 //
 //int main()
 //{
@@ -426,14 +426,60 @@ using namespace std;
 
 
 //正确做法：一般函数声明定义缺省，实现不用缺省
-void fun(int a = 1);
-void fun(int a)
+//void fun(int a = 1);
+//void fun(int a)
+//{
+//	cout << a << endl;
+//}
+//
+//int main()
+//{
+//	fun();
+//	return 0;
+//}
+
+
+
+
+#include<iostream>
+using namespace std;
+// 1、参数类型不同
+int Add(int e1, int e2)
 {
-	cout << a << endl;
+	return e1 + e2;
+}
+double Add(double e1, double e2)
+{
+	return e1 + e2;
+}
+// 2、参数个数不同
+void f()
+{
+	cout << "f()" << endl;
+}
+void f(int a)
+{
+	cout << "f(int a)" << endl;
+}
+// 3、参数类型顺序不同
+void fun(int a, char b)
+{
+	cout << "fun(int a,char b)" << endl;
+}
+void fun(char b, int a)
+{
+	cout << "fun(char b,int a)" << endl;
 }
 
 int main()
-{
-	fun();
+{	
+	//参数类型不同
+	cout << Add(1, 2) << "  " << Add(3.14, 3.14) << endl;
+	//参数个数不同
+	f();
+	f(1);
+	//参数类型顺序不同
+	fun(1, 'b');
+	fun('b', 1);
 	return 0;
 }
