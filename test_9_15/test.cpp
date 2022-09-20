@@ -439,47 +439,97 @@
 //}
 
 
+//
+//
+//#include<iostream>
+//using namespace std;
+//// 1、参数类型不同
+//int Add(int e1, int e2)
+//{
+//	return e1 + e2;
+//}
+//double Add(double e1, double e2)
+//{
+//	return e1 + e2;
+//}
+//// 2、参数个数不同
+//void f()
+//{
+//	cout << "f()" << endl;
+//}
+//void f(int a)
+//{
+//	cout << "f(int a)" << endl;
+//}
+//// 3、参数类型顺序不同
+//void fun(int a, char b)
+//{
+//	cout << "fun(int a,char b)" << endl;
+//}
+//void fun(char b, int a)
+//{
+//	cout << "fun(char b,int a)" << endl;
+//}
+//
+//int main()
+//{	
+//	//参数类型不同
+//	cout << Add(1, 2) << "  " << Add(3.14, 3.14) << endl;
+//	//参数个数不同
+//	f();
+//	f(1);
+//	//参数类型顺序不同
+//	fun(1, 'b');
+//	fun('b', 1);
+//	return 0;
+//}
+
 
 
 #include<iostream>
 using namespace std;
-// 1、参数类型不同
-int Add(int e1, int e2)
+
+//C++刚开始的类
+struct Stack
 {
-	return e1 + e2;
-}
-double Add(double e1, double e2)
+	void Init(int n = 4)
+	{
+		//.....
+	}
+	void Push(int x)
+	{
+		//.....
+	}
+
+
+	int* a;
+	int top;
+	int capacity;
+};
+
+
+class Queue
 {
-	return e1 + e2;
-}
-// 2、参数个数不同
-void f()
-{
-	cout << "f()" << endl;
-}
-void f(int a)
-{
-	cout << "f(int a)" << endl;
-}
-// 3、参数类型顺序不同
-void fun(int a, char b)
-{
-	cout << "fun(int a,char b)" << endl;
-}
-void fun(char b, int a)
-{
-	cout << "fun(char b,int a)" << endl;
-}
+	//公有方法
+public:
+	void Init(int n = 4)
+	{
+		//....
+	}
+	void Push(int x)
+	{
+		//...
+	}
+
+//私有属性
+private:
+	int* a;
+	int size;
+	int capacity;
+};
 
 int main()
-{	
-	//参数类型不同
-	cout << Add(1, 2) << "  " << Add(3.14, 3.14) << endl;
-	//参数个数不同
-	f();
-	f(1);
-	//参数类型顺序不同
-	fun(1, 'b');
-	fun('b', 1);
+{
+
 	return 0;
 }
