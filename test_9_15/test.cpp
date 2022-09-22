@@ -484,52 +484,101 @@
 //	return 0;
 //}
 
+//
+//
+//#include<iostream>
+//using namespace std;
+//
+////C++刚开始的类
+//struct Stack
+//{
+//	void Init(int n = 4)
+//	{
+//		//.....
+//	}
+//	void Push(int x)
+//	{
+//		//.....
+//	}
+//
+//
+//	int* a;
+//	int top;
+//	int capacity;
+//};
+//
+//
+//class Queue
+//{
+//	//公有方法
+//public:
+//	void Init(int n = 4)
+//	{
+//		//....
+//	}
+//	void Push(int x)
+//	{
+//		//...
+//	}
+//
+////私有属性
+//private:
+//	int* a;
+//	int size;
+//	int capacity;
+//};
+//
+//int main()
+//{
+//
+//	return 0;
+//}
+
 
 
 #include<iostream>
 using namespace std;
 
-//C++刚开始的类
-struct Stack
+//class Data
+//{
+//public:
+//	//构造函数  --》创建类的时候主动执行（不主动创建，编译器也会主动创建）
+//	Data(int year=0,int month=0,int day=0)
+//	{
+//		_year = year;
+//		_month = month;
+//		_day = day;
+//	}
+//
+//	void Print()
+//	{
+//		cout << _year << "    " << _month << "   " << _day << endl;
+//	}
+//private:
+//	int _year;
+//	int _month;
+//	int _day;
+//};
+
+
+class Data
 {
-	void Init(int n = 4)
-	{
-		//.....
-	}
-	void Push(int x)
-	{
-		//.....
-	}
-
-
-	int* a;
-	int top;
-	int capacity;
-};
-
-
-class Queue
-{
-	//公有方法
 public:
-	void Init(int n = 4)
-	{
-		//....
-	}
-	void Push(int x)
-	{
-		//...
-	}
+	//构造函数  --》创建类的时候主动执行（不主动创建，编译器也会主动创建）
 
-//私有属性
+	void Print()
+	{
+		cout << _year << "    " << _month << "   " << _day << endl;
+	}
 private:
-	int* a;
-	int size;
-	int capacity;
+	int _year;
+	int _month;
+	int _day;
 };
 
 int main()
 {
-
+	Data AA;
+	AA.Print();
 	return 0;
 }
