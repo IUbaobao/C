@@ -535,20 +535,36 @@
 //}
 
 
-
-#include<iostream>
-using namespace std;
-
+//
+//#include<iostream>
+//using namespace std;
+//
+////class Data
+////{
+////public:
+////	//构造函数  --》创建类的时候主动执行（不主动创建，编译器也会主动创建）
+////	Data(int year=0,int month=0,int day=0)
+////	{
+////		_year = year;
+////		_month = month;
+////		_day = day;
+////	}
+////
+////	void Print()
+////	{
+////		cout << _year << "    " << _month << "   " << _day << endl;
+////	}
+////private:
+////	int _year;
+////	int _month;
+////	int _day;
+////};
+//
+//
 //class Data
 //{
 //public:
 //	//构造函数  --》创建类的时候主动执行（不主动创建，编译器也会主动创建）
-//	Data(int year=0,int month=0,int day=0)
-//	{
-//		_year = year;
-//		_month = month;
-//		_day = day;
-//	}
 //
 //	void Print()
 //	{
@@ -559,26 +575,46 @@ using namespace std;
 //	int _month;
 //	int _day;
 //};
+//
+//int main()
+//{
+//	Data AA;
+//	AA.Print();
+//	return 0;
+//}
 
 
-class Data
+
+#include<iostream>
+using namespace std;
+
+class stack
 {
 public:
-	//构造函数  --》创建类的时候主动执行（不主动创建，编译器也会主动创建）
-
-	void Print()
+	stack(int capacity = 4)
 	{
-		cout << _year << "    " << _month << "   " << _day << endl;
+		_a = (int*)malloc(sizeof(int) * capacity);
+		_capacity = capacity;
+		_top = 0;
+	}
+
+
+	//析构函数：对象出了作用域之后自动执行
+	~stack()
+	{
+		free(_a);
+		_a = nullptr;
+		_top = _capacity = 0;
 	}
 private:
-	int _year;
-	int _month;
-	int _day;
+	int* _a;
+	int _top;
+	int _capacity;
 };
 
 int main()
 {
-	Data AA;
-	AA.Print();
+	stack st;
+	
 	return 0;
 }
