@@ -163,3 +163,71 @@ int main()
 //        && isBalanced(root->left)
 //        && isBalanced(root->right);
 //}
+
+
+
+
+//删除有序链表中重复的元素 - I
+//struct ListNode* deleteDuplicates(struct ListNode* head) {
+//    // write code here
+//    struct ListNode* newhead = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    if (newhead == NULL)
+//    {
+//        perror("malloc fail\n");
+//        return head;
+//    }
+//    newhead->next = head;
+//    struct ListNode* p = newhead;
+//    while (p != NULL)
+//    {
+//        if (p->next != NULL && p->val == p->next->val)
+//        {
+//            p->next = p->next->next;
+//        }
+//        else {
+//            p = p->next;
+//        }
+//    }
+//
+//    p = newhead->next;
+//    free(newhead);
+//    return p;
+//}
+
+
+
+//删除有序链表中重复的元素 - II (挫写法)
+//struct ListNode* deleteDuplicates(struct ListNode* head) {
+//    // write code here
+//    if (head == NULL || head->next == NULL)
+//        return head;
+//    struct ListNode* newhead = (struct ListNode*)malloc(sizeof(struct ListNode));
+//    if (newhead == NULL)
+//    {
+//        perror("malloc fail\n");
+//        return head;
+//    }
+//    struct ListNode* p = newhead;
+//    struct ListNode* cur = head;
+//    int pre = -1000000;
+//    while (cur != NULL)
+//    {
+//        printf("prev:%d cur->val:%d\n", pre, cur->val);
+//        if ((cur->val != pre && cur->next != NULL && cur->val != cur->next->val) || (cur->next == NULL && cur->val != pre))
+//        {
+//            p->next = cur;
+//            p = p->next;
+//            pre = cur->val;
+//            cur = cur->next;
+//        }
+//        else {
+//            pre = cur->val;
+//            cur = cur->next;
+//        }
+//
+//    }
+//    p->next = NULL;
+//    p = newhead->next;
+//    free(newhead);
+//    return p;
+//}
