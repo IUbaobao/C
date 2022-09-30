@@ -19,45 +19,45 @@
 //8 3
 //输出
 //6
-
-#include<stdio.h>
-struct pre
-{
-    int num;
-    struct pre* next;
-};
-
-int main()
-{
-    int n, m;
-
-    scanf("%d %d", &n, &m);
-    struct pre arr[n];
-    for (int i = 0; i < n; i++)
-    {
-        arr[i].num = i;
-        if (i < n - 1)
-            arr[i].next = &arr[i + 1];
-    }
-    arr[n - 1].next = &arr[0];//形成环
-    struct pre* p = &arr[0];
-    int i = 0;
-    while (p->next != p)
-    {
-        i++;
-        if (i % (m - 1) == 0)
-        {
-            p->next = p->next->next;
-            i = 0;
-        }
-        p = p->next;
-    }
-    printf("%d\n", p->num);
-
-    return 0;
-}
-
-
+//
+//#include<stdio.h>
+//struct pre
+//{
+//    int num;
+//    struct pre* next;
+//};
+//
+//int main()
+//{
+//    int n, m;
+//
+//    scanf("%d %d", &n, &m);
+//    struct pre arr[n];
+//    for (int i = 0; i < n; i++)
+//    {
+//        arr[i].num = i;
+//        if (i < n - 1)
+//            arr[i].next = &arr[i + 1];
+//    }
+//    arr[n - 1].next = &arr[0];//形成环
+//    struct pre* p = &arr[0];
+//    int i = 0;
+//    while (p->next != p)
+//    {
+//        i++;
+//        if (i % (m - 1) == 0)
+//        {
+//            p->next = p->next->next;
+//            i = 0;
+//        }
+//        p = p->next;
+//    }
+//    printf("%d\n", p->num);
+//
+//    return 0;
+//}
+//
+//
 
 
 
@@ -231,3 +231,38 @@ int main()
 //    free(newhead);
 //    return p;
 //}
+
+
+
+
+//单链表的排序
+int cmpint(const void* e1, const void* e2)
+{
+    return *((int*)e1) - *((int*)e2);
+}
+struct ListNode* sortInList(struct ListNode* head) {
+    // write code here
+    int n = 0;
+    struct ListNode* cur = head;
+    while (cur != NULL)//统计链表个数
+    {
+        n++;
+        cur = cur->next;
+    }
+    int* a = (int*)malloc(sizeof(int) * n);
+    cur = head;
+    int i = 0;
+    for (; cur != NULL; cur = cur->next)//将链表的值拷贝到数组
+    {
+        a[i++] = cur->val;
+    }
+    qsort(a, i, sizeof(a[0]), cmpint);//将数组排序
+    cur = head;
+    i = 0;
+    while (cur != NULL)//重新把数组的值拷贝回链表
+    {
+        cur->val = a[i++];
+        cur = cur->next;
+    }
+    return head;
+}
