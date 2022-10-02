@@ -34,6 +34,22 @@
 
 ---
 
+**常用命令汇总**
+
+| 序号 | 命令           | 对应英文             | 作用                     |
+| ---- | -------------- | -------------------- | ------------------------ |
+| 01   | ls             | list                 | 查看当前文件夹下的内容   |
+| 02   | pwd            | print work directory | 查看当前所在文件夹       |
+| 03   | cd [目录名]    | change directory     | 切换文件夹               |
+| 04   | touch [文件名] | touch                | 如果文件不存在，新建文件 |
+| 05   | mkdir [目录名] | make directory       | 创建目录                 |
+| 06   | rm [文件名]    | remove               | 删除指定的文件名         |
+| 07   | clear          | clear                | 清屏                     |
+
+
+
+----
+
 
 
 
@@ -916,4 +932,187 @@ tar指令：打包/解包，不打开它，直接看内容
 | -v       | 压缩的过程中显示文件！这个常用，但不建议用在背景执行过程！ |
 | -f       | 使用档名，请留意，在 f 之后要立即接档名喔！不要再加参数！  |
 | -C       | 解压到指定目录                                             |
+
+
+
+>特别注意，在参数 f 之后的文件档名是自己取的，我们习惯上都用 .tar 来作为辨识。
+>如果加 **z 参数**，则以 .**tar.gz** 或 **.tgz **来代表 gzip 压缩过的 tar file ～
+>如果加 **j 参数**，则以 **.tar.bz2 **来作为附档名啊  
+
+
+
+列如
+
+```shell
+[hdm@centos7 ~]$ ls
+a  test.c
+[hdm@centos7 ~]$ tar -czf a.tgz a  ## 压缩文件,以gzip格式压缩
+[hdm@centos7 ~]$ ls
+a  a.tgz  test.c
+[hdm@centos7 ~]$ rm -rf a
+[hdm@centos7 ~]$ ls
+a.tgz  test.c
+[hdm@centos7 ~]$ tar -xzf a.tgz   ## 解压文件，以gzip格式解压
+[hdm@centos7 ~]$ ls
+a  a.tgz  test.c
+```
+
+
+
+```shell
+[hdm@centos7 ~]$ ls
+a  test.c
+[hdm@centos7 ~]$ tar -cjf a.bz2 a  ## 压缩文件,以bzip2格式压缩
+[hdm@centos7 ~]$ ls
+a  a.bz2  test.c
+[hdm@centos7 ~]$ rm -rf a
+[hdm@centos7 ~]$ ls
+a.bz2  test.c 
+[hdm@centos7 ~]$ tar -xjf a.bz2   ## ## 解压文件，以bzip2格式解压
+[hdm@centos7 ~]$ ls
+a  a.bz2  test.c
+```
+
+
+
+-----
+
+
+
+
+
+# 21. bc指令(计算器)
+
+
+
+bc命令可以很方便的进行浮点运算  （也是Linux中的计算器）
+
+
+
+
+
+```shell
+[hdm@centos7 ~]$ bc
+bc 1.06.95
+Copyright 1991-1994, 1997, 1998, 2000, 2004, 2006 Free Software Foundation, Inc.
+This is free software with ABSOLUTELY NO WARRANTY.
+For details type `warranty'. 
+1+1
+2
+30*30
+900
+^C          ## 按键盘中的Ctrl+c退出
+(interrupt) Exiting bc.
+```
+
+
+
+
+
+
+
+----
+
+
+
+
+
+# 22. uname指令  
+
+
+
+**语法**： uname [选项]
+**功能**： uname用来获取电脑和操作系统的相关信息。
+**补充说明**： uname可显示linux主机所用的操作系统的版本、硬件的名称等基本信息  
+
+
+
+| -a  或–all | 详细输出所有信息，依次为内核名称，主机名，内核版本号，内核版本，硬件名，处理器类  型，硬件平台类型，操作系统名称 |
+| ---------- | ------------------------------------------------------------ |
+| **-r**     | **显示Linux内核的版本信息**                                  |
+
+
+
+```shell
+[hdm@centos7 ~]$ uname -r
+3.10.0-1160.53.1.el7.x86_64
+[hdm@centos7 ~]$ uname 
+Linux
+[hdm@centos7 ~]$ uname -a
+Linux centos7 3.10.0-1160.53.1.el7.x86_64 #1 SMP Fri Jan 14 13:59:45 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux
+```
+
+
+
+----
+
+
+
+# 23.shutdown  （关机）指令
+
+
+
+**语法**： shutdown [选项]  
+
+| 常用选项 | 功能                                                         |
+| -------- | ------------------------------------------------------------ |
+| -h       | 将系统的服务停掉后，立即关机                                 |
+| -r       | 在将系统的服务停掉之后就重新启动                             |
+| -t sec   | -t 后面加秒数，亦即『过几秒后关机』的意思  ，例如shutdown -t 10   （10秒后关机） |
+
+
+
+
+
+---
+
+
+
+
+
+# 24. 一些零散却有用的指令+快捷键
+
+
+
+lscpu：查看CPU信息
+
+
+
+lsmem：查看内存信息
+
+
+
+df -h： 查看硬盘使用情况
+
+
+
+who：查看当前Linux在线用户
+
+
+
+whoami ： 查看当前账号用户名
+
+
+
+## 快捷键
+
+tab 命令自动补全（常用）
+
+
+
+Ctrl + c 终止前台异常程序
+
+
+
+Ctrl + d 退出当前用户，退出一层
+
+
+
+Ctrl + r  搜索历史命令，左右可选中
+
+
+
+
+
+
 
