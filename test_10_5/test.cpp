@@ -250,7 +250,8 @@ using namespace std;
 //			free(_array);
 //			_array = NULL;
 //			_capacity = 0;
-//			_size = 0;//		}
+//			_size = 0;
+//		}
 //	}
 //private:
 //	DataType* _array;
@@ -305,6 +306,131 @@ using namespace std;
 // 注意：创建哪个类的对象则调用该类的析构函数，销毁那个类的对象则调用该类的析构函数
 
 
+//
+//class Date
+//{
+//public:
+//	Date(int year=1,int month=1,int day=1)
+//	{
+//		_year = year;
+//		_month = month;
+//		_day = day;
+//	}
+//	void Print()
+//	{
+//		cout << _year << "-" << _month << "-" << _day << endl;
+//	}
+//
+//	bool operator==(const Date& d1)
+//	{
+//		return _year == d1._year
+//			&& _month == d1._month
+//			&& _day == d1._day;
+//	}
+//	
+//	bool operator>(const Date& d1)
+//	{
+//		if (_year > d1._year)
+//		{
+//			return true;
+//		}
+//		else if (_year == d1._year && _month > d1._month)
+//		{
+//			return true;
+//		}
+//		else if (_year == d1._year && _month == d1._month && _day > d1._day)
+//		{
+//			return true;
+//		}
+//		
+//		return false;
+//	}
+//	bool operator>=(const Date& d1)
+//	{
+//		return *this > d1
+//			|| *this == d1;
+//	}
+//	int GetMonthDay(int year, int month)
+//	{
+//		static int MonthDayArr[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
+//		if ( month==2 &&((year % 4 == 0 && year % 100 != 0) || year % 400 == 0))
+//		{
+//			return 29;
+//		}
+//		return MonthDayArr[month];
+//	}
+//
+//	Date& operator+=(int day)
+//	{
+//		_day += day;
+//		while (_day > GetMonthDay(_year,_month))
+//		{
+//			_day -= GetMonthDay(_year, _month);
+//			_month++;
+//			if (_month == 13)
+//			{
+//				_year++;
+//				_month = 1;
+//			}
+//		}
+//		return *this;
+//	}
+//	
+//private:
+//	int _year;
+//	int _month;
+//	int _day;
+//};
+//
+//int main()
+//{
+//	Date d1(2022,9,22);
+////	Date d2(2022, 10, 7);
+//
+//	//cout << (d1 == d2) << endl;
+////	cout << (d1 >= d2) << endl;
+//
+//	d1 += 50;
+//
+//
+//	return 0;
+//}
+
+
+//错误
+//#include <iostream>
+//using namespace std;
+//int r(cin >> int x);
+//
+//int main()
+//{
+//    r(6);
+//    cout << r << endl;
+//}
+//int r(cin >> int x)
+//{
+//    return 2 * x;
+//}
+
+//正确写法
+//#include <iostream>
+//using namespace std;
+//int r(int x);
+//
+//int main()
+//{
+//    r(6);
+//    int x;
+//        cin >> x;
+//    cout << x << endl;
+//    cout << r << endl;
+//}
+//int r(int x)
+//{
+//    return 2 * x;
+//}
+
+
 
 class Date
 {
@@ -349,6 +475,23 @@ public:
 		return *this > d1
 			|| *this == d1;
 	}
+
+	bool operator<(const Date& d1)
+	{
+		return  !(*this > d1);
+	}
+
+	bool operator<=(const Date& d1)
+	{
+		return !(*this > d1)
+			|| *this == d1;
+	}
+
+	bool operator!=(const Date& d1)
+	{
+		return !(*this == d1);
+	}
+
 	int GetMonthDay(int year, int month)
 	{
 		static int MonthDayArr[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
@@ -374,7 +517,33 @@ public:
 		}
 		return *this;
 	}
-	
+	Date operator+(int day)
+	{
+		Date d1(*this);
+		return d1 += day;
+	}
+
+	Date& operator-=(int day)
+	{
+		_day -= day;
+		while (_day<=0)
+		{
+			if (_month == 1)
+			{
+				_year--;
+				_month = 13;
+			}
+			_day += GetMonthDay(_year, _month - 1);
+			_month -= 1;
+		}
+		return *this;
+	}
+
+	Date operator-(int day)
+	{
+		Date d1(*this);
+		return d1 -= day;
+	}
 private:
 	int _year;
 	int _month;
@@ -383,14 +552,19 @@ private:
 
 int main()
 {
-	Date d1(2022,9,22);
-//	Date d2(2022, 10, 7);
+	Date d1(2022, 10, 7);
+	//Date d2(d1);//默认生成的拷贝构造
+	//d2.Print();
+	Date d2(2022, 10, 8);
+	cout << (d1 != d2) << endl;
 
-	//cout << (d1 == d2) << endl;
-//	cout << (d1 >= d2) << endl;
+	Date d3 = d1 + 1000;
+	d3.Print();
 
-	d1 += 50;
+	d3 -= 1000;
+	d3.Print();
 
-
+	Date d4 = d2 - 1;
+	d4.Print();
 	return 0;
 }
