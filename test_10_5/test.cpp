@@ -522,19 +522,35 @@ public:
 		Date d1(*this);
 		return d1 += day;
 	}
+	//不好理解
+	//Date& operator-=(int day)
+	//{
+	//	_day -= day;
+	//	while (_day<=0)
+	//	{
+	//		--_month;
+	//		if (_month == 0)
+	//		{
+	//			_year--;
+	//			_month = 12;
+	//		}
+	//		_day += GetMonthDay(_year, _month);
+	//	}
+	//	return *this;
+	//}
 
 	Date& operator-=(int day)
 	{
 		_day -= day;
 		while (_day<=0)
 		{
-			if (_month == 1)
+			--_month;
+			if (_month == 0)
 			{
 				_year--;
-				_month = 13;
+				_month = 12;
 			}
-			_day += GetMonthDay(_year, _month - 1);
-			_month -= 1;
+			_day += GetMonthDay(_year, _month);
 		}
 		return *this;
 	}
@@ -544,6 +560,22 @@ public:
 		Date d1(*this);
 		return d1 -= day;
 	}
+
+	//前置++
+	Date& operator++()
+	{
+		*this+=1;
+		return *this;
+	}
+
+	//后置++
+	Date operator++(int)
+	{
+		Date tem(*this);
+		*this += 1;
+		return tem;
+	}
+
 private:
 	int _year;
 	int _month;
@@ -555,16 +587,18 @@ int main()
 	Date d1(2022, 10, 7);
 	//Date d2(d1);//默认生成的拷贝构造
 	//d2.Print();
-	Date d2(2022, 10, 8);
-	cout << (d1 != d2) << endl;
+	//Date d2(2022, 10, 8);
+	//cout << (d1 != d2) << endl;
 
-	Date d3 = d1 + 1000;
-	d3.Print();
+	//Date d3 = d1 + 1000;
+	//d3.Print();
 
-	d3 -= 1000;
-	d3.Print();
+	//d3 -= 1000;
+	//d3.Print();
 
-	Date d4 = d2 - 1;
-	d4.Print();
+	//Date d4 = d2 - 1;
+	//d4.Print();
+	//(d1++).Print();
+	(++d1).Print();
 	return 0;
 }
