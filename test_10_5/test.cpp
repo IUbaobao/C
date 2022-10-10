@@ -576,6 +576,41 @@ public:
 		return tem;
 	}
 
+	//前置--
+	Date& operator--()
+	{
+		*this -= 1;
+		return *this;
+	}
+
+	//后置--
+	Date operator--(int)
+	{
+		Date tem(*this);
+		*this -= 1;
+		return tem;
+	}
+	//d1-d2  日期类-日期类
+	int operator-(const Date& d)
+	{
+		Date max = *this;
+		Date min = d;
+		int flag = 1;
+
+		if (*this < d)
+		{
+			max = d;
+			min = *this;
+			flag = -1;
+		}
+		int n = 0;
+		while (min != max)
+		{
+			++n;
+			++min;
+		}
+		return n * flag;
+	}
 private:
 	int _year;
 	int _month;
@@ -599,6 +634,16 @@ int main()
 	//Date d4 = d2 - 1;
 	//d4.Print();
 	//(d1++).Print();
-	(++d1).Print();
+	//(++d1).Print();
+	//(d1--).Print();
+	//(--d1).Print();
+	
+	//Date d2;
+	//d2 = d1;//赋值重载
+	//d2.Print();
+	Date d2(2022, 10, 10);
+
+	cout << (d2 - d1) << endl;
+	cout << (d1 - d2) << endl;
 	return 0;
-}
+}	
