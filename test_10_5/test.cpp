@@ -440,6 +440,11 @@ public:
 		_year = year;
 		_month = month;
 		_day = day;
+
+		if (_month > 12 || _month <1 || day> GetMonthDay(_year, _month) || day < 1)
+		{
+			cout << "非法日期" << endl;
+		}
 	}
 	void Print()
 	{
@@ -611,11 +616,30 @@ public:
 		}
 		return n * flag;
 	}
+
+	friend ostream& operator<<(ostream& out, const Date& d);
+	friend istream& operator>>(istream& in, Date& d);
+
 private:
 	int _year;
 	int _month;
 	int _day;
 };
+
+
+ostream& operator<<(ostream& out, const Date& d)
+{
+	out << d._year << "年" << d._month << "月" << d._day << "日" << endl;
+	return out;
+}
+
+istream& operator>>(istream& in, Date& d)
+{
+	in >> d._year;
+	in >> d._month;
+	in >> d._day;
+	return in;
+}
 
 int main()
 {
@@ -641,9 +665,12 @@ int main()
 	//Date d2;
 	//d2 = d1;//赋值重载
 	//d2.Print();
-	Date d2(2022, 10, 10);
+	Date d2(2022, 10, 40);
 
-	cout << (d2 - d1) << endl;
-	cout << (d1 - d2) << endl;
+	//cout << (d2 - d1) << endl;
+	//cout << (d1 - d2) << endl;
+	Date d3;
+	cin >> d2 >> d3;
+	cout << d2 << d3;
 	return 0;
 }	
