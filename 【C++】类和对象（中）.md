@@ -532,7 +532,7 @@ int main()
 
 
 
-6. **如果类中没有申请资源时，析构函数可以不写，直接使用编译器生成的默认析构函数，比如 Date类；有资源申请时，一定要写，否则会造成资源泄漏，比如Stack类**。
+6. **如果类中没有申请资源时，析构函数可以不写，直接使用编译器生成的默认析构函数，比如 Date类；有资源申请时，一定要写，否则会造成资源泄漏，比如Stack（栈）类**。
 
 
 
@@ -540,7 +540,360 @@ int main()
 
 
 
+----
 
+
+
+
+
+# 3. 拷贝构造函数 
+
+
+
+## 3.1 概念
+
+
+
+   在现实生活中，可能存在一个与你一样的自己，我们称其为双胞胎  
+
+
+
+![image-20221011194627704](https://iubaopicbed.oss-cn-shenzhen.aliyuncs.com/img2/picbed202210111946068.png)
+
+
+
+
+
+那在创建对象时，可否创建一个与已存在对象一某一样的新对象呢？  
+
+
+
+**拷贝构造函数：只有单个形参，该形参是对本类类型对象的引用(一般常用const修饰)，在用已存
+在的类类型对象创建新对象时由编译器自动调用**。  
+
+
+
+
+
+## 3.2 特征  
+
+
+
+拷贝构造函数也是特殊的成员函数，其特征如下：  
+
+
+
+1. **拷贝构造函数是构造函数的一个重载形式**。  
+2. **拷贝构造函数的参数只有一个且必须是类类型对象的引用，使用传值方式编译器直接报错，
+   因为会引发无穷递归调用**。  
+
+
+
+```cpp
+class Date
+{
+public:
+	Date(int year = 1970, int month = 1, int day = 1)
+	{
+		_year = year;
+		_month = month;
+		_day = day;
+	}
+	// Date(const Date d) // 错误写法：编译报错，会引发无穷递归
+	Date(const Date& d) // 正确写法
+	{
+		_year = d._year;
+		_month = d._month;
+		_day = d._day;
+	}
+private:
+	int _year;
+	int _month;
+	int _day;
+};
+int main()
+{
+	Date d1;
+	Date d2(d1);
+	return 0;
+}
+```
+
+![image-20221011195746278](https://iubaopicbed.oss-cn-shenzhen.aliyuncs.com/img2/picbed202210111957333.png)
+
+> 函数传值传参，本质上就是实参的一份拷贝，这时候是会调用拷贝构造函数，比如下面的例子就可以验证
+
+
+
+
+
+```cpp
+class Date
+{
+public:
+	Date(int year = 1970, int month = 1, int day = 1)
+	{
+		_year = year;
+		_month = month;
+		_day = day;
+	}
+	Date(const Date& d) // 假设拷贝构造已经存在了
+	{
+		cout << "Date(const Date& d)" << endl;
+		_year = d._year;
+		_month = d._month;
+		_day = d._day;
+	}
+private:
+	int _year;
+	int _month;
+	int _day;
+};
+
+void DateTest1(Date d1)
+{
+	//传值，会发生拷贝构造
+}
+
+void DateTest2(Date& d)
+{
+	//传引用
+}
+int main()
+{
+	Date d1;
+	DateTest1(d1);
+	DateTest2(d1);
+	return 0;
+}
+```
+
+
+
+
+
+![image-20221011200327557](https://iubaopicbed.oss-cn-shenzhen.aliyuncs.com/img2/picbed202210112003599.png)
+
+
+
+
+
+> 运行结果证明传值的方式是会调用拷贝构造的，所以如果拷贝构造函数使用传值的方式，则会无穷调用自己本身。
+
+
+
+
+
+3. **若未显式定义，编译器会生成默认的拷贝构造函数**。 默认的拷贝构造函数对象按内存存储按
+   字节序完成拷贝，这种拷贝叫做浅拷贝，或者值拷贝。  
+
+
+
+```cpp
+class Time
+{
+public:
+	Time()
+	{
+		_hour = 1;
+		_minute = 1;
+		_second = 1;
+	}
+	Time(const Time& t)
+	{
+		_hour = t._hour;
+		_minute = t._minute;
+		_second = t._second;
+		cout << "Time::Time(const Time&)" << endl;
+	}
+private:
+	int _hour;
+	int _minute;
+	int _second;
+};
+class Date
+{
+public:
+	void Print()
+	{
+		cout << _year << "年" << _month << "月" << _day << "日" << endl;
+	}
+private:
+	// 基本类型(内置类型)
+	int _year = 1970;
+	int _month = 1;
+	int _day = 1;
+	// 自定义类型
+	Time _t;
+};
+int main()
+{
+	Date d1;
+	// 用已经存在的d1拷贝构造d2，此处会调用Date类的拷贝构造函数
+	// 但Date类并没有显式定义拷贝构造函数，则编译器会给Date类生成一个默认的拷贝构造函数
+	Date d2(d1);
+	d2.Print();
+	return 0;
+}
+```
+
+![image-20221011201013967](https://iubaopicbed.oss-cn-shenzhen.aliyuncs.com/img2/picbed202210112010016.png)
+
+
+
+
+
+
+
+==注意==：在编译器生成的默认拷贝构造函数中，**内置类型是按照字节方式直接拷贝的，而自定
+义类型是调用其拷贝构造函数完成拷贝的**。  
+
+
+
+
+
+4. **编译器生成的默认拷贝构造函数已经可以完成字节序的值拷贝了**，还需要自己显式实现吗？
+   像日期类这样的类当然是没必要的，那么所有类都不需要吗？
+
+显然不是，比如还是我们之前stack（栈）类
+
+```cpp
+// 这里会发现下面的程序会崩溃掉？这里就需要我们以后讲的深拷贝去解决。
+typedef int DataType;
+class Stack
+{
+public:
+	Stack(size_t capacity = 10)
+	{
+		_array = (DataType*)malloc(capacity * sizeof(DataType));
+		if (nullptr == _array)
+		{
+			perror("malloc申请空间失败");
+			return;
+		}
+		_size = 0;
+		_capacity = capacity;
+	}
+	void Push(const DataType& data)
+	{
+		// CheckCapacity();
+		_array[_size] = data;
+		_size++;
+	}
+	~Stack()
+	{
+		if (_array)
+		{
+			free(_array);
+			_array = nullptr;
+			_capacity = 0;
+			_size = 0;
+		}
+	}
+private:
+	DataType* _array;
+	size_t _size;
+	size_t _capacity;
+};
+int main()
+{
+	Stack s1;
+	s1.Push(1);
+	s1.Push(2);
+	s1.Push(3);
+	s1.Push(4);
+	Stack s2(s1);
+	return 0;
+}
+```
+
+
+
+
+
+
+
+![image-20221011202306373](https://iubaopicbed.oss-cn-shenzhen.aliyuncs.com/img2/picbed202210112023431.png) 
+
+
+
+
+
+> 其实本质上还是因为编译器默认生成的拷贝构造只是完成值拷贝，这就会导致两个栈都指向了同一块空间，而但它们结束生命周期后会调用析构函数，同一个空间释放了两次，自然就报错了。
+
+
+
+![image-20221011202445320](https://iubaopicbed.oss-cn-shenzhen.aliyuncs.com/img2/picbed202210112025752.png)
+
+==总结==：类中如果没有涉及资源申请时，拷贝构造函数是否写都可以；一旦涉及到资源申请
+时，则拷贝构造函数是一定要写的，否则就是浅拷贝(如果属性有在堆区开辟的，一定要自己提供拷贝构造函数，防止浅拷贝带来的问题)。  
+
+
+
+深浅拷贝是面试经典问题，也是常见的一个坑
+
+
+
+浅拷贝：简单的赋值拷贝操作
+
+
+
+深拷贝：在堆区重新申请空间，进行拷贝操作
+
+
+
+
+
+
+
+5. **拷贝构造函数典型调用场景**:
+
++ 使用已存在对象创建新对象
++ 函数参数类型为类类型对象
++ 函数返回值类型为类类型对象  
+
+
+
+> 为了提高程序效率，一般对象传参时，尽量使用引用类型，返回时根据实际场景，能用引用
+> 尽量使用引用。  
+
+
+
+
+
+----
+
+
+
+
+
+# 4.赋值运算符重载  
+
+
+
+
+
+## 4.1 运算符重载  
+
+> 运算符重载概念：对已有的运算符重新进行定义，赋予其另一种功能，以适应不同的数据类型
+
+**C++为了增强代码的可读性引入了运算符重载，运算符重载是具有特殊函数名的函数**，也具有其
+返回值类型，函数名字以及参数列表，其返回值类型与参数列表与普通的函数类似。
+函数名字为：关键字**operator后面接需要重载的运算符符号**。
+函数原型：**返回值类型 operator操作符(参数列表)**  
+
+
+
+
+
+注意：  
+
+1. 不能通过连接其他符号来创建新的操作符：比如operator@  
+2. 重载操作符必须有一个类类型参数  
+3. 用于内置类型的运算符，其含义不能改变，例如：内置的整型+，不 能改变其含义  
+4. 作为类成员函数重载时，其形参看起来比操作数数目少1，因为成员函数的第一个参数为隐
+   藏的this  
+5. `.* :: sizeof ?: .  `  注意以上5个运算符不能重载。这个经常在笔试选择题中出现。  
 
 
 
