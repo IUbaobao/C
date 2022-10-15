@@ -877,6 +877,18 @@ int main()
 
 > 运算符重载概念：对已有的运算符重新进行定义，赋予其另一种功能，以适应不同的数据类型
 
+
+
+>为什么需要运算符重载呢？
+>
+>因为编译器只提供了内置类型的基本运算，自定义类型如上面我们一直在用的日期类型，编译器是没有说给自定义类型提供
+>
+>日期加减，赋值等等的功能，这就需要我们自己用函数实现，但是用函数进行调用的话，又显得可读性并没有像内置类型那么高，
+>
+>所以就出现了一些运算符重载，让程序看起来更好理解。
+>
+>
+
 **C++为了增强代码的可读性引入了运算符重载，运算符重载是具有特殊函数名的函数**，也具有其
 返回值类型，函数名字以及参数列表，其返回值类型与参数列表与普通的函数类似。
 函数名字为：关键字**operator后面接需要重载的运算符符号**。
@@ -897,6 +909,64 @@ int main()
 
 
 
+```cpp
+// 全局的operator==
+class Date
+{
+public:
+	Date(int year = 1900, int month = 1, int day = 1)
+	{
+		_year = year;
+		_month = month;
+		_day = day;
+	}
+	//private:
+	int _year;
+	int _month;
+	int _day;
+};
+// 这里会发现运算符重载成全局的就需要成员变量是公有的，那么问题来了，封装性该如何保证呢？
+// 这里其实可以用我们后面学习的友元解决，或者干脆重载成成员函数。
+bool operator==(const Date& d1, const Date& d2)
+{
+	return d1._year == d2._year
+		&& d1._month == d2._month
+		&& d1._day == d2._day;
+}
+
+int main()
+{
+	Date d1(2022, 10, 15);
+	Date d2(2022, 10, 15);
+	//注意要加括号，因为<<的优先级高
+	cout << (d1 == d2) << endl;//其实这里编译器它会自动转换成operator==(d1,d2)去调用
+    cout << operator==(d1, d2) << endl;//也可以显示写，但没必要，因为运算符重载就是要让可读性更高
+	return 0;
+}
+
+///////////////////////////////////////
+//保证封装性
+class Date
+{
+public:
+	Date(int year = 1900, int month = 1, int day = 1)
+	{
+		_year = year;
+		_month = month;
+		_day = day;
+	}
+	bool operator==(const Date& d)//变成成员函数
+	{
+		return _year == d._year
+			&& _month == d._month
+			&& _day == d._day;
+	}
+private:
+	int _year;
+	int _month;
+	int _day;
+};
+```
 
 
 
@@ -908,8 +978,537 @@ int main()
 
 
 
+## 4.2 赋值运算符重载  
+
+
+
+1. 赋值运算符重载格式
+   参数类型：**const T&，传递引用可以提高传参效率**
+   返回值类型：**T&，返回引用可以提高返回的效率，有返回值目的是为了支持连续赋值
+   检测是否自己给自己赋值**
+   **返回\*this** ：要复合连续赋值的含义  
 
 
 
 
 
+```cpp
+class Date
+{
+public:
+	Date(int year = 1900, int month = 1, int day = 1)
+	{
+		_year = year;
+		_month = month;
+		_day = day;
+	}
+
+	Date& operator=(const Date&d)//赋值重载,建议最好就是返回自己，方便后续连续赋值
+	{
+		_year = d._year;
+		_month = d._month;
+		_day = d._day;
+		return *this;
+	}
+	void Print()
+	{
+		cout << _year << "年" << _month << "月" << _day << "日" << endl;
+	}
+private:
+	int _year;
+	int _month;
+	int _day;
+};
+
+int main()
+{
+
+	Date d1(2022, 10, 15);
+	Date d2;
+	d2 = d1;//编译器会自动转化成d2.operator=(d1)
+	d2.operator=(d1);//也可以直接这样写，但是道理也一样，没必要
+	d3 = d2 = d1;//连续赋值，需要函数有返回值才能实现
+	d2.Print();
+	d3.Print();
+	return 0;
+}
+```
+
+
+
+![image-20221015122709653](https://iubaopicbed.oss-cn-shenzhen.aliyuncs.com/img2/picbed202210151227712.png)
+
+
+
+
+
+
+
+2. **赋值运算符只能重载成类的成员函数不能重载成全局函数**  
+
+
+
+例如：下面的程序就会出错
+
+```cpp
+class Date
+{
+public:
+	Date(int year = 1900, int month = 1, int day = 1)
+	{
+		_year = year;
+		_month = month;
+		_day = day;
+	}
+	int _year;
+	int _month;
+	int _day;
+};
+// 赋值运算符重载成全局函数，注意重载成全局函数时没有this指针了，需要给两个参数
+Date& operator=(Date& left, const Date& right)
+{
+	if (&left != &right)
+	{
+		left._year = right._year;
+		left._month = right._month;
+		left._day = right._day;
+	}
+	return left;
+}
+//编译错误
+// error C2801: “operator =”必须是非静态成员
+int main()
+{
+	Date d1(2022, 10, 15);
+	Date d2;
+	d2 = d2;
+	return 0;
+}
+```
+
+
+
+
+
+原因：赋值运算符如果不显式实现，编译器会生成一个默认的。此时用户再在类外自己实现
+一个全局的赋值运算符重载，就和编译器在类中生成的默认赋值运算符重载冲突了，故赋值
+运算符重载只能是类的成员函数。  
+
+
+
+![image-20221015123045657](https://iubaopicbed.oss-cn-shenzhen.aliyuncs.com/img2/picbed202210151230730.png)
+
+
+
+
+
+> 所以说，其实编译器会自动帮我们默认生成一个赋值运算符重载
+>
+> 思考
+>
+> 日期类其实可以不用自己实现赋值运算符也可以，想想为什么？   
+>
+> 说明是不是所有的类都不需要自己写赋值，让编译器默认生成就够用了呢？
+>
+> 赋值重载跟拷贝构造可以一起类比参考，默认生成的赋值重载跟拷贝构造一样是对内置类型处理，
+>
+> 自定义类型调用它的赋值重载，日期类不需要自己实现是因为编译器默认生成的已经
+>
+> 满足了，但stack(栈)类呢？显然要自己实现！下面来证明一下
+
+
+
+
+
+
+
+3. **用户没有显式实现时，编译器会生成一个默认赋值运算符重载，以值的方式逐字节拷贝。注
+   意：内置类型成员变量是直接赋值的，而自定义类型成员变量需要调用对应类的赋值运算符
+   重载完成赋值**。  
+
+
+
+```cpp
+class Time
+{
+public:
+	Time()
+	{
+		_hour = 1;
+		_minute = 1;
+		_second = 1;
+	}
+	Time& operator=(const Time& t)
+	{
+		cout << "Time& operator=(const Time& t)" << endl;
+		if (this != &t)
+		{
+			_hour = t._hour;
+			_minute = t._minute;
+			_second = t._second;
+		}
+		return *this;
+	}
+private:
+	int _hour;
+	int _minute;
+	int _second;
+};
+
+class Date
+{
+public:
+	Date(int year = 1900, int month = 1, int day = 1)
+	{
+		_year = year;
+		_month = month;
+		_day = day;
+	}
+private:
+	// 基本类型(内置类型)
+	int _year ;
+	int _month ;
+	int _day;
+	// 自定义类型
+	Time _t;
+};
+
+int main()
+{
+	Date d1(2022,10.15);
+	Date d2;
+	d2 = d1;
+	return 0;
+}
+```
+
+
+
+
+
+
+
+
+
+![image-20221015124949636](https://iubaopicbed.oss-cn-shenzhen.aliyuncs.com/img2/picbed202210151249707.png)
+
+
+
+既然编译器生成的默认赋值运算符重载函数已经可以完成字节序的值拷贝了，还需要自己实
+现吗？当然像日期类这样的类是没必要的。那么下面的类呢？不写试试？  
+
+
+
+```cpp
+// 这里会发现下面的程序会崩溃掉，这里就需要我们以后学的深拷贝去解决。
+typedef int DataType;
+class Stack
+{
+public:
+	Stack(size_t capacity = 10)
+	{
+		_array = (DataType*)malloc(capacity * sizeof(DataType));
+		if (nullptr == _array)
+		{
+			perror("malloc申请空间失败");
+			return;
+		}
+			_size = 0;
+		_capacity = capacity;
+	}
+	void Push(const DataType& data)
+	{
+		// CheckCapacity();
+		_array[_size] = data;
+		_size++;
+	}
+	~Stack()
+	{
+		if (_array)
+		{
+			free(_array);
+			_array = nullptr;
+			_capacity = 0;
+			_size = 0;
+		}
+	}
+private:
+	DataType *_array;
+	size_t _size;
+	size_t _capacity;
+};
+int main()
+{
+	Stack s1;
+	s1.Push(1);
+	s1.Push(2);
+	s1.Push(3);
+	s1.Push(4);
+	Stack s2;
+	s2 = s1;
+	return 0;
+}
+```
+
+
+
+
+
+![image-20221015125247749](https://iubaopicbed.oss-cn-shenzhen.aliyuncs.com/img2/picbed202210151252829.png)
+
+
+
+
+
+>==注意==：**如果类中未涉及到资源管理，赋值运算符是否实现都可以；一旦涉及到资源管理则必
+>须要实现**。  
+
+
+
+
+
+
+
+
+
+## 4.3 前置++和后置++重载  
+
+
+
+既然运算符可以重载，而且后置++，和前置++，并没有在5个禁止重载的符号中，那么在实现前置和后置的时候怎么区别呢？
+
+`operator++()`这个代码前置还是后置++呢？
+
+
+
+C++规定：后置++重载时多增加一个int类型的参数，但调用函数时该参数不用传递，编译器
+自动传递  
+
+`operator++()`一律表示前置++
+
+`operator++(int)`一律表示后置++（int用来区分和前置的区别，从而构成了函数重载，且编译器规定是int，不能是其他）
+
+
+
+
+
+```cpp
+class Date
+{
+public:
+	Date(int year = 1970, int month = 1, int day = 1)
+	{
+		_year = year;
+		_month = month;
+		_day = day;
+	}
+	// 前置++：返回+1之后的结果
+	// 注意：this指向的对象函数结束后不会销毁，故以引用方式返回提高效率
+	Date& operator++()
+	{
+		_day += 1;
+		return *this;
+	}
+	// 后置++：
+	// 前置++和后置++都是一元运算符，为了让前置++与后置++形成能正确重载
+	// C++规定：后置++重载时多增加一个int类型的参数，但调用函数时该参数不用传递，编译器
+	//自动传递
+		// 注意：后置++是先使用后+1，因此需要返回+1之前的旧值，故需在实现时需要先将this保存
+		//一份，然后给this + 1
+		// 而temp是临时对象，因此只能以值的方式返回，不能返回引用
+	Date operator++(int)
+	{
+		Date temp(*this);
+		_day += 1;
+		return temp;
+	}
+	void Print()
+	{
+		cout << _year << "年" << _month << "月" << _day << "日" << endl;
+	}
+private:
+	int _year;
+	int _month;
+	int _day;
+};
+
+int main()
+{
+	Date d1(2022, 10, 15);
+	Date d2(d1);
+	d1.Print();
+	(d1++).Print();
+
+	d2.Print();
+	(++d2).Print();
+	return 0;
+}
+```
+
+
+
+
+
+![image-20221015130552165](https://iubaopicbed.oss-cn-shenzhen.aliyuncs.com/img2/picbed202210151305230.png)
+
+
+
+
+
+-----
+
+
+
+
+
+# 5.const修饰成员函数
+
+
+
+  
+
+将const修饰的“成员函数”称之为const成员函数，const修饰类成员函数，实际修饰该成员函数
+隐含的this指针，表明在该成员函数中不能对类的任何成员进行修改。  
+
+
+
+**常函数：**
+
+* 成员函数后加const后我们称为这个函数为**常函数**
+* 常函数内不可以修改成员属性
+
+
+
+
+
+**常对象：**
+
+* 声明对象前加const称该对象为常对象
+* 常对象只能调用常函数
+
+
+
+
+
+
+
+![image-20221015133701777](https://iubaopicbed.oss-cn-shenzhen.aliyuncs.com/img2/picbed202210151337889.png)
+
+
+
+```cpp
+class Date
+{
+public:
+	Date(int year, int month, int day)
+	{
+		_year = year;
+		_month = month;
+		_day = day;
+	}
+	void Print()
+	{
+		cout << "Print()" << endl;
+		cout << "year:" << _year << endl;
+		cout << "month:" << _month << endl;
+		cout << "day:" << _day << endl << endl;
+	}
+	void Print() const
+	{
+		cout << "Print()const" << endl;
+		cout << "year:" << _year << endl;
+		cout << "month:" << _month << endl;
+		cout << "day:" << _day << endl << endl;
+	}
+private:
+	int _year; // 年
+	int _month; // 月
+	int _day; // 日
+};
+
+int main()
+{
+	Date d1(2022, 10, 15);
+	d1.Print();
+	const Date d2(2022, 10, 16);
+	d2.Print();
+}
+```
+
+
+
+
+
+![image-20221015133915127](https://iubaopicbed.oss-cn-shenzhen.aliyuncs.com/img2/picbed202210151353975.png)
+
+
+
+
+
+
+
+
+
+----
+
+
+
+# 6.取地址及const取地址操作符重载  
+
+
+
+
+
+
+
+这两个默认成员函数一般不用重新定义 ，编译器默认会生成。  
+
+
+
+
+
+```cpp
+class Date
+{
+public:
+	Date* operator&()
+	{
+		cout << "Date* operator&()" << endl;
+
+		return this;
+	}
+	const Date* operator&()const
+	{
+		cout << "const Date* operator&()const" << endl;
+		return this;
+	}
+private:
+	int _year; // 年
+	int _month; // 月
+	int _day; // 日
+};
+
+
+
+int main()
+{
+	Date d1;
+	cout << &d1 << endl;
+	const Date d2;
+	cout << &d2 << endl;
+	return 0;
+}
+```
+
+
+
+> 这两个运算符一般不需要重载，使用编译器生成的默认取地址的重载即可，只有特殊情况，才需
+> 要重载，比如想让别人获取到指定的内容！
+
+
+
+
+
+
+
+![image-20221015134516408](https://iubaopicbed.oss-cn-shenzhen.aliyuncs.com/img2/picbed202210151353300.png)
