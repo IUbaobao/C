@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+//#define _CRT_SECURE_NO_WARNINGS
 
 #include<iostream>
 using namespace std;
@@ -430,103 +430,103 @@ using namespace std;
 //    return 2 * x;
 //}
 
-
-
-class Date
-{
-public:
-	Date(int year=1,int month=1,int day=1)
-	{
-		_year = year;
-		_month = month;
-		_day = day;
-
-		if (_month > 12 || _month <1 || day> GetMonthDay(_year, _month) || day < 1)
-		{
-			cout << "非法日期" << endl;
-		}
-	}
-	void Print()
-	{
-		cout << _year << "-" << _month << "-" << _day << endl;
-	}
-
-	bool operator==(const Date& d1)
-	{
-		return _year == d1._year
-			&& _month == d1._month
-			&& _day == d1._day;
-	}
-	
-	bool operator>(const Date& d1)
-	{
-		if (_year > d1._year)
-		{
-			return true;
-		}
-		else if (_year == d1._year && _month > d1._month)
-		{
-			return true;
-		}
-		else if (_year == d1._year && _month == d1._month && _day > d1._day)
-		{
-			return true;
-		}
-		
-		return false;
-	}
-	bool operator>=(const Date& d1)
-	{
-		return *this > d1
-			|| *this == d1;
-	}
-
-	bool operator<(const Date& d1)
-	{
-		return  !(*this > d1);
-	}
-
-	bool operator<=(const Date& d1)
-	{
-		return !(*this > d1)
-			|| *this == d1;
-	}
-
-	bool operator!=(const Date& d1)
-	{
-		return !(*this == d1);
-	}
-
-	int GetMonthDay(int year, int month)
-	{
-		static int MonthDayArr[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
-		if ( month==2 &&((year % 4 == 0 && year % 100 != 0) || year % 400 == 0))
-		{
-			return 29;
-		}
-		return MonthDayArr[month];
-	}
-
-	Date& operator+=(int day)
-	{
-		_day += day;
-		while (_day > GetMonthDay(_year,_month))
-		{
-			_day -= GetMonthDay(_year, _month);
-			_month++;
-			if (_month == 13)
-			{
-				_year++;
-				_month = 1;
-			}
-		}
-		return *this;
-	}
-	Date operator+(int day)
-	{
-		Date d1(*this);
-		return d1 += day;
-	}
+//
+//
+//class Date
+//{
+//public:
+//	Date(int year=1,int month=1,int day=1)
+//	{
+//		_year = year;
+//		_month = month;
+//		_day = day;
+//
+//		if (_month > 12 || _month <1 || day> GetMonthDay(_year, _month) || day < 1)
+//		{
+//			cout << "非法日期" << endl;
+//		}
+//	}
+//	void Print()
+//	{
+//		cout << _year << "-" << _month << "-" << _day << endl;
+//	}
+//
+//	bool operator==(const Date& d1)
+//	{
+//		return _year == d1._year
+//			&& _month == d1._month
+//			&& _day == d1._day;
+//	}
+//	
+//	bool operator>(const Date& d1)
+//	{
+//		if (_year > d1._year)
+//		{
+//			return true;
+//		}
+//		else if (_year == d1._year && _month > d1._month)
+//		{
+//			return true;
+//		}
+//		else if (_year == d1._year && _month == d1._month && _day > d1._day)
+//		{
+//			return true;
+//		}
+//		
+//		return false;
+//	}
+//	bool operator>=(const Date& d1)
+//	{
+//		return *this > d1
+//			|| *this == d1;
+//	}
+//
+//	bool operator<(const Date& d1)
+//	{
+//		return  !(*this > d1);
+//	}
+//
+//	bool operator<=(const Date& d1)
+//	{
+//		return !(*this > d1)
+//			|| *this == d1;
+//	}
+//
+//	bool operator!=(const Date& d1)
+//	{
+//		return !(*this == d1);
+//	}
+//
+//	int GetMonthDay(int year, int month)
+//	{
+//		static int MonthDayArr[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
+//		if ( month==2 &&((year % 4 == 0 && year % 100 != 0) || year % 400 == 0))
+//		{
+//			return 29;
+//		}
+//		return MonthDayArr[month];
+//	}
+//
+//	Date& operator+=(int day)
+//	{
+//		_day += day;
+//		while (_day > GetMonthDay(_year,_month))
+//		{
+//			_day -= GetMonthDay(_year, _month);
+//			_month++;
+//			if (_month == 13)
+//			{
+//				_year++;
+//				_month = 1;
+//			}
+//		}
+//		return *this;
+//	}
+//	Date operator+(int day)
+//	{
+//		Date d1(*this);
+//		return d1 += day;
+//	}
 	//不好理解
 	//Date& operator-=(int day)
 	//{
@@ -544,106 +544,106 @@ public:
 	//	return *this;
 	//}
 
-	Date& operator-=(int day)
-	{
-		_day -= day;
-		while (_day<=0)
-		{
-			--_month;
-			if (_month == 0)
-			{
-				_year--;
-				_month = 12;
-			}
-			_day += GetMonthDay(_year, _month);
-		}
-		return *this;
-	}
-
-	Date operator-(int day)
-	{
-		Date d1(*this);
-		return d1 -= day;
-	}
-
-	//前置++
-	Date& operator++()
-	{
-		*this+=1;
-		return *this;
-	}
-
-	//后置++
-	Date operator++(int)
-	{
-		Date tem(*this);
-		*this += 1;
-		return tem;
-	}
-
-	//前置--
-	Date& operator--()
-	{
-		*this -= 1;
-		return *this;
-	}
-
-	//后置--
-	Date operator--(int)
-	{
-		Date tem(*this);
-		*this -= 1;
-		return tem;
-	}
-	//d1-d2  日期类-日期类
-	int operator-(const Date& d)
-	{
-		Date max = *this;
-		Date min = d;
-		int flag = 1;
-
-		if (*this < d)
-		{
-			max = d;
-			min = *this;
-			flag = -1;
-		}
-		int n = 0;
-		while (min != max)
-		{
-			++n;
-			++min;
-		}
-		return n * flag;
-	}
-
-	friend ostream& operator<<(ostream& out, const Date& d);
-	friend istream& operator>>(istream& in, Date& d);
-
-private:
-	int _year;
-	int _month;
-	int _day;
-};
-
-
-ostream& operator<<(ostream& out, const Date& d)
-{
-	out << d._year << "年" << d._month << "月" << d._day << "日" << endl;
-	return out;
-}
-
-istream& operator>>(istream& in, Date& d)
-{
-	in >> d._year;
-	in >> d._month;
-	in >> d._day;
-	return in;
-}
-
-int main()
-{
-	Date d1(2022, 10, 7);
+//	Date& operator-=(int day)
+//	{
+//		_day -= day;
+//		while (_day<=0)
+//		{
+//			--_month;
+//			if (_month == 0)
+//			{
+//				_year--;
+//				_month = 12;
+//			}
+//			_day += GetMonthDay(_year, _month);
+//		}
+//		return *this;
+//	}
+//
+//	Date operator-(int day)
+//	{
+//		Date d1(*this);
+//		return d1 -= day;
+//	}
+//
+//	//前置++
+//	Date& operator++()
+//	{
+//		*this+=1;
+//		return *this;
+//	}
+//
+//	//后置++
+//	Date operator++(int)
+//	{
+//		Date tem(*this);
+//		*this += 1;
+//		return tem;
+//	}
+//
+//	//前置--
+//	Date& operator--()
+//	{
+//		*this -= 1;
+//		return *this;
+//	}
+//
+//	//后置--
+//	Date operator--(int)
+//	{
+//		Date tem(*this);
+//		*this -= 1;
+//		return tem;
+//	}
+//	//d1-d2  日期类-日期类
+//	int operator-(const Date& d)
+//	{
+//		Date max = *this;
+//		Date min = d;
+//		int flag = 1;
+//
+//		if (*this < d)
+//		{
+//			max = d;
+//			min = *this;
+//			flag = -1;
+//		}
+//		int n = 0;
+//		while (min != max)
+//		{
+//			++n;
+//			++min;
+//		}
+//		return n * flag;
+//	}
+//
+//	friend ostream& operator<<(ostream& out, const Date& d);
+//	friend istream& operator>>(istream& in, Date& d);
+//
+//private:
+//	int _year;
+//	int _month;
+//	int _day;
+//};
+//
+//
+//ostream& operator<<(ostream& out, const Date& d)
+//{
+//	out << d._year << "年" << d._month << "月" << d._day << "日" << endl;
+//	return out;
+//}
+//
+//istream& operator>>(istream& in, Date& d)
+//{
+//	in >> d._year;
+//	in >> d._month;
+//	in >> d._day;
+//	return in;
+//}
+//
+//int main()
+//{
+//	Date d1(2022, 10, 7);
 	//Date d2(d1);//默认生成的拷贝构造
 	//d2.Print();
 	//Date d2(2022, 10, 8);
@@ -665,12 +665,488 @@ int main()
 	//Date d2;
 	//d2 = d1;//赋值重载
 	//d2.Print();
-	Date d2(2022, 10, 40);
+	//Date d2(2022, 10, 40);
 
 	//cout << (d2 - d1) << endl;
 	//cout << (d1 - d2) << endl;
-	Date d3;
-	cin >> d2 >> d3;
-	cout << d2 << d3;
+//	Date d3;
+//	cin >> d2 >> d3;
+//	cout << d2 << d3;
+//	return 0;
+//}
+//
+
+
+//class Date
+//{
+//public:
+//	Date(int year = 1970, int month = 1, int day = 1)
+//	{
+//		_year = year;
+//		_month = month;
+//		_day = day;
+//	}
+//	// Date(const Date d) // 错误写法：编译报错，会引发无穷递归
+//	Date(const Date& d) // 正确写法
+//	{
+//		cout << "Date(const Date& d)" << endl;
+//		_year = d._year;
+//		_month = d._month;
+//		_day = d._day;
+//	}
+//private:
+//	int _year;
+//	int _month;
+//	int _day;
+//};
+//
+//void DateTest1(Date d1)
+//{
+//	//传值，会发生拷贝构造
+//}
+//
+//void DateTest2(Date& d)
+//{
+//	//传引用
+//}
+//int main()
+//{
+//	Date d1;
+//	//Date d2(d1);
+//	DateTest1(d1);
+//	DateTest2(d1);
+//	return 0;
+//}
+
+
+//class Time
+//{
+//public:
+//	Time()
+//	{
+//		_hour = 1;
+//		_minute = 1;
+//		_second = 1;
+//	}
+//	Time(const Time& t)
+//	{
+//		_hour = t._hour;
+//		_minute = t._minute;
+//		_second = t._second;
+//		cout << "Time::Time(const Time&)" << endl;
+//	}
+//private:
+//	int _hour;
+//	int _minute;
+//	int _second;
+//};
+//class Date
+//{
+//public:
+//	void Print()
+//	{
+//		cout << _year << "年" << _month << "月" << _day << "日" << endl;
+//	}
+//private:
+//	// 基本类型(内置类型)
+//	int _year = 1970;
+//	int _month = 1;
+//	int _day = 1;
+//	// 自定义类型
+//	Time _t;
+//};
+//int main()
+//{
+//	Date d1;
+//	// 用已经存在的d1拷贝构造d2，此处会调用Date类的拷贝构造函数
+//	// 但Date类并没有显式定义拷贝构造函数，则编译器会给Date类生成一个默认的拷贝构造函数
+//	Date d2(d1);
+//	d2.Print();
+//	return 0;
+//}
+
+
+
+// 这里会发现下面的程序会崩溃掉？这里就需要以后讲的深拷贝去解决。
+//typedef int DataType;
+//class Stack
+//{
+//public:
+//	Stack(size_t capacity = 10)
+//	{
+//		_array = (DataType*)malloc(capacity * sizeof(DataType));
+//		if (nullptr == _array)
+//		{
+//			perror("malloc申请空间失败");
+//			return;
+//		}
+//		_size = 0;
+//		_capacity = capacity;
+//	}
+//	void Push(const DataType& data)
+//	{
+//		// CheckCapacity();
+//		_array[_size] = data;
+//		_size++;
+//	}
+//	~Stack()
+//	{
+//		if (_array)
+//		{
+//			free(_array);
+//			_array = nullptr;
+//			_capacity = 0;
+//			_size = 0;
+//		}
+//	}
+//private:
+//	DataType* _array;
+//	size_t _size;
+//	size_t _capacity;
+//};
+//int main()
+//{
+//	Stack s1;
+//	s1.Push(1);
+//	s1.Push(2);
+//	s1.Push(3);
+//	s1.Push(4);
+//	Stack s2(s1);
+//	return 0;
+//}
+//
+//// 全局的operator==
+//class Date
+//{
+//public:
+//	Date(int year = 1900, int month = 1, int day = 1)
+//	{
+//		_year = year;
+//		_month = month;
+//		_day = day;
+//	}
+//	//private:
+//	int _year;
+//	int _month;
+//	int _day;
+//};
+//// 这里会发现运算符重载成全局的就需要成员变量是公有的，那么问题来了，封装性该如何保证呢？
+//// 这里其实可以用我们后面学习的友元解决，或者干脆重载成成员函数。
+//bool operator==(const Date& d1, const Date& d2)
+//{
+//	return d1._year == d2._year
+//		&& d1._month == d2._month
+//		&& d1._day == d2._day;
+//}
+//
+//int main()
+//{
+//	Date d1(2022, 10, 15);
+//	Date d2(2022, 10, 15);
+//	//注意要加括号，因为<<的优先级高
+//	cout << (d1 == d2) << endl;//其实这里编译器它会自动转换成operator==(d1,d2);
+//	cout << operator==(d1, d2) << endl;//也可以显示写，但没必要，因为运算符重载就是要让可读性更高
+//	return 0;
+//}
+//
+//class Date
+//{
+//public:
+//	Date(int year = 1900, int month = 1, int day = 1)
+//	{
+//		_year = year;
+//		_month = month;
+//		_day = day;
+//	}
+//
+//	//Date& operator=(const Date&d)//赋值重载
+//	//{
+//	//	_year = d._year;
+//	//	_month = d._month;
+//	//	_day = d._day;
+//	//	return *this;
+//	//}
+//	void Print()
+//	{
+//		cout << _year << "年" << _month << "月" << _day << "日" << endl;
+//	}
+//private:
+//	int _year;
+//	int _month;
+//	int _day;
+//};
+//
+//int main()
+//{
+//
+//	Date d1(2022, 10, 15);
+//	Date d2;
+//	Date d3;
+//	d2 = d1;//编译器会自动转化成d2.operator=(d1)
+//	d2.operator=(d1);//也可以直接这样写，但是道理也一样，没必要
+//	d3 = d2 = d1;//连续赋值，需要函数有返回值才能实现
+//	d2.Print();
+//	d3.Print();
+//	return 0;
+//}
+//
+
+
+//class Date
+//{
+//public:
+//	Date(int year = 1900, int month = 1, int day = 1)
+//	{
+//		_year = year;
+//		_month = month;
+//		_day = day;
+//	}
+//	int _year;
+//	int _month;
+//	int _day;
+//};
+//// 赋值运算符重载成全局函数，注意重载成全局函数时没有this指针了，需要给两个参数
+//Date& operator=(Date& left, const Date& right)
+//{
+//	if (&left != &right)
+//	{
+//		left._year = right._year;
+//		left._month = right._month;
+//		left._day = right._day;
+//	}
+//	return left;
+//}
+////编译错误
+//// error C2801: “operator =”必须是非静态成员
+//int main()
+//{
+//	Date d1(2022, 10, 15);
+//	Date d2;
+//	d2 = d2;
+//	return 0;
+//}
+
+//class Time
+//{
+//public:
+//	Time()
+//	{
+//		_hour = 1;
+//		_minute = 1;
+//		_second = 1;
+//	}
+//	Time& operator=(const Time& t)
+//	{
+//		cout << "Time& operator=(const Time& t)" << endl;
+//		if (this != &t)
+//		{
+//			_hour = t._hour;
+//			_minute = t._minute;
+//			_second = t._second;
+//		}
+//		return *this;
+//	}
+//private:
+//	int _hour;
+//	int _minute;
+//	int _second;
+//};
+//
+//class Date
+//{
+//public:
+//	Date(int year = 1900, int month = 1, int day = 1)
+//	{
+//		_year = year;
+//		_month = month;
+//		_day = day;
+//	}
+//private:
+//	// 基本类型(内置类型)
+//	int _year ;
+//	int _month ;
+//	int _day;
+//	// 自定义类型
+//	Time _t;
+//};
+//
+//int main()
+//{
+//	Date d1(2022,10.15);
+//	Date d2;
+//	d2 = d1;
+//	return 0;
+//}
+
+
+// 这里会发现下面的程序会崩溃掉？这里就需要我们以后讲的深拷贝去解决。
+//typedef int DataType;
+//class Stack
+//{
+//public:
+//	Stack(size_t capacity = 10)
+//	{
+//		_array = (DataType*)malloc(capacity * sizeof(DataType));
+//		if (nullptr == _array)
+//		{
+//			perror("malloc申请空间失败");
+//			return;
+//		}
+//			_size = 0;
+//		_capacity = capacity;
+//	}
+//	void Push(const DataType& data)
+//	{
+//		// CheckCapacity();
+//		_array[_size] = data;
+//		_size++;
+//	}
+//	~Stack()
+//	{
+//		if (_array)
+//		{
+//			free(_array);
+//			_array = nullptr;
+//			_capacity = 0;
+//			_size = 0;
+//		}
+//	}
+//private:
+//	DataType *_array;
+//	size_t _size;
+//	size_t _capacity;
+//};
+//int main()
+//{
+//	Stack s1;
+//	s1.Push(1);
+//	s1.Push(2);
+//	s1.Push(3);
+//	s1.Push(4);
+//	Stack s2;
+//	s2 = s1;
+//	return 0;
+//}
+
+
+//
+//class Date
+//{
+//public:
+//	Date(int year = 1970, int month = 1, int day = 1)
+//	{
+//		_year = year;
+//		_month = month;
+//		_day = day;
+//	}
+//	// 前置++：返回+1之后的结果
+//	// 注意：this指向的对象函数结束后不会销毁，故以引用方式返回提高效率
+//	Date& operator++()
+//	{
+//		_day += 1;
+//		return *this;
+//	}
+//	// 后置++：
+//	// 前置++和后置++都是一元运算符，为了让前置++与后置++形成能正确重载
+//	// C++规定：后置++重载时多增加一个int类型的参数，但调用函数时该参数不用传递，编译器
+//	//自动传递
+//		// 注意：后置++是先使用后+1，因此需要返回+1之前的旧值，故需在实现时需要先将this保存
+//		//一份，然后给this + 1
+//		// 而temp是临时对象，因此只能以值的方式返回，不能返回引用
+//	Date operator++(int)
+//	{
+//		Date temp(*this);
+//		_day += 1;
+//		return temp;
+//	}
+//	void Print()
+//	{
+//		cout << _year << "年" << _month << "月" << _day << "日" << endl;
+//	}
+//private:
+//	int _year;
+//	int _month;
+//	int _day;
+//};
+//
+//int main()
+//{
+//	//Date d1(2022, 10, 15);
+//	//Date d2(d1);
+//	//d1.Print();
+//	//(d1++).Print();
+//
+//	//d2.Print();
+//	//(++d2).Print();
+//	return 0;
+//}
+
+
+//class Date
+//{
+//public:
+//	Date(int year, int month, int day)
+//	{
+//		_year = year;
+//		_month = month;
+//		_day = day;
+//	}
+//	void Print()
+//	{
+//		cout << "Print()" << endl;
+//		cout << "year:" << _year << endl;
+//		cout << "month:" << _month << endl;
+//		cout << "day:" << _day << endl << endl;
+//	}
+//	void Print() const
+//	{
+//		cout << "Print()const" << endl;
+//		cout << "year:" << _year << endl;
+//		cout << "month:" << _month << endl;
+//		cout << "day:" << _day << endl << endl;
+//	}
+//private:
+//	int _year; // 年
+//	int _month; // 月
+//	int _day; // 日
+//};
+//
+//int main()
+//{
+//	Date d1(2022, 10, 15);
+//	d1.Print();
+//	const Date d2(2022, 10, 16);
+//	d2.Print();
+//}
+
+class Date
+{
+public:
+	Date* operator&()
+	{
+		cout << "Date* operator&()" << endl;
+
+		return this;
+	}
+	const Date* operator&()const
+	{
+		cout << "const Date* operator&()const" << endl;
+		return this;
+	}
+private:
+	int _year; // 年
+	int _month; // 月
+	int _day; // 日
+};
+
+//这两个运算符一般不需要重载，使用编译器生成的默认取地址的重载即可，只有特殊情况，才需
+//要重载，比如想让别人获取到指定的内容！
+
+int main()
+{
+	Date d1;
+	cout << &d1 << endl;
+	const Date d2;
+	cout << &d2 << endl;
 	return 0;
-}	
+}
