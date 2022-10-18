@@ -592,31 +592,31 @@ using namespace std;
 
 
 //Ä£°å
-template<typename T>
-void Swap(T&left, T&right)
-{
-	T tem = left;
-	left = right;
-	right = tem;
-}
+//template<typename T>
+//void Swap(T&left, T&right)
+//{
+//	T tem = left;
+//	left = right;
+//	right = tem;
+//}
 
-int main()
-{
-	int a = 10, b = 20;
-	double c = 1.1, d = 2.2;
-	cout << a << "-" << b << endl;
-	cout << c << "-" << d << endl;
-
-	Swap(a, b);
-	Swap<int>(a, b);
-
-	Swap(c, d);
-
-	cout << a << "-" << b << endl;
-	cout << c << "-" << d << endl;
-	Swap<int>(a, b);
-
-	cout << a << "-" << b << endl;
-
-	return 0;
-}
+//int main()
+//{
+//	int a = 10, b = 20;
+//	double c = 1.1, d = 2.2;
+//	cout << a << "-" << b << endl;
+//	cout << c << "-" << d << endl;
+//
+//	Swap(a, b);
+//	Swap<int>(a, b);
+//
+//	Swap(c, d);
+//
+//	cout << a << "-" << b << endl;
+//	cout << c << "-" << d << endl;
+//	Swap<int>(a, b);
+//
+//	cout << a << "-" << b << endl;
+//
+//	return 0;
+//}
