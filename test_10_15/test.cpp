@@ -591,7 +591,7 @@ using namespace std;
 //2. 代码的可维护性比较低，一个出错可能所有的重载均出错
 
 
-//模板
+////模板
 //template<typename T>
 //void Swap(T&left, T&right)
 //{
@@ -599,7 +599,7 @@ using namespace std;
 //	left = right;
 //	right = tem;
 //}
-
+//
 //int main()
 //{
 //	int a = 10, b = 20;
@@ -620,3 +620,110 @@ using namespace std;
 //
 //	return 0;
 //}
+
+
+
+////以前的做法
+//typedef int DataType;
+//class Stack
+//{
+//public:
+//	Stack(size_t capacity = 3)
+//	{
+//		_array = (DataType*)malloc(sizeof(DataType) * capacity);
+//		if (NULL == _array)
+//		{
+//			perror("malloc申请空间失败!!!");
+//			return;
+//		}
+//		_capacity = capacity;
+//		_size = 0;
+//	}
+//	void Push(DataType data)
+//	{
+//		_array[_size] = data;
+//		_size++;
+//	}
+//	// 其他方法...
+//	~Stack()
+//	{
+//		if (_array)
+//		{
+//			free(_array);
+//			_array = NULL;
+//			_capacity = 0;
+//			_size = 0;
+//		}
+//	}
+//private:
+//	DataType* _array;
+//	int _capacity;
+//	int _size;
+//};
+
+
+//template<class T1, class T2, ..., class Tn>
+//class 类模板名
+//{
+//	// 类内成员定义
+//};
+
+//Stack不是具体的类，是编译器根据被实例化的类型生成具体类的模具
+template <class T>
+class Stack 
+{
+public:
+	Stack(size_t capacity = 3)
+	{
+		_array = (T*)malloc(sizeof(T) * capacity);
+		if (NULL == _array)
+		{
+			perror("malloc申请空间失败!!!");
+			return;
+		}
+		_capacity = capacity;
+		_size = 0;
+	}
+	void Push(T data)
+	{
+		_array[_size] = data;
+		_size++;
+	}
+	// 其他方法...
+	~Stack();
+	//{
+	//	if (_array)
+	//	{
+	//		free(_array);
+	//		_array = NULL;
+	//		_capacity = 0;
+	//		_size = 0;
+	//	}
+	//}
+private:
+	T* _array;
+	int _capacity;
+	int _size;
+};
+
+//类模板实例化需要在类模板名字后跟<>，然后将实例化的类型放在<>
+//中即可，类模板名字不是真正的类，而实例化的结果才是真正的类
+
+// 注意：类模板中函数放在类外进行定义时，需要加模板参数列表
+template <class T>
+Stack<T>::~Stack()
+{
+	if (_array)
+	{
+		free(_array);
+		_array = NULL;
+		_capacity = 0;
+		_size = 0;
+	}
+}
+int main()
+{
+	Stack<int> st1;
+	Stack<double> st2;
+	return 0;
+}
