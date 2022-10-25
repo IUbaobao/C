@@ -240,66 +240,125 @@ using namespace std;
 //	return 0;
 //}
 
+//
+//class A
+//{
+//public:
+//	A(int a = 0)
+//		:_a(a)
+//	{
+//		cout << "A(int a)" << endl;
+//	}
+//	A(const A& aa)
+//		:_a(aa._a)
+//	{
+//		cout << "A(const A& aa)" << endl;
+//	}
+//	A& operator=(const A& aa)
+//	{
+//		cout << "A& operator=(const A& aa)" << endl;
+//		if (this != &aa)
+//		{
+//			_a = aa._a;
+//		}
+//		return *this;
+//	}
+//	~A()
+//	{
+//		cout << "~A()" << endl;
+//	}
+//private:
+//	int _a;
+//};
+//void f1(A aa)
+//{}
+//A f2()
+//{
+//	A aa;
+//	return aa;
+//}
+//int main()
+//{
+//	A a1 = 1; //A tem(1) + A a1(tem) -> 优化 A a1(1)
+//	cout << endl;
+//
+//	// 传值传参
+//	A aa1;
+//	f1(aa1);//f1中的临时aa拷贝构造aa1，而且具有常属性const
+//	cout << endl;
+//
+//	// 传值返回
+//	f2();//同理，f2中的aa是传值返回，也要拷贝构造一个临时对象返回，也具有常属性const
+//	cout << endl;
+//
+//	// 一个表达式中，连续拷贝构造+拷贝构造->优化一个拷贝构造
+//	A ret = f2();
+//	//下面这种情况就无法优化了
+///*	A ret;
+//	ret = f2()*/;
+//	cout << endl;
+//
+//	// 一个表达式中，连续拷贝构造+赋值重载->无法优化
+//	aa1 = f2();
+//	cout << endl;
+//	return 0;
+//}
+//
+//
 
-class A
-{
-public:
-	A(int a = 0)
-		:_a(a)
-	{
-		cout << "A(int a)" << endl;
-	}
-	A(const A& aa)
-		:_a(aa._a)
-	{
-		cout << "A(const A& aa)" << endl;
-	}
-	A& operator=(const A& aa)
-	{
-		cout << "A& operator=(const A& aa)" << endl;
-		if (this != &aa)
-		{
-			_a = aa._a;
-		}
-		return *this;
-	}
-	~A()
-	{
-		cout << "~A()" << endl;
-	}
-private:
-	int _a;
-};
-void f1(A aa)
-{}
-A f2()
-{
-	A aa;
-	return aa;
-}
-int main()
-{
-	A a1 = 1; //A tem(1) + A a1(tem) -> 优化 A a1(1)
-	cout << endl;
+//int main()
+//{
+//	int x = 3, y = 4;
+//
+//	x = (y++, y + 5, y / 5);
+//	cout << x<<endl;
+//	cout << y << endl;
+//	return 0;
+//}
 
-	// 传值传参
-	A aa1;
-	f1(aa1);//f1中的临时aa拷贝构造aa1，而且具有常属性const
-	cout << endl;
-
-	// 传值返回
-	f2();//同理，f2中的aa是传值返回，也要拷贝构造一个临时对象返回，也具有常属性const
-	cout << endl;
-
-	// 一个表达式中，连续拷贝构造+拷贝构造->优化一个拷贝构造
-	A ret = f2();
-	//下面这种情况就无法优化了
-/*	A ret;
-	ret = f2()*/;
-	cout << endl;
-
-	// 一个表达式中，连续拷贝构造+赋值重载->无法优化
-	aa1 = f2();
-	cout << endl;
-	return 0;
-}
+//23. 合并K个升序链表
+//int cmp_int(const void* e1, const void*e2)
+//{
+//	return *((int*)e1) - *((int*)e2);
+//}
+//
+//struct ListNode* mergeKLists(struct ListNode** lists, int listsSize){
+//	if (lists == NULL || listsSize == 0)
+//		return NULL;
+//	int n = 0;
+//	for (int i = 0; i<listsSize; ++i)
+//	{
+//		struct ListNode*cur = lists[i];
+//		while (cur)
+//		{
+//			n++;
+//			cur = cur->next;
+//		}
+//	}
+//	if (n == 0)
+//		return NULL;
+//	int*a = (int*)malloc(sizeof(int)*n);
+//	int j = 0;
+//	for (int i = 0; i<listsSize; ++i)
+//	{
+//		struct ListNode*cur = lists[i];
+//		while (cur)
+//		{
+//			a[j++] = cur->val;
+//			cur = cur->next;
+//		}
+//	}
+//	struct ListNode*phead = (struct ListNode*)malloc(sizeof(struct ListNode));
+//	struct ListNode*cur = phead;
+//	qsort(a, n, sizeof(int), cmp_int);
+//	for (int i = 0; i<n; i++)
+//	{
+//		struct ListNode*new = (struct ListNode*)malloc(sizeof(struct ListNode));
+//		new->val = a[i];
+//		new->next = NULL;
+//		cur->next = new;
+//		cur = cur->next;
+//	}
+//	return phead->next;
+//}
+//
