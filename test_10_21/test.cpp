@@ -362,3 +362,128 @@ using namespace std;
 //	return phead->next;
 //}
 //
+
+
+//917. 仅仅反转字母
+//class Solution {
+//public:
+//	string reverseOnlyLetters(string s) {
+//		int begin = 0, end = s.size();
+//		while (begin<end)
+//		{
+//			while (begin<end && !isalpha(s[begin]))
+//				++begin;
+//			while (begin<end && !isalpha(s[end]))
+//				--end;
+//
+//			swap(s[begin], s[end]);
+//			++begin;
+//			--end;
+//		}
+//		return s;
+//	}
+//};
+
+
+//字符串中的第一个唯一字符
+//输入: s = "leetcode"
+//输出 : 0
+//	 示例 2 :
+//
+// 输入 : s = "loveleetcode"
+//  输出 : 2
+//class Solution {
+//public:
+//	int firstUniqChar(string s) {
+//		int a[33] = { 0 };
+//		for (int i = 0; i<s.size(); ++i)
+//		{
+//			a[s[i] - 'a']++;
+//		}
+//		char cout = '1';
+//		for (int i = 0; i<s.size(); ++i)
+//		{
+//			if (a[s[i] - 'a'] == 1)
+//			{
+//				cout = s[i];
+//				break;
+//			}
+//		}
+//		int ret = -1;
+//		for (int i = 0; i<s.size(); ++i)
+//		{
+//			if (s[i] == cout)
+//			{
+//				ret = i;
+//				break;
+//			}
+//		}
+//		return ret;
+//	}
+//};
+//优化
+//class Solution {
+//public:
+//	int firstUniqChar(string s) {
+//		int a[256] = { 0 };
+//		int size = s.size();
+//		for (int i = 0; i<size; ++i)
+//		{
+//			a[s[i]]++;
+//		}
+//		for (int i = 0; i<size; ++i)
+//		{
+//			if (1 == a[s[i]])
+//				return i;
+//		}
+//		return -1;
+//	}
+//};
+
+
+/////////////////////////
+//415. 字符串相加
+#include <algorithm>
+class Solution {
+public:
+	string addStrings(string num1, string num2) {
+		string ret;
+		ret.reserve(max(num1.size(), num2.size()) + 1);
+		int end1 = num1.size()-1, end2 = num2.size()-1;
+		int carry = 0;
+		while (end1 >= 0 || end2 >= 0)
+		{
+			int val1 = end1 >= 0 ? num1[end1] - '0' : 0;
+			int val2 = end2 >= 0 ? num2[end2] - '0' : 0;
+
+			int sum = val1 + val2 + carry;
+
+			carry = sum / 10;
+			sum %= 10;
+
+			ret += sum + '0';
+			--end1;
+			--end2;
+		}
+		if (carry == 1)
+			ret += '1';
+
+		reverse(ret.begin(), ret.end());
+		return ret;
+	}
+};
+
+
+int main()
+{
+	Solution s;
+	char num1[] = "12";
+	char num2[] = "11";
+	 string s1 = s.addStrings(num1, num2);
+	 for (auto& e : s1)
+	 {
+		 cout << e;
+	 }
+
+	return 0;
+}
