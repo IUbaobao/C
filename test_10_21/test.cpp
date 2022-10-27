@@ -442,48 +442,182 @@ using namespace std;
 
 
 /////////////////////////
-//415. 字符串相加
-#include <algorithm>
-class Solution {
-public:
-	string addStrings(string num1, string num2) {
-		string ret;
-		ret.reserve(max(num1.size(), num2.size()) + 1);
-		int end1 = num1.size()-1, end2 = num2.size()-1;
-		int carry = 0;
-		while (end1 >= 0 || end2 >= 0)
+////415. 字符串相加
+//#include <algorithm>
+//class Solution {
+//public:
+//	string addStrings(string num1, string num2) {
+//		string ret;
+//		ret.reserve(max(num1.size(), num2.size()) + 1);
+//		int end1 = num1.size()-1, end2 = num2.size()-1;
+//		int carry = 0;
+//		while (end1 >= 0 || end2 >= 0)
+//		{
+//			int val1 = end1 >= 0 ? num1[end1] - '0' : 0;
+//			int val2 = end2 >= 0 ? num2[end2] - '0' : 0;
+//
+//			int sum = val1 + val2 + carry;
+//
+//			carry = sum / 10;
+//			sum %= 10;
+//
+//			ret += sum + '0';
+//			--end1;
+//			--end2;
+//		}
+//		if (carry == 1)
+//			ret += '1';
+//
+//		reverse(ret.begin(), ret.end());
+//		return ret;
+//	}
+//};
+//
+//
+//int main()
+//{
+//	Solution s;
+//	char num1[] = "12";
+//	char num2[] = "11";
+//	 string s1 = s.addStrings(num1, num2);
+//	 for (auto& e : s1)
+//	 {
+//		 cout << e;
+//	 }
+//
+//	return 0;
+//}
+
+
+//#include <stdio.h>
+//#include <iostream>
+//using namespace std;
+//
+//int main() {
+//
+//	char arr[50000];
+//	fgets(arr, sizeof(arr), stdin);
+//	string s(arr);
+//	int count = 0;
+//	for (int i = s.size() - 1; i >= 0; --i)
+//	{
+//	
+//		if (s[i] == ' ')
+//		{
+//			cout << count << endl;
+//			break;
+//		}
+//		count++;
+//	}
+//}
+////验证回文串
+//bool isPalindrome(string s) {
+//	for (auto& e : s)
+//	{
+//		if (isalpha(e) && e >= 'A'&& e <= 'Z')
+//		{
+//			e = e + 32;
+//		}
+//	}
+//	int begin = 0, end = s.size() - 1;
+//	while (begin<end)
+//	{
+//		while (begin<end && !(isalpha(s[begin]) || isdigit(s[begin])))
+//			++begin;
+//		while (begin<end && !(isalpha(s[end]) || isdigit(s[end])))
+//			--end;
+//		if (s[begin] != s[end])
+//			return false;
+//
+//		++begin;
+//		--end;
+//	}
+//	return true;
+//
+//}
+//
+//
+//void Swap(char&e1, char&e2)
+//{
+//	char tem = e1;
+//	e1 = e2;
+//	e2 = tem;
+//}
+//string reverseStr(string s, int k) {
+//	int count = 0, flag = 1;
+//	for (int i = 0; i<s.size(); ++i)
+//	{
+//		count++;
+//		if (count == k &&flag == 1)
+//		{
+//			Swap(s[i - 1], s[i]);
+//			flag = 0;
+//			count = 0;
+//		}
+//		else if (count == k)
+//		{
+//			flag = 1;
+//			count = 0;
+//		}
+//	}
+//	return s;
+//}
+//void Reverse(string& s, int begin, int end)
+//{
+//	while (begin<end)
+//	{
+//		char tem = s[begin];
+//		s[begin] = s[end];
+//		s[end] = tem;
+//
+//		++begin;
+//		--end;
+//	}
+//}
+string reverseStr(string s, int k) {
+	int n = s.size();
+	for (int i = 0; i<s.size(); i += 2 * k)
+	{
+		if (i + k<n)
 		{
-			int val1 = end1 >= 0 ? num1[end1] - '0' : 0;
-			int val2 = end2 >= 0 ? num2[end2] - '0' : 0;
-
-			int sum = val1 + val2 + carry;
-
-			carry = sum / 10;
-			sum %= 10;
-
-			ret += sum + '0';
-			--end1;
-			--end2;
+			reverse(s.begin() + i, s.begin() + i + k);
+			continue;
 		}
-		if (carry == 1)
-			ret += '1';
+		reverse(s.begin() + i, s.begin()+ n);
 
-		reverse(ret.begin(), ret.end());
-		return ret;
 	}
-};
+	return s;
+
+}
 
 
 int main()
 {
-	Solution s;
-	char num1[] = "12";
-	char num2[] = "11";
-	 string s1 = s.addStrings(num1, num2);
-	 for (auto& e : s1)
-	 {
-		 cout << e;
-	 }
-
+	string s("abcdefg");
+	reverseStr(s, 1);
 	return 0;
 }
+
+
+//206. 反转链表（递归法）
+//class Solution {
+//public:
+//	ListNode* reverseList(ListNode* head) {
+//		if (head == NULL || head->next == NULL)
+//		{
+//			return head;
+//		}
+//		ListNode*newhead = reverseList(head->next);
+//		head->next->next = head;
+//		head->next = NULL;
+//		return newhead;
+//	}
+//};
+
+//
+//int main()
+//{
+//	string s("hello");
+//	cout << s.size() << endl;
+//	return 0;
+//}
