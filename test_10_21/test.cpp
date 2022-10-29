@@ -574,29 +574,29 @@ using namespace std;
 //		--end;
 //	}
 //}
-string reverseStr(string s, int k) {
-	int n = s.size();
-	for (int i = 0; i<s.size(); i += 2 * k)
-	{
-		if (i + k<n)
-		{
-			reverse(s.begin() + i, s.begin() + i + k);
-			continue;
-		}
-		reverse(s.begin() + i, s.begin()+ n);
-
-	}
-	return s;
-
-}
-
-
-int main()
-{
-	string s("abcdefg");
-	reverseStr(s, 1);
-	return 0;
-}
+//string reverseStr(string s, int k) {
+//	int n = s.size();
+//	for (int i = 0; i<s.size(); i += 2 * k)
+//	{
+//		if (i + k<n)
+//		{
+//			reverse(s.begin() + i, s.begin() + i + k);
+//			continue;
+//		}
+//		reverse(s.begin() + i, s.begin()+ n);
+//
+//	}
+//	return s;
+//
+//}
+//
+//
+//int main()
+//{
+//	string s("abcdefg");
+//	reverseStr(s, 1);
+//	return 0;
+//}
 
 
 //206. 反转链表（递归法）
@@ -629,52 +629,102 @@ int main()
 
 
 
-//977. 有序数组的平方
-class Solution {
-public:
-	vector<int> sortedSquares(vector<int>& nums) {
-		int k = nums.size() - 1;
-		vector<int> result(k + 1, 0);
-		int begin = 0, end = k;
-		while (begin <= end)
-		{
-			if (nums[begin] * nums[begin]>nums[end] * nums[end])
-			{
-				result[k--] = nums[begin] * nums[begin];
-				++begin;
-			}
-			else
-			{
-				result[k--] = nums[end] * nums[end];
-				--end;
-			}
-		}
-		return result;
-	}
-};
+////977. 有序数组的平方
+//class Solution {
+//public:
+//	vector<int> sortedSquares(vector<int>& nums) {
+//		int k = nums.size() - 1;
+//		vector<int> result(k + 1, 0);
+//		int begin = 0, end = k;
+//		while (begin <= end)
+//		{
+//			if (nums[begin] * nums[begin]>nums[end] * nums[end])
+//			{
+//				result[k--] = nums[begin] * nums[begin];
+//				++begin;
+//			}
+//			else
+//			{
+//				result[k--] = nums[end] * nums[end];
+//				--end;
+//			}
+//		}
+//		return result;
+//	}
+//};
+//
+////209.长度最小的子数组
+//class Solution {
+//public:
+//	int minSubArrayLen(int target, vector<int>& nums) {
+//		int n = nums.size();
+//		int j = 0, sum = 0, result = INT_MAX;
+//		for (int i = 0; i<n; ++i)
+//		{
+//			sum += nums[i];
+//			while (sum >= target)
+//			{
+//				if (i - j + 1<result)
+//					result = i - j + 1;
+//				sum -= nums[j];
+//				j++;
+//			}
+//		}
+//
+//		return result == INT_MAX ? 0 : result;
+//	}
+//};
+//
+//
+//
+//void Reverse(int*a, int begin, int end)
+//{
+//	while (begin < end)
+//	{
+//		int tem = a[begin];
+//		a[begin] = a[end];
+//		a[end] = tem;
+//
+//		++begin;
+//		--end;
+//	}
+//}
+//
+//int main()
+//{
+//	int arr[] = {1,2,3,4,5,6,7,8,9,10};
+//	int k;
+//	scanf("%d", &k);
+//	int n = sizeof(arr) / sizeof(arr[0]);
+//	k %= n;
+//	Reverse(arr, 0, n - 1);//整体逆置
+//	Reverse(arr, 0, n - k - 1);//逆置前n-k个
+//	Reverse(arr, n - k, n - 1);//逆置后k个
+//
+//	for (int i = 0; i < n; ++i)
+//	{
+//		printf("%d ", arr[i]);
+//	}
+//	
+//	return 0;
+//}
 
-//209.长度最小的子数组
-class Solution {
-public:
-	int minSubArrayLen(int target, vector<int>& nums) {
-		int n = nums.size();
-		int j = 0, sum = 0, result = INT_MAX;
-		for (int i = 0; i<n; ++i)
-		{
-			sum += nums[i];
-			while (sum >= target)
-			{
-				if (i - j + 1<result)
-					result = i - j + 1;
-				sum -= nums[j];
-				j++;
-			}
-		}
 
-		return result == INT_MAX ? 0 : result;
-	}
-};
+struct TreeNode* lowestCommonAncestor(struct TreeNode* root, struct TreeNode* p, struct TreeNode* q) {
+	if (!root)
+		return root;
+	if (root == q || root == p)
+		return root;
 
+	struct TreeNode*left = lowestCommonAncestor(root->left, p, q);
+	struct TreeNode*right = lowestCommonAncestor(root->right, p, q);
 
+	if (left != NULL && right != NULL)
+		return root;
+	if (left == NULL && right != NULL)
+		return right;
+	if (left != NULL && right == NULL)
+		return left;
 
-
+	return NULL;
+}
