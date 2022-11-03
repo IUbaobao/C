@@ -15,9 +15,9 @@
 //}
 
 
-#include<iostream>
-#include<string>
-using namespace std;
+//#include<iostream>
+//#include<string>
+//using namespace std;
 //
 //int main()
 //{
@@ -90,20 +90,68 @@ using namespace std;
 //};
 
 //反转字符串中的单词 III
-//给定一个字符串 s ，你需要反转字符串中每个单词的字符顺序，同时仍保留空格和单词的初始顺序。
+////给定一个字符串 s ，你需要反转字符串中每个单词的字符顺序，同时仍保留空格和单词的初始顺序。
+//class Solution {
+//public:
+//	string reverseWords(string s) {
+//		int begin = 0;
+//		for (int i = 0; i<s.size(); ++i)
+//		{
+//			if (s[i] == ' ')
+//			{
+//				reverse(s.begin() + begin, s.begin() + i);
+//				begin = i + 1;
+//			}
+//		}
+//		reverse(s.begin() + begin, s.end());
+//		return s;
+//	}
+//};
+
+
+//完全二叉树的节点个数
 class Solution {
 public:
-	string reverseWords(string s) {
-		int begin = 0;
-		for (int i = 0; i<s.size(); ++i)
+	int countNodes(TreeNode* root) {
+		if (!root)
+			return 0;
+		TreeNode*left = root->left;
+		TreeNode*right = root->right;
+		int count1 = 0, count2 = 0;
+		//分别计算直左直右长度是否相等
+		while (left)
 		{
-			if (s[i] == ' ')
-			{
-				reverse(s.begin() + begin, s.begin() + i);
-				begin = i + 1;
-			}
+			count1++;
+			left = left->left;
 		}
-		reverse(s.begin() + begin, s.end());
-		return s;
+		while (right)
+		{
+			count2++;
+			right = right->right;
+		}
+		//相等即为满二叉树：2^n-1
+		if (count1 == count2)
+		{
+			return (2 << count1) - 1;
+		}
+
+		return  countNodes(root->left) +
+			countNodes(root->right) + 1;
+	}
+};
+
+// 左叶子之和
+class Solution {
+public:
+	int sumOfLeftLeaves(TreeNode* root) {
+		if (!root)
+			return 0;
+		int leftval = 0;
+		if (root->left != nullptr && root->left->left == nullptr &&root->left->right == nullptr)
+		{
+			leftval = root->left->val;
+		}
+
+		return sumOfLeftLeaves(root->left) + sumOfLeftLeaves(root->right) + leftval;
 	}
 };
