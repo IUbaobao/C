@@ -110,48 +110,173 @@
 
 
 //完全二叉树的节点个数
-class Solution {
+//class Solution {
+//public:
+//	int countNodes(TreeNode* root) {
+//		if (!root)
+//			return 0;
+//		TreeNode*left = root->left;
+//		TreeNode*right = root->right;
+//		int count1 = 0, count2 = 0;
+//		//分别计算直左直右长度是否相等
+//		while (left)
+//		{
+//			count1++;
+//			left = left->left;
+//		}
+//		while (right)
+//		{
+//			count2++;
+//			right = right->right;
+//		}
+//		//相等即为满二叉树：2^n-1
+//		if (count1 == count2)
+//		{
+//			return (2 << count1) - 1;
+//		}
+//
+//		return  countNodes(root->left) +
+//			countNodes(root->right) + 1;
+//	}
+//};
+//
+//// 左叶子之和
+//class Solution {
+//public:
+//	int sumOfLeftLeaves(TreeNode* root) {
+//		if (!root)
+//			return 0;
+//		int leftval = 0;
+//		if (root->left != nullptr && root->left->left == nullptr &&root->left->right == nullptr)
+//		{
+//			leftval = root->left->val;
+//		}
+//
+//		return sumOfLeftLeaves(root->left) + sumOfLeftLeaves(root->right) + leftval;
+//	}
+//};
+
+
+//#include<stdio.h>
+//int main()
+//{
+//	char arr[10][10];
+	//for (int i = 0; i< 10; i++)
+	//{
+	//	scanf("%s", arr[i]);
+	//}
+//	printf("%p\n", &arr[0]);
+//	printf("%p\n", &arr[0] + 1);
+//	printf("%p\n", &arr[0][0]);
+//	printf("%p\n", &arr[0][0] + 1);
+//
+//	return 0;
+//}
+#include<iostream>
+#include<stack>
+#include<vector>
+using namespace std;
+class Treenode
+{
 public:
-	int countNodes(TreeNode* root) {
-		if (!root)
-			return 0;
-		TreeNode*left = root->left;
-		TreeNode*right = root->right;
-		int count1 = 0, count2 = 0;
-		//分别计算直左直右长度是否相等
-		while (left)
-		{
-			count1++;
-			left = left->left;
-		}
-		while (right)
-		{
-			count2++;
-			right = right->right;
-		}
-		//相等即为满二叉树：2^n-1
-		if (count1 == count2)
-		{
-			return (2 << count1) - 1;
-		}
+	int _val;
+	Treenode*left;
+	Treenode*right;
 
-		return  countNodes(root->left) +
-			countNodes(root->right) + 1;
-	}
+	Treenode(int val=0)
+		:_val(val)
+		, left(nullptr)
+		, right(nullptr)
+	{}
+
 };
+void TreePrev(Treenode*root)
+{
+	if (!root)
+		return;
+	cout << root->_val << " ";
+	TreePrev(root->left);
+	TreePrev(root->right);
+}
 
-// 左叶子之和
-class Solution {
-public:
-	int sumOfLeftLeaves(TreeNode* root) {
-		if (!root)
-			return 0;
-		int leftval = 0;
-		if (root->left != nullptr && root->left->left == nullptr &&root->left->right == nullptr)
-		{
-			leftval = root->left->val;
-		}
+void Tree(Treenode*root)
+{
+	if (!root)
+		return;
+	Tree(root->left);
+	Tree(root->right);
+	cout << root->_val << " ";
+}
 
-		return sumOfLeftLeaves(root->left) + sumOfLeftLeaves(root->right) + leftval;
+vector<int> TreePrevNoNR(Treenode*root)
+{
+	stack<Treenode*>st;
+	vector<int> v;
+	st.push(root);
+	while (!st.empty())
+	{
+		Treenode*node = st.top();
+		st.pop();
+		if (node == nullptr)
+			continue;
+		v.push_back(node->_val);
+		if (node->right)
+			st.push(node->right);
+		if (node->left != nullptr)
+			st.push(node->left);
 	}
-};
+	return v;
+}
+
+vector<int> TreeNoNR(Treenode*root)
+{
+	stack<Treenode*>st;
+	vector<int> v;
+	st.push(root);
+	while (!st.empty())
+	{
+		Treenode*node = st.top();
+		st.pop();
+		if (node == nullptr)
+			continue;
+		v.push_back(node->_val);
+		if (node->left != nullptr)
+			st.push(node->left);
+		if (node->right)
+			st.push(node->right);
+	}
+	reverse(v.begin(), v.end());
+	return v;
+}
+
+
+int main()
+{
+	Treenode n1(5);
+	Treenode n2(4);
+	Treenode n3(6);
+	Treenode n4(1);
+	Treenode n5(2);
+	n1.left = &n2;
+	n1.right = &n3;
+	n2.left = &n4;
+	n2.right = &n5;
+	TreePrev(&n1);
+	cout << endl;
+	vector<int> result=TreePrevNoNR(&n1);
+	for (auto e : result)
+	{
+		cout << e << " ";
+	}
+	cout << endl;
+
+	Tree(&n1);
+	cout << endl;
+
+	vector<int> result2 = TreeNoNR(&n1);
+	for (auto e : result2)
+	{
+		cout << e << " ";
+	}
+	return 0;
+}
