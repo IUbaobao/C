@@ -172,111 +172,120 @@
 //
 //	return 0;
 //}
-#include<iostream>
-#include<stack>
-#include<vector>
-using namespace std;
-class Treenode
-{
-public:
-	int _val;
-	Treenode*left;
-	Treenode*right;
+//#include<iostream>
+//#include<stack>
+//#include<vector>
+//using namespace std;
+//class Treenode
+//{
+//public:
+//	int _val;
+//	Treenode*left;
+//	Treenode*right;
+//
+//	Treenode(int val=0)
+//		:_val(val)
+//		, left(nullptr)
+//		, right(nullptr)
+//	{}
+//
+//};
+//void TreePrev(Treenode*root)
+//{
+//	if (!root)
+//		return;
+//	cout << root->_val << " ";
+//	TreePrev(root->left);
+//	TreePrev(root->right);
+//}
+//
+//void Tree(Treenode*root)
+//{
+//	if (!root)
+//		return;
+//	Tree(root->left);
+//	Tree(root->right);
+//	cout << root->_val << " ";
+//}
+//
+//vector<int> TreePrevNoNR(Treenode*root)
+//{
+//	stack<Treenode*>st;
+//	vector<int> v;
+//	st.push(root);
+//	while (!st.empty())
+//	{
+//		Treenode*node = st.top();
+//		st.pop();
+//		if (node == nullptr)
+//			continue;
+//		v.push_back(node->_val);
+//		if (node->right)
+//			st.push(node->right);
+//		if (node->left != nullptr)
+//			st.push(node->left);
+//	}
+//	return v;
+//}
+//
+//vector<int> TreeNoNR(Treenode*root)
+//{
+//	stack<Treenode*>st;
+//	vector<int> v;
+//	st.push(root);
+//	while (!st.empty())
+//	{
+//		Treenode*node = st.top();
+//		st.pop();
+//		if (node == nullptr)
+//			continue;
+//		v.push_back(node->_val);
+//		if (node->left != nullptr)
+//			st.push(node->left);
+//		if (node->right)
+//			st.push(node->right);
+//	}
+//	reverse(v.begin(), v.end());
+//	return v;
+//}
+//
+//
+//int main()
+//{
+//	Treenode n1(5);
+//	Treenode n2(4);
+//	Treenode n3(6);
+//	Treenode n4(1);
+//	Treenode n5(2);
+//	n1.left = &n2;
+//	n1.right = &n3;
+//	n2.left = &n4;
+//	n2.right = &n5;
+//	TreePrev(&n1);
+//	cout << endl;
+//	vector<int> result=TreePrevNoNR(&n1);
+//	for (auto e : result)
+//	{
+//		cout << e << " ";
+//	}
+//	cout << endl;
+//
+//	Tree(&n1);
+//	cout << endl;
+//
+//	vector<int> result2 = TreeNoNR(&n1);
+//	for (auto e : result2)
+//	{
+//		cout << e << " ";
+//	}
+//	return 0;
+//}
 
-	Treenode(int val=0)
-		:_val(val)
-		, left(nullptr)
-		, right(nullptr)
-	{}
 
-};
-void TreePrev(Treenode*root)
-{
-	if (!root)
-		return;
-	cout << root->_val << " ";
-	TreePrev(root->left);
-	TreePrev(root->right);
-}
-
-void Tree(Treenode*root)
-{
-	if (!root)
-		return;
-	Tree(root->left);
-	Tree(root->right);
-	cout << root->_val << " ";
-}
-
-vector<int> TreePrevNoNR(Treenode*root)
-{
-	stack<Treenode*>st;
-	vector<int> v;
-	st.push(root);
-	while (!st.empty())
-	{
-		Treenode*node = st.top();
-		st.pop();
-		if (node == nullptr)
-			continue;
-		v.push_back(node->_val);
-		if (node->right)
-			st.push(node->right);
-		if (node->left != nullptr)
-			st.push(node->left);
-	}
-	return v;
-}
-
-vector<int> TreeNoNR(Treenode*root)
-{
-	stack<Treenode*>st;
-	vector<int> v;
-	st.push(root);
-	while (!st.empty())
-	{
-		Treenode*node = st.top();
-		st.pop();
-		if (node == nullptr)
-			continue;
-		v.push_back(node->_val);
-		if (node->left != nullptr)
-			st.push(node->left);
-		if (node->right)
-			st.push(node->right);
-	}
-	reverse(v.begin(), v.end());
-	return v;
-}
-
+#include"string.h"
 
 int main()
 {
-	Treenode n1(5);
-	Treenode n2(4);
-	Treenode n3(6);
-	Treenode n4(1);
-	Treenode n5(2);
-	n1.left = &n2;
-	n1.right = &n3;
-	n2.left = &n4;
-	n2.right = &n5;
-	TreePrev(&n1);
-	cout << endl;
-	vector<int> result=TreePrevNoNR(&n1);
-	for (auto e : result)
-	{
-		cout << e << " ";
-	}
-	cout << endl;
-
-	Tree(&n1);
-	cout << endl;
-
-	vector<int> result2 = TreeNoNR(&n1);
-	for (auto e : result2)
-	{
-		cout << e << " ";
-	}
+	hdm::Test_String1();
 	return 0;
 }
