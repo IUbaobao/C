@@ -281,97 +281,118 @@
 //	return 0;
 //}
 
+//
+//template<class T>
+//T Add(const T& left, const T& right)
+//{
+//	return left + right;
+//}
+//
+//int main()
+//{
+//	int a1 = 10, a2 = 20;
+//	double d1 = 10.0, d2 = 20.0;
+//	Add(a1, a2);
+//	Add(d1, d2);
+//	/*
+//	该语句不能通过编译，因为在编译期间，当编译器看到该实例化时，需要推演其实参类型
+//	通过实参a1将T推演为int，通过实参d1将T推演为double类型，但模板参数列表中只有一个T，
+//	编译器无法确定此处到底该将T确定为int 或者 double类型而报错
+//	注意：在模板中，编译器一般不会进行类型转换操作，因为一旦转化出问题，编译器就需要背黑锅
+//	Add(a1, d1);
+//	*/
+//	// 此时有两种处理方式：1. 用户自己来强制转化 2. 使用显式实例化
+//	Add(a1, (int)d1);
+//	return 0;
+//}
+//
+//
+//
+//
+//// 专门处理int的加法函数
+//int Add(int left, int right)
+//{
+//	return left + right;
+//}
+//// 通用加法函数
+//template<class T>
+//T Add(T left, T right)
+//{
+//	return left + right;
+//}
+//void Test()
+//{
+//	Add(1, 2); // 与非模板函数匹配，编译器不需要特化
+//	Add<int>(1, 2); // 调用编译器特化的Add版本
+//}
+//
+//
+//// 专门处理int的加法函数
+//int Add(int left, int right)
+//{
+//	return left + right;
+//}
+//// 通用加法函数
+//template<class T1, class T2>
+//T1 Add(T1 left, T2 right)
+//{
+//	return left + right;
+//}
+//void Test()
+//{
+//	Add(1, 2); // 与非函数模板类型完全匹配，不需要函数模板实例化
+//	Add(1, 2.0); // 模板函数可以生成更加匹配的版本，编译器根据实参生成更加匹配的Add函数
+//
+//}
+//
+//
+//// 动态顺序表
+//// 注意：Vector不是具体的类，是编译器根据被实例化的类型生成具体类的模具
+//template<class T>
+//class Vector
+//{
+//public:
+//	Vector(size_t capacity = 10)
+//		: _pData(new T[capacity])
+//		, _size(0)
+//		, _capacity(capacity)
+//	{}
+//	// 使用析构函数演示：在类中声明，在类外定义。
+//	~Vector();
+//	void PushBack(const T& data)；
+//		void PopBack()；
+//		// ...
+//private:
+//	T* _pData;
+//	size_t _size;
+//	size_t _capacity;
+//};
 
-template<class T>
-T Add(const T& left, const T& right)
-{
-	return left + right;
-}
+#include"string.h"
+
+#include<string>
 
 int main()
 {
-	int a1 = 10, a2 = 20;
-	double d1 = 10.0, d2 = 20.0;
-	Add(a1, a2);
-	Add(d1, d2);
-	/*
-	该语句不能通过编译，因为在编译期间，当编译器看到该实例化时，需要推演其实参类型
-	通过实参a1将T推演为int，通过实参d1将T推演为double类型，但模板参数列表中只有一个T，
-	编译器无法确定此处到底该将T确定为int 或者 double类型而报错
-	注意：在模板中，编译器一般不会进行类型转换操作，因为一旦转化出问题，编译器就需要背黑锅
-	Add(a1, d1);
-	*/
-	// 此时有两种处理方式：1. 用户自己来强制转化 2. 使用显式实例化
-	Add(a1, (int)d1);
+	hdm::Test_String6();
+	//string s("hello world");
+	//s.resize(15, '!');
+	//cout << s << endl;
+	//s.resize(100,'!');
+	//cout << s << endl;
+	//string s;
+	//cin >> s;
+	//cout << s << endl;
+	/*char arr1[10] = "123";
+	char arr2[10] = "234";*/
+	//cout << strcmp(arr2, arr1) << endl;
+
+
 	return 0;
 }
 
 
 
 
-// 专门处理int的加法函数
-int Add(int left, int right)
-{
-	return left + right;
-}
-// 通用加法函数
-template<class T>
-T Add(T left, T right)
-{
-	return left + right;
-}
-void Test()
-{
-	Add(1, 2); // 与非模板函数匹配，编译器不需要特化
-	Add<int>(1, 2); // 调用编译器特化的Add版本
-}
 
 
-// 专门处理int的加法函数
-int Add(int left, int right)
-{
-	return left + right;
-}
-// 通用加法函数
-template<class T1, class T2>
-T1 Add(T1 left, T2 right)
-{
-	return left + right;
-}
-void Test()
-{
-	Add(1, 2); // 与非函数模板类型完全匹配，不需要函数模板实例化
-	Add(1, 2.0); // 模板函数可以生成更加匹配的版本，编译器根据实参生成更加匹配的Add函数
-
-}
-
-
-// 动态顺序表
-// 注意：Vector不是具体的类，是编译器根据被实例化的类型生成具体类的模具
-template<class T>
-class Vector
-{
-public:
-	Vector(size_t capacity = 10)
-		: _pData(new T[capacity])
-		, _size(0)
-		, _capacity(capacity)
-	{}
-	// 使用析构函数演示：在类中声明，在类外定义。
-	~Vector();
-	void PushBack(const T& data)；
-		void PopBack()；
-		// ...
-private:
-	T* _pData;
-	size_t _size;
-	size_t _capacity;
-};
-
-//#include"string.h"
-//
-//int main()
-//{
-//	hdm::Test_String1();
-//	return 0;
-//}
