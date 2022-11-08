@@ -368,31 +368,47 @@
 //	size_t _capacity;
 //};
 
-#include"string.h"
+//#include"string.h"
+//
+//#include<string>
+//
+//int main()
+//{
+//	hdm::Test_String6();
+//	//string s("hello world");
+//	//s.resize(15, '!');
+//	//cout << s << endl;
+//	//s.resize(100,'!');
+//	//cout << s << endl;
+//	//string s;
+//	//cin >> s;
+//	//cout << s << endl;
+//	/*char arr1[10] = "123";
+//	char arr2[10] = "234";*/
+//	//cout << strcmp(arr2, arr1) << endl;
+//
+//
+//	return 0;
+//}
 
-#include<string>
-
-int main()
-{
-	hdm::Test_String6();
-	//string s("hello world");
-	//s.resize(15, '!');
-	//cout << s << endl;
-	//s.resize(100,'!');
-	//cout << s << endl;
-	//string s;
-	//cin >> s;
-	//cout << s << endl;
-	/*char arr1[10] = "123";
-	char arr2[10] = "234";*/
-	//cout << strcmp(arr2, arr1) << endl;
 
 
-	return 0;
+//两两交换链表中的节点
+ListNode* swapPairs(ListNode* head) {
+	ListNode* newhead = new ListNode(0);
+	newhead->next = head;
+	ListNode* cur = newhead;
+	while (cur->next != nullptr && cur->next->next != nullptr)
+	{
+		ListNode*tem1 = cur->next;
+		ListNode*tem2 = cur->next->next->next;
+
+		cur->next = cur->next->next;
+		cur->next->next = tem1;
+		tem1->next = tem2;
+
+		cur = cur->next->next;
+	}
+	return newhead->next;
 }
-
-
-
-
-
 
