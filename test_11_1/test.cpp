@@ -477,3 +477,60 @@ public:
 		return nullptr;
 	}
 };
+
+
+
+
+
+
+//找树左下角的值
+class Solution {
+public:
+	int maxDepth = INT_MIN;
+	int reslut;
+	int findBottomLeftValue(TreeNode* root) {
+		int depth = 1;
+		_findBottomLeftValue(root, depth);
+		return reslut;
+	}
+
+	void _findBottomLeftValue(TreeNode* root, int depth)
+	{
+		if (root->left == nullptr && root->right == nullptr)
+		{
+			if (depth>maxDepth)
+			{
+				maxDepth = depth;
+				reslut = root->val;
+			}
+		}
+
+		if (root->left)
+		{
+			_findBottomLeftValue(root->left, depth + 1);
+		}
+		if (root->right)
+		{
+			_findBottomLeftValue(root->right, depth + 1);
+		}
+	}
+};
+
+
+
+//左叶子之和
+
+class Solution {
+public:
+	int sumOfLeftLeaves(TreeNode* root) {
+		if (root == nullptr)
+			return 0;
+		int leftleav = 0;
+		if (root->left != nullptr && root->left->left == nullptr && root->left->right == nullptr)
+		{
+			leftleav = root->left->val;
+		}
+
+		return sumOfLeftLeaves(root->left) + sumOfLeftLeaves(root->right) + leftleav;
+	}
+};
