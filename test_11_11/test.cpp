@@ -74,3 +74,37 @@ int main()
 	reverseWords("  world hello  ");
 	return 0;
 }
+
+
+//剑指 Offer 58 - II. 左旋转字符串
+string reverseLeftWords(string s, int n) {
+	n %= s.size();
+	reverse(s.begin(), s.end());
+	reverse(s.begin(), s.begin() + s.size() - n);
+	reverse(s.begin() + s.size() - n, s.end());
+
+	return s;
+}
+
+
+//找出字符串中第一个匹配项的下标
+int strStr(string haystack, string needle) {
+	int begin = 0;
+	int cur1 = 0, cur2 = 0;
+	while (begin<haystack.size())
+	{
+		while (haystack[cur1] == needle[cur2] && haystack[cur1] != '\0')
+		{
+			cur1++;
+			cur2++;
+		}
+		if (needle[cur2] == '\0')
+		{
+			return begin;
+		}
+		cur1 = ++begin;
+		cur2 = 0;
+	}
+	return -1;
+
+}
