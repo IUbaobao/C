@@ -108,3 +108,17 @@ int strStr(string haystack, string needle) {
 	return -1;
 
 }
+
+
+//重复的子字符串
+/*所以判断字符串s是否有重复子串组成，只要两个s拼接在一起，里面还出现一个s的话，就说明是又重复子串组成。
+当然，我们在判断 s + s 拼接的字符串里是否出现一个s的的时候，
+要刨除 s + s 的首字符和尾字符，这样避免在s + s中搜索出原来的s，我们要搜索的是中间拼接出来的s*/。
+bool repeatedSubstringPattern(string s) {
+	string t = s + s;
+	t.erase(t.begin());
+	t.erase(t.end() - 1);
+
+	int pos = t.find(s);
+	return pos != std::string::npos;
+}
