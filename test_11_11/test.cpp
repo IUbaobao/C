@@ -138,3 +138,31 @@ TreeNode* mergeTrees(TreeNode* root1, TreeNode* root2) {
 	return root1;
 
 }
+
+
+
+
+//118. Ñî»ÔÈý½Ç
+class Solution {
+public:
+	vector<vector<int>> generate(int numRows) {
+		vector<vector<int> > vv;
+		vv.resize(numRows);
+		for (size_t i = 0; i< vv.size(); ++i)
+		{
+			vv[i].resize(i + 1, 0);
+			vv[i][0] = vv[i][vv[i].size() - 1] = 1;
+		}
+		for (size_t i = 0; i<vv.size(); ++i)
+		{
+			for (size_t j = 0; j<vv[i].size(); ++j)
+			{
+				if (vv[i][j] == 0)
+				{
+					vv[i][j] = vv[i - 1][j - 1] + vv[i - 1][j];
+				}
+			}
+		}
+		return vv;
+	}
+};
