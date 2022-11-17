@@ -175,3 +175,20 @@ TreeNode* searchBST(TreeNode* root, int val) {
 	if (root->val < val) return searchBST(root->right, val);
 	return NULL;
 }
+
+
+//ÑéÖ¤¶þ²æËÑË÷Ê÷
+class Solution {
+public:
+	TreeNode*prev = nullptr;
+	bool isValidBST(TreeNode* root) {
+		if (!root)
+			return true;
+		bool left = isValidBST(root->left);
+		if (prev != nullptr && prev->val >= root->val)
+			return false;
+		prev = root;
+		bool right = isValidBST(root->right);
+		return left&&right;
+	}
+};
