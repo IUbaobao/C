@@ -192,3 +192,24 @@ public:
 		return left&&right;
 	}
 };
+
+
+
+//530. 二叉搜索树的最小绝对差
+class Solution {
+public:
+	TreeNode*prev = nullptr;
+	int min = INT_MAX;
+	int getMinimumDifference(TreeNode* root) {
+		if (root == nullptr)
+			return 0;
+		getMinimumDifference(root->left);
+		if (prev != nullptr && abs(root->val - prev->val)<min)
+		{
+			min = abs(root->val - prev->val);
+		}
+		prev = root;
+		getMinimumDifference(root->right);
+		return min;
+	}
+};
