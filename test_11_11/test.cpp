@@ -213,3 +213,45 @@ public:
 		return min;
 	}
 };
+
+
+
+//501. 二叉搜索树中的众数
+class Solution {
+public:
+	TreeNode*prev = nullptr;
+	int count = 0, maxcount = 0;
+	vector<int> result;
+	vector<int> findMode(TreeNode* root) {
+		_findMode(root);
+		return result;
+	}
+	void _findMode(TreeNode* cur)
+	{
+		if (cur == nullptr)
+			return;
+		_findMode(cur->left);
+		if (prev != nullptr && prev->val == cur->val)
+		{
+			count++;
+		}
+		else
+		{
+			count = 1;
+		}
+		prev = cur;
+		if (count == maxcount)
+		{
+			result.push_back(cur->val);
+		}
+		if (count>maxcount)
+		{
+			result.clear();
+			maxcount = count;
+			result.push_back(cur->val);
+		}
+		_findMode(cur->right);
+	}
+
+};
+
