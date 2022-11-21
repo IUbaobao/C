@@ -368,169 +368,169 @@
 //	size_t _capacity;
 //};
 
-//#include"string.h"
-//
-//#include<string>
-//
-//int main()
-//{
-//	hdm::Test_String6();
-//	//string s("hello world");
-//	//s.resize(15, '!');
-//	//cout << s << endl;
-//	//s.resize(100,'!');
-//	//cout << s << endl;
-//	//string s;
-//	//cin >> s;
-//	//cout << s << endl;
-//	/*char arr1[10] = "123";
-//	char arr2[10] = "234";*/
-//	//cout << strcmp(arr2, arr1) << endl;
-//
-//
-//	return 0;
-//}
+#include"string.h"
+
+#include<string>
+
+int main()
+{
+	hdm::Test_String6();
+	//string s("hello world");
+	//s.resize(15, '!');
+	//cout << s << endl;
+	//s.resize(100,'!');
+	//cout << s << endl;
+	//string s;
+	//cin >> s;
+	//cout << s << endl;
+	/*char arr1[10] = "123";
+	char arr2[10] = "234";*/
+	//cout << strcmp(arr2, arr1) << endl;
 
 
-
-//两两交换链表中的节点
-ListNode* swapPairs(ListNode* head) {
-	ListNode* newhead = new ListNode(0);
-	newhead->next = head;
-	ListNode* cur = newhead;
-	while (cur->next != nullptr && cur->next->next != nullptr)
-	{
-		ListNode*tem1 = cur->next;
-		ListNode*tem2 = cur->next->next->next;
-
-		cur->next = cur->next->next;
-		cur->next->next = tem1;
-		tem1->next = tem2;
-
-		cur = cur->next->next;
-	}
-	return newhead->next;
+	return 0;
 }
 
 
-//删除链表的倒数第 N 个结点
-class Solution {
-public:
-	ListNode* removeNthFromEnd(ListNode* head, int n) {
-		ListNode* newhead = new ListNode(0);
-		newhead->next = head;
-		ListNode*fast = newhead, *slow = newhead;
-		while (n-- && fast != nullptr)
-		{
-			fast = fast->next;
-		}
-		while (fast != nullptr&& fast->next != nullptr)
-		{
-			fast = fast->next;
-			slow = slow->next;
-		}
-		slow->next = slow->next->next;
-		return newhead->next;
-	}
-};
-
-
-
-// 链表相交
-class Solution {
-public:
-	ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-		int count1 = 0, count2 = 0;
-		ListNode *cur1 = headA, *cur2 = headB;
-		//统计链表长度
-		while (cur1)
-		{
-			count1++;
-			cur1 = cur1->next;
-		}
-		while (cur2)
-		{
-			count2++;
-			cur2 = cur2->next;
-		}
-
-		//让长的那个先走差距步
-		ListNode * longlist = headA, *shortlist = headB;
-		if (count1<count2)
-		{
-			longlist = headB;
-			shortlist = headA;
-		}
-		int gap = abs(count1 - count2);
-		while (gap--)
-		{
-			longlist = longlist->next;
-		}
-		//两个链表一起走，有相等即为相交
-		while (longlist && shortlist)
-		{
-			if (longlist == shortlist)
-				return longlist;
-			longlist = longlist->next;
-			shortlist = shortlist->next;
-		}
-		return nullptr;
-	}
-};
-
-
-
-
-
-
-//找树左下角的值
-class Solution {
-public:
-	int maxDepth = INT_MIN;
-	int reslut;
-	int findBottomLeftValue(TreeNode* root) {
-		int depth = 1;
-		_findBottomLeftValue(root, depth);
-		return reslut;
-	}
-
-	void _findBottomLeftValue(TreeNode* root, int depth)
-	{
-		if (root->left == nullptr && root->right == nullptr)
-		{
-			if (depth>maxDepth)
-			{
-				maxDepth = depth;
-				reslut = root->val;
-			}
-		}
-
-		if (root->left)
-		{
-			_findBottomLeftValue(root->left, depth + 1);
-		}
-		if (root->right)
-		{
-			_findBottomLeftValue(root->right, depth + 1);
-		}
-	}
-};
-
-
-
-//左叶子之和
-
-class Solution {
-public:
-	int sumOfLeftLeaves(TreeNode* root) {
-		if (root == nullptr)
-			return 0;
-		int leftleav = 0;
-		if (root->left != nullptr && root->left->left == nullptr && root->left->right == nullptr)
-		{
-			leftleav = root->left->val;
-		}
-
-		return sumOfLeftLeaves(root->left) + sumOfLeftLeaves(root->right) + leftleav;
-	}
-};
+//
+////两两交换链表中的节点
+//ListNode* swapPairs(ListNode* head) {
+//	ListNode* newhead = new ListNode(0);
+//	newhead->next = head;
+//	ListNode* cur = newhead;
+//	while (cur->next != nullptr && cur->next->next != nullptr)
+//	{
+//		ListNode*tem1 = cur->next;
+//		ListNode*tem2 = cur->next->next->next;
+//
+//		cur->next = cur->next->next;
+//		cur->next->next = tem1;
+//		tem1->next = tem2;
+//
+//		cur = cur->next->next;
+//	}
+//	return newhead->next;
+//}
+//
+//
+////删除链表的倒数第 N 个结点
+//class Solution {
+//public:
+//	ListNode* removeNthFromEnd(ListNode* head, int n) {
+//		ListNode* newhead = new ListNode(0);
+//		newhead->next = head;
+//		ListNode*fast = newhead, *slow = newhead;
+//		while (n-- && fast != nullptr)
+//		{
+//			fast = fast->next;
+//		}
+//		while (fast != nullptr&& fast->next != nullptr)
+//		{
+//			fast = fast->next;
+//			slow = slow->next;
+//		}
+//		slow->next = slow->next->next;
+//		return newhead->next;
+//	}
+//};
+//
+//
+//
+//// 链表相交
+//class Solution {
+//public:
+//	ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+//		int count1 = 0, count2 = 0;
+//		ListNode *cur1 = headA, *cur2 = headB;
+//		//统计链表长度
+//		while (cur1)
+//		{
+//			count1++;
+//			cur1 = cur1->next;
+//		}
+//		while (cur2)
+//		{
+//			count2++;
+//			cur2 = cur2->next;
+//		}
+//
+//		//让长的那个先走差距步
+//		ListNode * longlist = headA, *shortlist = headB;
+//		if (count1<count2)
+//		{
+//			longlist = headB;
+//			shortlist = headA;
+//		}
+//		int gap = abs(count1 - count2);
+//		while (gap--)
+//		{
+//			longlist = longlist->next;
+//		}
+//		//两个链表一起走，有相等即为相交
+//		while (longlist && shortlist)
+//		{
+//			if (longlist == shortlist)
+//				return longlist;
+//			longlist = longlist->next;
+//			shortlist = shortlist->next;
+//		}
+//		return nullptr;
+//	}
+//};
+//
+//
+//
+//
+//
+//
+////找树左下角的值
+//class Solution {
+//public:
+//	int maxDepth = INT_MIN;
+//	int reslut;
+//	int findBottomLeftValue(TreeNode* root) {
+//		int depth = 1;
+//		_findBottomLeftValue(root, depth);
+//		return reslut;
+//	}
+//
+//	void _findBottomLeftValue(TreeNode* root, int depth)
+//	{
+//		if (root->left == nullptr && root->right == nullptr)
+//		{
+//			if (depth>maxDepth)
+//			{
+//				maxDepth = depth;
+//				reslut = root->val;
+//			}
+//		}
+//
+//		if (root->left)
+//		{
+//			_findBottomLeftValue(root->left, depth + 1);
+//		}
+//		if (root->right)
+//		{
+//			_findBottomLeftValue(root->right, depth + 1);
+//		}
+//	}
+//};
+//
+//
+//
+////左叶子之和
+//
+//class Solution {
+//public:
+//	int sumOfLeftLeaves(TreeNode* root) {
+//		if (root == nullptr)
+//			return 0;
+//		int leftleav = 0;
+//		if (root->left != nullptr && root->left->left == nullptr && root->left->right == nullptr)
+//		{
+//			leftleav = root->left->val;
+//		}
+//
+//		return sumOfLeftLeaves(root->left) + sumOfLeftLeaves(root->right) + leftleav;
+//	}
+//};
