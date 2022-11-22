@@ -320,3 +320,75 @@
 //	cout << s1 << endl;
 //	return 0;
 //}
+
+
+
+
+
+//#include<iostream>
+//#include<string>
+//#include <algorithm>
+//using namespace std;
+//
+//int main()
+//{
+//	string s;
+//	getline(cin, s);
+//	reverse(s.begin(), s.end());
+//	int begin = 0;
+//	for (int i = 0; i < s.size(); ++i)
+//	{
+//		if (s[i] == ' ')
+//		{
+//			reverse(s.begin() + begin, s.begin() + i);
+//			begin = i + 1;
+//		}
+//	}
+//	reverse(s.begin() + begin, s.end());
+//	cout << s << endl;
+//	return 0;
+//}
+
+#include<iostream>
+#include<vector>
+using namespace std;
+int main()
+{
+	long long int n;
+	cin >> n;
+	vector<long long int> v;
+	v.resize(n+1);
+	for (long long int i = 0; i < n; ++i)
+	{
+		cin >> v[i];
+	}
+	 int count = 0;
+	 int i = 0;
+	 while (i < n)
+	 {
+		 if (v[i]>v[i + 1])
+		 {
+			 while (i<n && v[i] >= v[i + 1])
+			 {
+				 i++;
+			 }
+			 count++;
+			 i++;
+		 }
+		 else if (v[i] < v[i + 1])
+		 {
+			 while (i<n && v[i] <= v[i + 1])
+			 {
+				 i++;
+			 }
+			 count++;
+			 i++;
+		 }
+		 else
+		 {
+			 i++;
+		 }
+	 }
+	cout << count << endl;
+	return 0;
+}
