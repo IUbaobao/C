@@ -349,46 +349,144 @@
 //	return 0;
 //}
 
-#include<iostream>
-#include<vector>
-using namespace std;
+//#include<iostream>
+//#include<vector>
+//using namespace std;
+//int main()
+//{
+//	long long int n;
+//	cin >> n;
+//	vector<long long int> v;
+//	v.resize(n+1);
+//	for (long long int i = 0; i < n; ++i)
+//	{
+//		cin >> v[i];
+//	}
+//	 int count = 0;
+//	 int i = 0;
+//	 while (i < n)
+//	 {
+//		 if (v[i]>v[i + 1])
+//		 {
+//			 while (i<n && v[i] >= v[i + 1])
+//			 {
+//				 i++;
+//			 }
+//			 count++;
+//			 i++;
+//		 }
+//		 else if (v[i] < v[i + 1])
+//		 {
+//			 while (i<n && v[i] <= v[i + 1])
+//			 {
+//				 i++;
+//			 }
+//			 count++;
+//			 i++;
+//		 }
+//		 else
+//		 {
+//			 i++;
+//		 }
+//	 }
+//	cout << count << endl;
+//	return 0;
+//}
+//
+
+//字符串中找出最长的连续数字串
+//#include<iostream>
+//#include<string>
+//
+//using namespace std;
+//
+//bool isnum(char&s)
+//{
+//	if (s >= '0' && s <= '9')
+//	{
+//		return true;
+//	}
+//	return false;
+//}
+//int main()
+//{
+//	string s;
+//	cin >> s;
+//	int begin = 0,prev=0;
+//	int count = 0,maxcount=0,i=0;
+//	while (i<s.size())
+//	{
+//		while (i<s.size() && !isnum(s[i]))
+//		{
+//			i++;
+//		}
+//		begin = i;
+//		while (i<s.size() && isnum(s[i++]))
+//		{
+//			count++;
+//		}
+//		if (maxcount < count)
+//		{
+//			prev = begin;
+//			maxcount = count;
+//		}
+//		count = 0;
+//	}
+//	for (int j = prev; j < maxcount + prev; ++j)
+//	{
+//		cout << s[j];
+//	}
+//	cout << endl;
+//	return 0;
+//}
+
+
+//// 数组中出现次数超过一半的数字
+//想象一下，如果把这些数字当做人种，一个数字和另外一个数字打了起来，
+//同归于尽。最后剩下的是不是人数最多的那种人。这里要满足一个条件：某类人的数目一定要大于总人数的一半。
+//算法步骤：我们选择输入数组中第一个元素作为候选元素candidate，并设置其出现次数为count = 1。
+//随后遍历数组。当遇到与candidate相同的元素，count + 1; 不同的元素，count - 1。当count为0的时候，
+//选择下一个元素为候选元素，并且置count = 1。遍历到数组的最后，剩下的candidate就是要求的结果。
+//int candidate = numbers[0], count = 1;
+//for (int i = 0; i<numbers.size(); ++i)
+//{
+//	if (candidate == numbers[i])
+//	{
+//		count++;
+//	}
+//	else{
+//		count--;
+//	}
+//	if (count == 0)
+//	{
+//		candidate = numbers[i];
+//		count = 1;
+//	}
+//}
+//	return candidate;
+//}
+
+//#include<iostream>
+//#include<vector>
+//using namespace std;
+//int main()
+//{
+//	vector<int> v;
+//	//v.reserve(100);
+//	//cout << v.capacity() << endl;
+//	//v.reserve(50);
+//	//cout << v.capacity() << endl;
+//	v.resize(10);
+//	//cout << v[10] << endl;
+//	cout << v.at(10) << endl;
+//	return 0;
+//}
+
+#include<stdio.h>
 int main()
 {
-	long long int n;
-	cin >> n;
-	vector<long long int> v;
-	v.resize(n+1);
-	for (long long int i = 0; i < n; ++i)
-	{
-		cin >> v[i];
-	}
-	 int count = 0;
-	 int i = 0;
-	 while (i < n)
-	 {
-		 if (v[i]>v[i + 1])
-		 {
-			 while (i<n && v[i] >= v[i + 1])
-			 {
-				 i++;
-			 }
-			 count++;
-			 i++;
-		 }
-		 else if (v[i] < v[i + 1])
-		 {
-			 while (i<n && v[i] <= v[i + 1])
-			 {
-				 i++;
-			 }
-			 count++;
-			 i++;
-		 }
-		 else
-		 {
-			 i++;
-		 }
-	 }
-	cout << count << endl;
+	printf("%s,%20.3s\n", "hello", "computer");
+	printf("%10.3f",123.123123);
+
 	return 0;
 }
