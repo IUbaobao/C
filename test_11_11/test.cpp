@@ -482,11 +482,38 @@
 //	return 0;
 //}
 
-#include<stdio.h>
+//#include<stdio.h>
+//int main()
+//{
+//	printf("%s,%20.3s\n", "hello", "computer");
+//	printf("%10.3f",123.123123);
+//
+//	return 0;
+//}
+
+
+//#include<iostream>
+//
+//int main()
+//{
+//	int a = 123;
+//	printf("%o\n", a);
+//	return 0;
+//}
+
+#include<iostream>
+using namespace std;
 int main()
 {
-	printf("%s,%20.3s\n", "hello", "computer");
-	printf("%10.3f",123.123123);
+	int a, b, c,d;
+	cin >> a >> b >> c>>d;
 
+	int B = (b + d) / 2;
+	int A = (a + c) / 2;
+	int C = B - b;
+	if (A - B == a &&B - C == b&&A + B == c&&B + C == d)
+		cout << A << " " << B << " " << C << endl;
+	else
+		cout << "No" << endl;
 	return 0;
 }
