@@ -501,19 +501,178 @@
 //	return 0;
 //}
 
+//#include<iostream>
+//using namespace std;
+//int main()
+//{
+//	int a, b, c,d;
+//	cin >> a >> b >> c>>d;
+//
+//	int B = (b + d) / 2;
+//	int A = (a + c) / 2;
+//	int C = B - b;
+//	if (A - B == a &&B - C == b&&A + B == c&&B + C == d)
+//		cout << A << " " << B << " " << C << endl;
+//	else
+//		cout << "No" << endl;
+//	return 0;
+//}
+
+
+
+//½øÖÆ×ª»»
+//#include <iostream>
+//#include<string>
+//#include<algorithm>
+//using namespace std;
+//
+//int main()
+//{
+//	int m, n;
+//	cin >> m >> n;
+//	string s1("0123456789ABCDEFG");
+//	string s;
+//	int flag = 1;
+//	if (m<0)
+//	{
+//		m *= -1;
+//		flag = -1;
+//	}
+//	while (m)
+//	{
+//		s += s1[m%n];
+//		m /= n;
+//	}
+//	if (flag == -1)
+//	{
+//		s += '-';
+//	}
+//	reverse(s.begin(), s.end());
+//	if (s.size() != 0)
+//		cout << s << endl;
+//	else
+//		cout << '0' << endl;
+//	return 0;
+//}
+
+
+
+//#include<iostream>
+//#include<algorithm>
+//#include<string>
+//using namespace std;
+//
+//bool ispalindrome(string& s)
+//{
+//	int begin = 0, end = s.size() - 1;
+//	while (begin < end)
+//	{
+//		if (s[begin] != s[end])
+//		{
+//			return false;
+//		}
+//		begin++;
+//		end--;
+//	}
+//	return true;
+//}
+//
+//int main()
+//{
+//	string s1, s2;
+//	cin >> s1 >> s2;
+//	int count = 0;
+//	for (size_t j = 0; j < s1.size(); j++)
+//	{
+//		s1.insert(j, s2);
+//		if (ispalindrome(s1))
+//		{
+//			count++;
+//		}
+//		s1.erase(j,s2.size());
+//	}
+//	cout << count << endl;
+//	return 0;
+//}
+
+
+
+//#include<iostream>
+//#include<algorithm>
+//#include<vector>
+//using namespace std;
+//int maxsum = 0;
+
+//void max_arry(int n, int sum, int startIndex)
+//{
+//	if (startIndex==n)
+//	{
+//		return;
+//	}
+//		
+//	for (int i = startIndex; i < n; ++i)
+//	{
+//		sum += v[i];
+//		if (sum > maxsum)
+//		{
+//			maxsum = sum;
+//		}
+//		max_arry(n, sum, i + 1);
+//		sum -= v[i];
+//	}
+//}
+
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//
+//	for (int i = 0; i < n; ++i)
+//	{
+//		int k;
+//		cin >> k;
+//		v.push_back(k);
+//	}
+//	int sum = 0;
+//	max_arry(n,sum,0);
+//	cout << maxsum << endl;
+//	return 0;
+//}
+
+
+
 #include<iostream>
+#include<algorithm>
+#include<vector>
 using namespace std;
 int main()
 {
-	int a, b, c,d;
-	cin >> a >> b >> c>>d;
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	for (int i = 0; i < n; ++i)
+	{
+		cin >> v[i];
+	}
+	int sum = 0,maxsum=0,begin=0;
+	for (int i = 0; i < v.size(); ++i)
+	{
+		sum += v[i];
+		if (sum > maxsum)
+		{
+			while (i<v.size() && sum + v[i]>maxsum)
+			{
+				sum += v[i++];
+			}
+			maxsum = sum;
+		}
+		while (begin<=i && sum - v[begin]>maxsum )
+		{
+			sum -= v[begin++];
+		}
 
-	int B = (b + d) / 2;
-	int A = (a + c) / 2;
-	int C = B - b;
-	if (A - B == a &&B - C == b&&A + B == c&&B + C == d)
-		cout << A << " " << B << " " << C << endl;
-	else
-		cout << "No" << endl;
+		
+	}
+	cout << maxsum << endl;
 	return 0;
 }
