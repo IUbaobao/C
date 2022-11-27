@@ -860,22 +860,115 @@ void test03()
 //	return 0;
 //}
 
+//
+//#include<string>
+//#include"string.h"
+//
+//int main()
+//{
+//	hdm::stringtest2();
+//	//string s1("hello world");
+//
+//	//cout << s1.c_str() << endl;
+//	//size_t pos = s1.find('d');
+//	//if (pos != -1)
+//	//{
+//	//	s1.insert(pos,1,'u');
+//	//}
+//	//cout << s1.c_str() << endl;
+//
+//	return 0;
+//}
 
-#include<string>
-#include"string.h"
+//字符串转整数
+//#include<iostream>
+//#include<string>
+//using namespace std;
+//class Solution {
+//public:
+//	int StrToInt(string str) {
+//		int flag = 1;
+//		if (str[0] == '-')
+//		{
+//			flag = -1;
+//			str.erase(0,1);
+//
+//		}
+//		else if (str[0] == '+')
+//		{
+//			flag = 1;
+//			str.erase(0,1);
+//		}
+//		else if (!isnum(str[0]))
+//		{
+//			return 0;
+//		}
+//		long long sum = 0;
+//		int j = 1;
+//		for (int i = str.size() - 1; i>=0; --i)
+//		{
+//			if (isnum(str[i]))
+//			{
+//				sum += (str[i] - '0')*j;
+//				j *= 10;
+//			}
+//			else
+//			{
+//				return 0;
+//			}
+//		}
+//		return sum*flag;
+//
+//	}
+//
+//	bool isnum(const char& s)
+//	{
+//		if (s >= '0'&& s <= '9')
+//		{
+//			return true;
+//		}
+//		return false;
+//	}
+//};
+//
+//
+//int main()
+//{
+//	string s;
+//	cin >> s;
+//	cout << Solution().StrToInt(s) << endl;
+//	return 0;
+//}
+
+
+//DP6 连续子数组最大和
+#include <iostream>
+#include<vector>
+using namespace std;
+
+int Getmax(int a, int b)
+{
+	return a>b ? a : b;
+}
 
 int main()
 {
-	hdm::stringtest2();
-	//string s1("hello world");
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	v.resize(n);
+	for (int i = 0; i<n; ++i)
+		cin >> v[i];
 
-	//cout << s1.c_str() << endl;
-	//size_t pos = s1.find('d');
-	//if (pos != -1)
-	//{
-	//	s1.insert(pos,1,'u');
-	//}
-	//cout << s1.c_str() << endl;
-
+	int sum = v[0], max = v[0];
+	for (int i = 1; i<v.size(); ++i)
+	{
+		sum = Getmax(sum + v[i], v[i]);
+		if (sum>max)
+		{
+			max = sum;
+		}
+	}
+	cout << max << endl;
 	return 0;
 }
