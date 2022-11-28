@@ -942,33 +942,133 @@ void test03()
 
 
 //DP6 连续子数组最大和
-#include <iostream>
-#include<vector>
+//#include <iostream>
+//#include<vector>
+//using namespace std;
+//
+//int Getmax(int a, int b)
+//{
+//	return a>b ? a : b;
+//}
+//
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	vector<int> v(n);
+//	v.resize(n);
+//	for (int i = 0; i<n; ++i)
+//		cin >> v[i];
+//
+//	int sum = v[0], max = v[0];
+//	for (int i = 1; i<v.size(); ++i)
+//	{
+//		sum = Getmax(sum + v[i], v[i]);
+//		if (sum>max)
+//		{
+//			max = sum;
+//		}
+//	}
+//	cout << max << endl;
+//	return 0;
+//}
+
+//
+//#include<iostream>
+//#include<string>
+//using namespace std;
+//int main()
+//{
+//	string s("hello world");
+//	cout << "字符串s的长度为："<<s.size() << endl;
+//
+//	s.resize(20, '!');
+//	cout <<"resize()之后的s："<< s << endl;
+//	cout << "字符串s的长度为：" << s.size() << endl;
+//
+//	cout << endl;
+//	cout << "字符串s的修改前的容量为为：" << s.capacity() << endl;
+//	s.reserve(95);
+//	cout << "字符串s的修改后的容量为为：" << s.capacity() << endl;
+//
+//	return 0;
+//}
+
+
+
+
+
+//
+//#include <iostream>
+//#include <limits.h>
+//using namespace std;
+//
+//int main()
+//{
+//	long long int n;
+//	cin >> n;
+//	long long int a = 0, b = 1, c = 0, min = INT_MAX;
+//	while (1)
+//	{
+//		c = a + b;
+//		a = b;
+//		b = c;
+//		if (min>abs(n - c))
+//		{
+//			min = abs(n - c);
+//		}
+//		else
+//		{
+//			break;
+//		}
+//	}
+//	cout << min << endl;
+//	return 0;
+//}
+
+
+//合法括号序列判断
+#include<stack>
+#include<iostream>
 using namespace std;
+class Parenthesis {
+public:
+	bool chkParenthesis(string A, int n) {
 
-int Getmax(int a, int b)
-{
-	return a>b ? a : b;
-}
+		stack<char> st;
+		if (A[0] == '(') st.push(A[0]);
+		else  return false;
 
+		int i = 1;
+		while (i<n)
+		{
+			if (A[i] == '(')
+			{
+				st.push(A[i]);
+			}
+			else
+			{
+				if (!st.empty())
+				{
+					char tem = st.top();
+					st.pop();
+					if (A[i] != ')')
+						return false;
+				}
+				else
+					return false;
+			}
+			i++;
+		}
+		if (!st.empty())
+			return false;
+		return true;
+
+	}
+};
 int main()
 {
-	int n;
-	cin >> n;
-	vector<int> v(n);
-	v.resize(n);
-	for (int i = 0; i<n; ++i)
-		cin >> v[i];
-
-	int sum = v[0], max = v[0];
-	for (int i = 1; i<v.size(); ++i)
-	{
-		sum = Getmax(sum + v[i], v[i]);
-		if (sum>max)
-		{
-			max = sum;
-		}
-	}
-	cout << max << endl;
+	cout << Parenthesis().chkParenthesis("()()(((())))", 12) << endl;
 	return 0;
 }
+
