@@ -1072,3 +1072,40 @@ int main()
 	return 0;
 }
 
+
+
+
+
+
+//17. 电话号码的字母组合
+
+class Solution {
+public:
+
+	string numstring[10] = { "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
+	void _letterCombinations(string digits, int i, string path, vector<string>&vs)
+	{
+		if (i == digits.size())
+		{
+			vs.push_back(path);
+			return;
+		}
+		int num = digits[i] - '0';
+		string str = numstring[num];
+		for (auto e : str)
+		{
+			_letterCombinations(digits, i + 1, path + e, vs);
+		}
+	}
+
+	vector<string> letterCombinations(string digits) {
+		vector<string> vs;
+		if (digits.size() == 0)
+			return vs;
+
+		string path;
+		_letterCombinations(digits, 0, path, vs);
+		return vs;
+
+	}
+};
