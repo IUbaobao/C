@@ -113,17 +113,31 @@ namespace hdm
 		 ReverseIterator(iterator it)
 			 :_it(it)
 		 {}
-
+		 //前置++
 		 Self operator++()
 		 {
 			 --_it;
 			 return *this;
 		 }
-
+		 //后置++
+		 Self operator++(int)
+		 {
+			 Self tmp(*this);
+			 --_it;
+			 return tmp;
+		 }
+		 //前置--
 		 Self operator--()
 		 {
 			 ++_it;
 			 return *this;
+		 }
+		 //后置--
+		 Self operator--(int)
+		 {
+			 Self tmp(*this);
+			 ++_it;
+			 return tmp;
 		 }
 
 		 Ref operator*()
@@ -186,7 +200,19 @@ namespace hdm
 			}
 		}
 
-		//拷贝构造
+		//拷贝构造函数 传统写法
+		//list(const list<T>& lt)
+		//{
+		//	_head = new node; //申请一个头结点
+		//	_head->_next = _head; //头结点的后继指针指向自己
+		//	_head->_prev = _head; //头结点的前驱指针指向自己
+		//	for (const auto& e : lt)
+		//	{
+		//		push_back(e); //将容器lt当中的数据一个个尾插到新构造的容器后面
+		//	}
+		//}
+
+		//拷贝构造 现代写法
 		list(const list<T>& l)
 		{
 			CreatNode();
@@ -194,6 +220,21 @@ namespace hdm
 			swap(tmp);
 		}
 
+		////传统写法 传统写法
+		//list<T>& operator=(const list<T>& lt)
+		//{
+		//	if (this != &lt) //避免自己给自己赋值
+		//	{
+		//		clear(); //清空容器
+		//		for (const auto& e : lt)
+		//		{
+		//			push_back(e); //将容器lt当中的数据一个个尾插到链表后面
+		//		}
+		//	}
+		//	return *this; //支持连续赋值
+		//}
+
+		//现代写法
 		list<T>& operator=(list<T> tmp)
 		{
 			swap(tmp);	
