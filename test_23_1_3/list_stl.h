@@ -322,7 +322,7 @@ namespace hdm
 					--oldsize;
 				}
 			}
-			else
+			else//newsize>oldsize£¬ÓÃvalÀ©³äÔªËØµ½newsize
 			{
 				while (newsize > oldsize)
 				{

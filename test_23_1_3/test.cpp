@@ -647,12 +647,159 @@ void TestList9()
 	list<int>::iterator it = L1.begin();
 	//it = it + 1;//错误，不可以跳跃访问，即使是+1
 }
-#include "list_stl.h"
+//#include "list_stl.h"
+//int main()
+//{
+//	hdm::TesthdmList4();
+//	return 0;
+//}
+
+//43. 字符串相乘
+class Solution {
+public:
+	string multiply(string num1, string num2) {
+		if (num1[0] == '0' || num2[0] == '0')
+		{
+			return "0";
+		}
+		int len1 = num1.size();
+		int len2 = num2.size();
+		vector<int> ansArr;
+		ansArr.resize(len1 + len2);
+		//用num1每一位去乘num2的每一位，保存到新数组的i+j+1的位置上，不用进位这么快
+		for (int i = len1 - 1; i >= 0; --i)
+		{
+			int x1 = num1[i] - '0';
+			for (int j = len2 - 1; j >= 0; --j)
+			{
+				int x2 = num2[j] - '0';
+				ansArr[i + j + 1] += x1*x2;
+			}
+		}
+		//开始计算进位
+		for (int i = len1 + len2 - 1; i>0; --i)
+		{
+			ansArr[i - 1] += ansArr[i] / 10;
+			ansArr[i] %= 10;
+		}
+		string ret;
+		//看它最高位是否是零，是就从1开始算
+		int index = ansArr[0] == 0 ? 1 : 0;
+		//转成字符串
+		while (index<len1 + len2)
+		{
+			ret += ansArr[index++] + '0';
+		}
+		return ret;
+
+	}
+};
+
+
+
+
+//
+//#include <iostream>
+//#include <queue>
+//#include <vector>
+//#include <functioanl>
+//
+//using namespace std;
+//int main()
+//{
+//	priority_queue<int,vector<int>> pq;
+//	pq.push(1);
+//	pq.push(3);
+//	pq.push(2);
+//	pq.push(5);
+//
+//	while (!pq.empty())
+//	{
+//		cout << pq.top() << " ";
+//		pq.pop();
+//	}
+//	cout << endl;
+//
+//	return 0;
+//}
+
+//#include <iostream>
+//#include <string>
+//using namespace std;
+//
+//int main()
+//{
+//	int n = 0;
+//	cin >> n;
+//	string str[n];
+//	for (int i = 0; i<n; ++i)
+//	{
+//		cin >> str[i];
+//	}
+//	int flag1, flag2;
+//	flag1 = flag2 = 1;
+//	for (int i = 0; i<n - 1; ++i)
+//	{
+//		if (str[i]>str[i + 1])
+//		{
+//			flag1 = 0;
+//			break;
+//		}
+//	}
+//	for (int i = 0; i<n - 1; ++i)
+//	{
+//		if (str[i].size()>str[i + 1].size())
+//		{
+//			flag2 = 0;
+//			break;
+//		}
+//	}
+//	if (flag1 == 1 && flag2 == 1)
+//	{
+//		cout << "both" << endl;
+//	}
+//	else if (flag1 == 1)
+//	{
+//		cout << "lexicographically" << endl;
+//	}
+//	else if (flag2 == 1)
+//	{
+//		cout << "lengths" << endl;
+//	}
+//	else
+//	{
+//		cout << "none" << endl;
+//	}
+//
+//	return 0;
+//}
+//
+//
+
+
+
+#include <iostream>
+using namespace std;
+
 int main()
 {
-	hdm::TesthdmList4();
+	int a, b;
+	cin >> a >> b;
+	while (a % b)
+	{
+		int c = a%b;
+		a = b;
+		b = c;
+	}
+	cout << b << endl;
 	return 0;
 }
+
+
+
+
+
+
 
 
 
