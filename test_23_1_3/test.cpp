@@ -697,32 +697,6 @@ public:
 
 
 
-
-//
-//#include <iostream>
-//#include <queue>
-//#include <vector>
-//#include <functioanl>
-//
-//using namespace std;
-//int main()
-//{
-//	priority_queue<int,vector<int>> pq;
-//	pq.push(1);
-//	pq.push(3);
-//	pq.push(2);
-//	pq.push(5);
-//
-//	while (!pq.empty())
-//	{
-//		cout << pq.top() << " ";
-//		pq.pop();
-//	}
-//	cout << endl;
-//
-//	return 0;
-//}
-
 //#include <iostream>
 //#include <string>
 //using namespace std;
@@ -778,25 +752,56 @@ public:
 
 
 
+//#include <iostream>
+//using namespace std;
+//
+//int main()
+//{
+//	int a, b;
+//	cin >> a >> b;
+//	while (a % b)
+//	{
+//		int c = a%b;
+//		a = b;
+//		b = c;
+//	}
+//	cout << b << endl;
+//	return 0;
+//}
+//
+//
+//
 #include <iostream>
-using namespace std;
+#include <queue>
+#include <vector>
+#include <functional>
+#include "priority_queue.h"
 
+using namespace std;
 int main()
 {
-	int a, b;
-	cin >> a >> b;
-	while (a % b)
+	//priority_queue<int,vector<int>,less<int>> pq;
+
+	/*priority_queue<int, vector<int>, greater<int>> pq;*/
+	hdm::priority_queue<int,vector<int>,hdm::greater<int>> pq;
+
+	pq.push(1);
+	pq.push(3);
+	pq.push(2);
+	pq.push(4);
+	pq.push(5);
+	pq.push(6);
+
+
+	while (!pq.empty())
 	{
-		int c = a%b;
-		a = b;
-		b = c;
+		cout << pq.top() << " ";
+		pq.pop();
 	}
-	cout << b << endl;
+	cout << endl;
+
 	return 0;
 }
-
-
-
 
 
 
