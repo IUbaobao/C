@@ -74,7 +74,7 @@
 //				case '-':
 //					st.push(left - right);
 //					break;
-//				case '*':
+//				case 1:
 //					st.push(left*right);
 //					break;
 //				case '/':
@@ -777,34 +777,219 @@ public:
 #include <functional>
 #include "priority_queue.h"
 
+//using namespace std;
+//int main()
+//{
+//	//priority_queue<int,vector<int>,less<int>> pq;
+//
+//	/*priority_queue<int, vector<int>, greater<int>> pq;*/
+//	hdm::priority_queue<int,vector<int>,hdm::greater<int>> pq;
+//
+//	pq.push(1);
+//	pq.push(3);
+//	pq.push(2);
+//	pq.push(4);
+//	pq.push(5);
+//	pq.push(6);
+//
+//
+//	while (!pq.empty())
+//	{
+//		cout << pq.top() << " ";
+//		pq.pop();
+//	}
+//	cout << endl;
+//
+//	return 0;
+//}
+
+class UnusualAdd {
+public:
+	int addAB(int A, int B) {
+		// write code here
+		while (B != 0)
+		{
+			int carry = (A&B) << 1;//存放进位
+			A ^= B;//异或得到不是进位的和
+			B = carry;//进位给B继续
+		}
+		return A;
+	}
+};
+
+//int count = 0;
+//
+//void getGo(int n, int m)
+//{
+//	if (n == 0 && m == 0)
+//	{
+//		::count++;
+//		return;
+//	}
+//	if (n != 0)
+//	{
+//		getGo(n - 1, m);
+//	}
+//	if (m != 0)
+//	{
+//		getGo(n, m - 1);
+//	}
+//}
+//
+//int main()
+//{
+//	int n, m;
+//	cin >> n >> m;
+//	getGo(n, m);
+//	cout << ::count << endl;
+//	return 0;
+//}
+//
+//int main()
+//{
+//	const int a = 10;
+//	int *p = (int*)(&a);
+//	*p = 20;
+//	cout << *p << endl;
+//	cout << a << endl;
+//	return 0;
+//}
+
+
+
+//密码强度等级
+#include <iostream>
+#include <string>
 using namespace std;
+//判断是否是合法符号
+bool issymbol(int c)
+{
+	if ((c >= 0x21 && c < 0x2F) || (c >= 0x3A && c <= 0x40) || (c >= 0x5B && c <= 0x60) || (c >= 0x7B && c <= 0x7E))
+	{
+		return true;
+	}
+	return false;
+}
+
 int main()
 {
-	//priority_queue<int,vector<int>,less<int>> pq;
-
-	/*priority_queue<int, vector<int>, greater<int>> pq;*/
-	hdm::priority_queue<int,vector<int>,hdm::greater<int>> pq;
-
-	pq.push(1);
-	pq.push(3);
-	pq.push(2);
-	pq.push(4);
-	pq.push(5);
-	pq.push(6);
-
-
-	while (!pq.empty())
+	string passwd;
+	cin >> passwd;
+	int score = 0;
+	//计算密码长度得分
+	if (passwd.size() >= 8)
 	{
-		cout << pq.top() << " ";
-		pq.pop();
+		score += 25;
 	}
-	cout << endl;
+	else if (passwd.size() >= 5)
+	{
+		score += 10;
+	}
+	else
+	{
+		score += 5;
+	}
+	//判断是否有大小写
+	int isupperflag = 0, islowerflag = 0, isalphaflag = 0;
+	int isdigitflag = 0;//判断数字有多少个
+	int issymbolflag = 0;//判断符号有多少个
+	for (auto e : passwd)
+	{
+		if (isupper(e))
+		{
+			isupperflag = 1;
+			isalphaflag = 1;
+		}
+		else if (islower(e))
+		{
+			islowerflag = 1;
+			isalphaflag = 1;
+		}
+		if (isdigit(e))
+		{
+			isdigitflag++;
+		}
+		if (issymbol(e))
+		{
+			issymbolflag++;
+		}
+
+	}
+	//大小写都有
+	if (islowerflag == 1 && isupperflag == 1)
+	{
+		score += 20;
+	}//大小写占一个
+	else if (islowerflag == 1 || isupperflag == 1)
+	{
+		score += 10;
+	}
+	//判断数字得分
+	if (isdigitflag > 0)
+	{
+		if (isdigitflag > 1)
+		{
+			score += 20;
+		}
+		else
+		{
+			score += 10;
+		}
+	}
+	//判断符号得分
+	if (issymbolflag > 0)
+	{
+		if (issymbolflag > 1)
+		{
+			score += 25;
+		}
+		else
+		{
+			score += 10;
+		}
+	}
+	//判断奖励得分
+	if ((isupperflag == 1 && islowerflag == 1) && isdigitflag >= 1 && issymbolflag >= 1)
+	{
+		score += 5;
+	}
+	else if (isalphaflag == 1 && isdigitflag > 0 && issymbolflag > 0)
+	{
+		score += 3;
+	}
+	else if (isalphaflag == 1 && isdigitflag > 0)
+	{
+		score += 2;
+	}
+	//最终评分
+	if (score >= 90)
+	{
+		cout << "VERY_SECURE" << endl;
+	}
+	else if (score >= 80)
+	{
+		cout << "SECURE" << endl;
+	}
+	else if (score >= 70)
+	{
+		cout << "VERY_STRONG" << endl;
+	}
+	else if (score >= 60)
+	{
+		cout << "STRONG" << endl;
+	}
+	else if (score >= 50)
+	{
+		cout << "AVERAGE" << endl;
+	}
+	else if (score >= 25)
+	{
+		cout << "WEAK" << endl;
+	}
+	else
+	{
+		cout << "VERY_WEAK" << endl;
+	}
 
 	return 0;
 }
-
-
-
-
-
-
