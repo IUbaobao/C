@@ -857,139 +857,191 @@ public:
 
 
 
-//密码强度等级
-#include <iostream>
-#include <string>
-using namespace std;
-//判断是否是合法符号
-bool issymbol(int c)
-{
-	if ((c >= 0x21 && c < 0x2F) || (c >= 0x3A && c <= 0x40) || (c >= 0x5B && c <= 0x60) || (c >= 0x7B && c <= 0x7E))
-	{
-		return true;
+////密码强度等级
+//#include <iostream>
+//#include <string>
+//using namespace std;
+////判断是否是合法符号
+//bool issymbol(int c)
+//{
+//	if ((c >= 0x21 && c < 0x2F) || (c >= 0x3A && c <= 0x40) || (c >= 0x5B && c <= 0x60) || (c >= 0x7B && c <= 0x7E))
+//	{
+//		return true;
+//	}
+//	return false;
+//}
+//
+//int main()
+//{
+//	string passwd;
+//	cin >> passwd;
+//	int score = 0;
+//	//计算密码长度得分
+//	if (passwd.size() >= 8)
+//	{
+//		score += 25;
+//	}
+//	else if (passwd.size() >= 5)
+//	{
+//		score += 10;
+//	}
+//	else
+//	{
+//		score += 5;
+//	}
+//	//判断是否有大小写
+//	int isupperflag = 0, islowerflag = 0, isalphaflag = 0;
+//	int isdigitflag = 0;//判断数字有多少个
+//	int issymbolflag = 0;//判断符号有多少个
+//	for (auto e : passwd)
+//	{
+//		if (isupper(e))
+//		{
+//			isupperflag = 1;
+//			isalphaflag = 1;
+//		}
+//		else if (islower(e))
+//		{
+//			islowerflag = 1;
+//			isalphaflag = 1;
+//		}
+//		if (isdigit(e))
+//		{
+//			isdigitflag++;
+//		}
+//		if (issymbol(e))
+//		{
+//			issymbolflag++;
+//		}
+//
+//	}
+//	//大小写都有
+//	if (islowerflag == 1 && isupperflag == 1)
+//	{
+//		score += 20;
+//	}//大小写占一个
+//	else if (islowerflag == 1 || isupperflag == 1)
+//	{
+//		score += 10;
+//	}
+//	//判断数字得分
+//	if (isdigitflag > 0)
+//	{
+//		if (isdigitflag > 1)
+//		{
+//			score += 20;
+//		}
+//		else
+//		{
+//			score += 10;
+//		}
+//	}
+//	//判断符号得分
+//	if (issymbolflag > 0)
+//	{
+//		if (issymbolflag > 1)
+//		{
+//			score += 25;
+//		}
+//		else
+//		{
+//			score += 10;
+//		}
+//	}
+//	//判断奖励得分
+//	if ((isupperflag == 1 && islowerflag == 1) && isdigitflag >= 1 && issymbolflag >= 1)
+//	{
+//		score += 5;
+//	}
+//	else if (isalphaflag == 1 && isdigitflag > 0 && issymbolflag > 0)
+//	{
+//		score += 3;
+//	}
+//	else if (isalphaflag == 1 && isdigitflag > 0)
+//	{
+//		score += 2;
+//	}
+//	//最终评分
+//	if (score >= 90)
+//	{
+//		cout << "VERY_SECURE" << endl;
+//	}
+//	else if (score >= 80)
+//	{
+//		cout << "SECURE" << endl;
+//	}
+//	else if (score >= 70)
+//	{
+//		cout << "VERY_STRONG" << endl;
+//	}
+//	else if (score >= 60)
+//	{
+//		cout << "STRONG" << endl;
+//	}
+//	else if (score >= 50)
+//	{
+//		cout << "AVERAGE" << endl;
+//	}
+//	else if (score >= 25)
+//	{
+//		cout << "WEAK" << endl;
+//	}
+//	else
+//	{
+//		cout << "VERY_WEAK" << endl;
+//	}
+//
+//	return 0;
+//}
+
+//最近公共祖先
+class LCA {
+public:
+	int getLCA(int a, int b) {
+		// write code here
+		//让节点大的去找父节点
+		while (a != b)
+		{
+			if (a>b)
+			{
+				a /= 2;
+			}
+			else
+			{
+				b /= 2;
+			}
+		}
+		return a;
 	}
-	return false;
-}
+};
+
+
+#include <iostream>
+using namespace std;
 
 int main()
 {
-	string passwd;
-	cin >> passwd;
-	int score = 0;
-	//计算密码长度得分
-	if (passwd.size() >= 8)
+	int n;
+	cin >> n;
+	int count = 0;
+	int maxcount = 0;
+	while (n)
 	{
-		score += 25;
-	}
-	else if (passwd.size() >= 5)
-	{
-		score += 10;
-	}
-	else
-	{
-		score += 5;
-	}
-	//判断是否有大小写
-	int isupperflag = 0, islowerflag = 0, isalphaflag = 0;
-	int isdigitflag = 0;//判断数字有多少个
-	int issymbolflag = 0;//判断符号有多少个
-	for (auto e : passwd)
-	{
-		if (isupper(e))
+		if ((n & 1) == 1)
 		{
-			isupperflag = 1;
-			isalphaflag = 1;
-		}
-		else if (islower(e))
-		{
-			islowerflag = 1;
-			isalphaflag = 1;
-		}
-		if (isdigit(e))
-		{
-			isdigitflag++;
-		}
-		if (issymbol(e))
-		{
-			issymbolflag++;
-		}
-
-	}
-	//大小写都有
-	if (islowerflag == 1 && isupperflag == 1)
-	{
-		score += 20;
-	}//大小写占一个
-	else if (islowerflag == 1 || isupperflag == 1)
-	{
-		score += 10;
-	}
-	//判断数字得分
-	if (isdigitflag > 0)
-	{
-		if (isdigitflag > 1)
-		{
-			score += 20;
+			count++;
+			if (count>maxcount)
+			{
+				maxcount = count;
+			}
 		}
 		else
 		{
-			score += 10;
-		}
-	}
-	//判断符号得分
-	if (issymbolflag > 0)
-	{
-		if (issymbolflag > 1)
-		{
-			score += 25;
-		}
-		else
-		{
-			score += 10;
-		}
-	}
-	//判断奖励得分
-	if ((isupperflag == 1 && islowerflag == 1) && isdigitflag >= 1 && issymbolflag >= 1)
-	{
-		score += 5;
-	}
-	else if (isalphaflag == 1 && isdigitflag > 0 && issymbolflag > 0)
-	{
-		score += 3;
-	}
-	else if (isalphaflag == 1 && isdigitflag > 0)
-	{
-		score += 2;
-	}
-	//最终评分
-	if (score >= 90)
-	{
-		cout << "VERY_SECURE" << endl;
-	}
-	else if (score >= 80)
-	{
-		cout << "SECURE" << endl;
-	}
-	else if (score >= 70)
-	{
-		cout << "VERY_STRONG" << endl;
-	}
-	else if (score >= 60)
-	{
-		cout << "STRONG" << endl;
-	}
-	else if (score >= 50)
-	{
-		cout << "AVERAGE" << endl;
-	}
-	else if (score >= 25)
-	{
-		cout << "WEAK" << endl;
-	}
-	else
-	{
-		cout << "VERY_WEAK" << endl;
-	}
 
+			count = 0;
+		}
+		n = n >> 1;
+	}
+	cout << maxcount << endl;
 	return 0;
 }
