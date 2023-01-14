@@ -1015,33 +1015,90 @@ public:
 	}
 };
 
+//
+//#include <iostream>
+//using namespace std;
+//
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	int count = 0;
+//	int maxcount = 0;
+//	while (n)
+//	{
+//		if ((n & 1) == 1)
+//		{
+//			count++;
+//			if (count>maxcount)
+//			{
+//				maxcount = count;
+//			}
+//		}
+//		else
+//		{
+//
+//			count = 0;
+//		}
+//		n = n >> 1;
+//	}
+//	cout << maxcount << endl;
+//	return 0;
+//}
+
+
+
+//#include <iostream>
+//#include <vector>
+//using namespace std;
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	vector<int > v;
+//	for (int i = 1; i <= n; ++i)
+//	{
+//		int flag = 0;
+//		for (int j = 2; j <= sqrt(i); ++j)
+//		{
+//			if (j!=i &&i%j == 0)
+//			{
+//				flag = 1;
+//			}
+//		}
+//		if (flag == 0)
+//		{
+//			v.push_back(i);
+//		}
+//	}
+//	int min = INT_MAX;
+//	vector<int> out;
+//	for (int i = 0;i<v.size();++i)
+//	{
+//		for (int j = i; j < v.size(); ++j)
+//		{
+//			if (v[i] + v[j] == n && abs(v[i] - v[j]) < min)
+//			{
+//				out.clear();
+//				out.push_back(v[i]);
+//				out.push_back(v[j]);
+//			}
+//		}
+//	}
+//	cout << out[0] << " " << out[1] << endl;
+//	return 0;
+//}
+
 
 #include <iostream>
-using namespace std;
 
+using namespace std;
 int main()
 {
-	int n;
-	cin >> n;
-	int count = 0;
-	int maxcount = 0;
-	while (n)
-	{
-		if ((n & 1) == 1)
-		{
-			count++;
-			if (count>maxcount)
-			{
-				maxcount = count;
-			}
-		}
-		else
-		{
-
-			count = 0;
-		}
-		n = n >> 1;
-	}
-	cout << maxcount << endl;
+	int n, m, i, j;
+	cin >> n >> m >> j >> i;
+	m <<= j;
+	cout << (n | m) << endl;
+	
 	return 0;
 }
