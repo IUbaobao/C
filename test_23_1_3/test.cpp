@@ -1090,15 +1090,181 @@ public:
 //}
 
 
-#include <iostream>
+//#include <iostream>
 
+//using namespace std;
+//int main()
+//{
+//	int n, m, i, j;
+//	cin >> n >> m >> j >> i;
+//	m <<= j;
+//	cout << (n | m) << endl;
+//	
+//	return 0;
+//}
+
+//// 自守数
+//#include <iostream>
+//using namespace std;
+//
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	int count = 0;
+//	for (int i = 0; i <= n; ++i)
+//	{
+//		int cp = i*i;
+//		int flag = 1;
+//		while (true)
+//		{
+//			flag *= 10;
+//			if (i == cp%flag)
+//			{
+//				count++;
+//				break;
+//			}
+//			if (cp%flag == cp)
+//			{
+//				break;
+//			}
+//
+//		}
+//	}
+//	cout << count << endl;
+//	return 0;
+//}
+
+//返回小于 N 的质数个数
+#include <iostream>
+#include <cmath>
 using namespace std;
+
 int main()
 {
-	int n, m, i, j;
-	cin >> n >> m >> j >> i;
-	m <<= j;
-	cout << (n | m) << endl;
-	
+	int n;
+	cin >> n;
+	int count = 0;
+	for (int i = 2; i <= n; ++i)
+	{
+		int flag = 1;
+		for (int j = 2; j <= sqrt(i); ++j)
+		{
+			if (i%j == 0)
+			{
+				flag = 0;
+				break;
+			}
+		}
+		if (flag == 1)
+		{
+			count++;
+			cout << i << endl;
+		}
+	}
+	cout << count << endl;
 	return 0;
 }
+
+//NC31 第一个只出现一次的字符
+class Solution {
+public:
+	int FirstNotRepeatingChar(string str) {
+		vector<int >v;
+		v.resize(64, 0);
+		for (int i = 0; i<str.size(); ++i)
+		{
+			v[str[i] - 'A']++;
+		}
+		for (int i = 0; i<str.size(); ++i)
+		{
+			if (v[str[i] - 'A'] == 1)
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
+};
+
+//判定是否互为字符重排
+class Solution {
+public:
+	bool CheckPermutation(string str, string s2) {
+		vector<int >v;
+		v.resize(64, 0);
+		for (int i = 0; i<str.size(); ++i)
+		{
+			v[str[i] - 'A']++;
+		}
+		for (int i = 0; i<s2.size(); ++i)
+		{
+			v[s2[i] - 'A']--;
+		}
+		for (auto e : v)
+		{
+			if (e != 0)
+				return false;
+		}
+		return true;
+
+	}
+};
+
+//单词缩写
+//#include <iostream>
+//#include <string>
+//using namespace std;
+//
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	string s[n];
+//	for (int i = 0; i<n; ++i)
+//	{
+//		cin >> s[i];
+//	}
+//	for (int i = 0; i<n; ++i)
+//	{
+//		if (s[i].size() >= 10)
+//		{
+//			cout << s[i][0] << s[i].size() - 2 << s[i][s[i].size() - 1] << endl;
+//		}
+//		else
+//		{
+//			cout << s[i] << endl;
+//		}
+//	}
+//	return 0;
+//}
+
+// URL化
+class Solution {
+public:
+	string replaceSpaces(string s, int length) {
+		int count = 0;
+		for (int i = 0; i<length; ++i)
+		{
+			if (s[i] == ' ')
+				count += 2;
+		}
+		s.resize(length + count);
+		int i = s.size() - 1, j = length - 1;
+		while (j >= 0)
+		{
+			if (s[j] == ' ')
+			{
+				s[i--] = '0';
+				s[i--] = '2';
+				s[i--] = '%';
+			}
+			else
+			{
+				s[i--] = s[j];
+			}
+			j--;
+		}
+		return s;
+	}
+};
