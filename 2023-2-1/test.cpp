@@ -3,34 +3,34 @@
 #include <vector>
 using namespace std;
 
-class Person
-{
-public:
-	Person()
-	{}
-	Person(string name,int age)
-		:_name(name), _age(age)
-	{}
-	void Print()
-	{
-		cout << _name << " " << _age << endl;
-	}
-protected:
-	string _name;
-private:
-	int _age;
-};
-
-class Student :public Person
-{
-public:
-	Student(string name,int age,int num=0)
-		:Person(name, age), _num(num)
-	{}
-
-protected:
-	int _num;
-};
+//class Person
+//{
+//public:
+//	Person()
+//	{}
+//	Person(string name,int age)
+//		:_name(name), _age(age)
+//	{}
+//	void Print()
+//	{
+//		cout << _name << " " << _age << endl;
+//	}
+//protected:
+//	string _name;
+//private:
+//	int _age;
+//};
+//
+//class Student :public Person
+//{
+//public:
+//	Student(string name,int age,int num=0)
+//		:Person(name, age), _num(num)
+//	{}
+//
+//protected:
+//	int _num;
+//};
 //
 //int main()
 //{
@@ -274,20 +274,105 @@ void TestPriorityQueue()
 
 #include "priority_queue.h"
 
+//ÂÝÐý¾ØÕóII
+class Solution1 {
+public:
+	vector<vector<int>> generateMatrix(int n) {
+		vector<vector<int> > vv(n, vector<int>(n, 0));
+		int startx = 0, starty = 0;
+		int mid = n / 2;
+		int i = 0, j = 0;
+		int offset = 1;
+		int count = 1;
+		while (mid--)
+		{
+			for (j = starty; j<n - offset; ++j)
+			{
+				vv[startx][j] = count++;
+			}
+			for (i = startx; i<n - offset; ++i)
+			{
+				vv[i][j] = count++;
+			}
+			for (j; j>starty; --j)
+			{
+				vv[i][j] = count++;
+			}
+			for (i; i>startx; --i)
+			{
+				vv[i][j] = count++;
+			}
+			offset++;
+			startx++;
+			starty++;
+		}
+		if (n % 2 == 1)
+		{
+			vv[n / 2][n / 2] = count++;
+		}
+		return vv;
+	}
+};
+
 int main()
 {
-	hdm::priority_queue<int,vector<int>,hdm::greater<int>> q1;
-	q1.push(2);
-	q1.push(3);
-	q1.push(1);
-	q1.push(4);
-	q1.push(10);
+	//hdm::priority_queue<int,vector<int>,hdm::greater<int>> q1;
+	//q1.push(2);
+	//q1.push(3);
+	//q1.push(1);
+	//q1.push(4);
+	//q1.push(10);
 
-	while (!q1.empty())
+	//while (!q1.empty())
+	//{
+	//	cout << q1.top() << " ";
+	//	q1.pop();
+	//}
+	//cout << endl;
+	auto vv=Solution1().generateMatrix(6);
+	for (int i = 0; i < vv.size(); ++i)
 	{
-		cout << q1.top() << " ";
-		q1.pop();
+		for (int j = 0; j < vv[i].size(); ++j)
+		{
+			cout << vv[i][j] << " ";
+		}
+		cout << endl;
 	}
 	cout << endl;
 	return 0;
 }
+
+//
+//class Person
+//{
+//public:
+//	virtual void BuyTicket()
+//	{
+//		cout << "Person--ÂòÆ±-È«¼Û" << endl;
+//	}
+//};
+//
+//class Student :public Person
+//{
+//public:
+//	virtual void BuyTicket()
+//	{
+//		cout << "Student--ÂòÆ±-°ë¼Û" << endl;
+//	}
+//};
+//
+//
+//void Func(Person& p)
+//{
+//	p.BuyTicket();
+//}
+//
+//
+//int main()
+//{
+//	Person ps;
+//	Student st;
+//	Func(ps);
+//	Func(st);
+//	return 0;
+//}
