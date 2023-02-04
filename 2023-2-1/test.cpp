@@ -314,33 +314,33 @@ public:
 	}
 };
 
-int main()
-{
-	//hdm::priority_queue<int,vector<int>,hdm::greater<int>> q1;
-	//q1.push(2);
-	//q1.push(3);
-	//q1.push(1);
-	//q1.push(4);
-	//q1.push(10);
-
-	//while (!q1.empty())
-	//{
-	//	cout << q1.top() << " ";
-	//	q1.pop();
-	//}
-	//cout << endl;
-	auto vv=Solution1().generateMatrix(6);
-	for (int i = 0; i < vv.size(); ++i)
-	{
-		for (int j = 0; j < vv[i].size(); ++j)
-		{
-			cout << vv[i][j] << " ";
-		}
-		cout << endl;
-	}
-	cout << endl;
-	return 0;
-}
+//int main()
+//{
+//	//hdm::priority_queue<int,vector<int>,hdm::greater<int>> q1;
+//	//q1.push(2);
+//	//q1.push(3);
+//	//q1.push(1);
+//	//q1.push(4);
+//	//q1.push(10);
+//
+//	//while (!q1.empty())
+//	//{
+//	//	cout << q1.top() << " ";
+//	//	q1.pop();
+//	//}
+//	//cout << endl;
+//	auto vv=Solution1().generateMatrix(6);
+//	for (int i = 0; i < vv.size(); ++i)
+//	{
+//		for (int j = 0; j < vv[i].size(); ++j)
+//		{
+//			cout << vv[i][j] << " ";
+//		}
+//		cout << endl;
+//	}
+//	cout << endl;
+//	return 0;
+//}
 
 //
 //class Person
@@ -376,3 +376,30 @@ int main()
 //	Func(st);
 //	return 0;
 //}
+
+
+#include "BSTress.h"
+
+int main()
+{
+	BSTress<int> t;
+	int a[] = { 8, 3, 1, 10, 6, 4, 7, 14, 13 };
+	for (auto e : a)
+	{
+		t.insert(e);
+	}
+	t.InOrder();
+	cout << endl;
+
+	for (auto e : a)
+	{
+		t.erase(e);
+		t.InOrder();
+		cout << endl;
+	}
+	t.erase(1);
+	t.InOrder();
+	cout << endl;
+
+	return 0;
+}
