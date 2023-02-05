@@ -390,16 +390,31 @@ int main()
 	}
 	t.InOrder();
 	cout << endl;
+	//auto f = t.Find(13);
+	//if (f != nullptr)
+	//{
+	//	cout << f->_val << endl;
+	//}
+	BSTress<int> t1(t);
+	t1.InOrder();
+	cout << endl;
+	BSTress<int> t2;
+	t2 = t1;
+	t2.InOrder();
+	cout << endl;
 
 	for (auto e : a)
 	{
-		t.erase(e);
+		t.eraseR(e);
 		t.InOrder();
 		cout << endl;
 	}
-	t.erase(1);
-	t.InOrder();
-	cout << endl;
+	//t.erase(8);
+	//t.InOrder();
+	//cout << endl;
 
+	//t.erase(14);
+	//t.InOrder();
+	//cout << endl;
 	return 0;
 }

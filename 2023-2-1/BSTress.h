@@ -21,6 +21,17 @@ class BSTress
 public:
 	BSTress() :_root(nullptr){}
 
+	BSTress(const BSTress& t)
+	{
+		_root=Copy(t._root);
+	}
+
+	BSTress<T>& operator=(BSTress<T> tmp)
+	{
+		swap(_root, tmp._root);
+		return *this;
+	}
+
 	Node* Find(const T& x)
 	{
 		Node*cur = _root;
@@ -180,7 +191,101 @@ public:
 	{
 		_InOrder(_root);
 	}
+
+	bool insertR(const T& x)
+	{
+		return _insertR(_root, x);
+	}
+
+	Node* FindR(const T& x)
+	{
+		return _FindR(_root, x);
+	}
+
+	bool eraseR(const T&x)
+	{
+		return _eraseR(_root, x);
+	}
 private:
+	Node* Copy(Node* root)
+	{
+		if (root == nullptr)
+			return nullptr;
+		Node* newNode = new Node(root->_val);
+		newNode->_left = Copy(root->_left);
+		newNode->_right = Copy(root->_right);
+		return newNode;
+	}
+
+	bool _eraseR(Node*& root, const T&x)
+	{
+		if (root == nullptr)
+			return false;
+		if (root->_val > x)
+			return _eraseR(root->_left, x);
+		else if (root->_val < x)
+			return _eraseR(root->_right, x);
+		else
+		{
+			Node* del = root;
+			if (root->_left == nullptr)
+			{
+				root = root->_right;
+
+			}
+			else if (root->_right == nullptr)
+			{
+				root = root->_left;
+			}
+			else
+			{
+				Node* minRight = root->_right;
+				while (minRight->_left)
+				{
+					minRight = minRight->_left;
+				}
+				swap(root->_val, minRight->_val);
+				return _eraseR(root->_right, x);
+			}
+			delete del;
+			return true;
+		}
+
+	}
+	Node* _FindR(Node* root, const T&x)
+	{
+		if (root == nullptr)
+			return root;
+		if (root->_val > x)
+		{
+			return _FindR(root->_left, x);
+		}
+		else if (root->_val < x)
+		{
+			return _FindR(root->_right, x);
+		}
+		else
+		{
+			return root;
+		}
+	}
+	bool _insertR(Node*& root, const T& x)
+	{
+		if (root == nullptr)
+		{
+			root = new Node(x);
+			return true;
+		}
+		if (root->_val > x)
+		{
+			return _insertR(root->_left, x);
+		}
+		else if (root->_val < x)
+		{
+			return _insertR(root->_right, x);
+		}
+		return false;
+	}
 	void _InOrder(Node* root)
 	{
 		if (root == nullptr)
