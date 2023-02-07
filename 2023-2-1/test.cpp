@@ -785,40 +785,203 @@ public:
 //	a._name = "peter";
 //}
 
+//
+//
+//class A
+//{
+//public:
+//	int _a;
+//};
+////class B : public A
+//class B : virtual public A
+//{
+//public:
+//	int _b;
+//};
+////class C : public A
+//class C : virtual public A
+//{
+//public:
+//	int _c;
+//};
+//class D : public B, public C
+//{
+//public:
+//	int _d;
+//};
+//int main()
+//{
+//	D d;
+//	d.B::_a = 1;
+//	d.C::_a = 2;
+//	d._b = 3;
+//	d._c = 4;
+//	d._d = 5;
+//	d._a = 6;
+//	return 0;
+//}
+//
+//
+////根据二叉树创建字符串
+//class Solution {
+//public:
+//	string tree2str(TreeNode* root) {
+//		if (root == nullptr)
+//			return string();
+//		string str;
+//		str += to_string(root->val);
+//		if (root->left)
+//		{
+//			str += "(";
+//			str += tree2str(root->left);
+//			str += ")";
+//		}
+//		else if (root->right)
+//		{
+//			str += "()";
+//		}
+//		if (root->right)
+//		{
+//			str += "(";
+//			str += tree2str(root->right);
+//			str += ")";
+//		}
+//
+//		return str;
+//	}
+//};
 
 
-class A
-{
-public:
-	int _a;
-};
-//class B : public A
-class B : virtual public A
-{
-public:
-	int _b;
-};
-//class C : public A
-class C : virtual public A
-{
-public:
-	int _c;
-};
-class D : public B, public C
-{
-public:
-	int _d;
-};
-int main()
-{
-	D d;
-	d.B::_a = 1;
-	d.C::_a = 2;
-	d._b = 3;
-	d._c = 4;
-	d._d = 5;
-	d._a = 6;
-	return 0;
-}
+//二叉树的层序遍历
+//class Solution {
+//public:
+//	vector<vector<int>> levelOrder(TreeNode* root) {
+//		queue<TreeNode*> q;
+//		vector<vector<int> >vv;
+//		int leaveSize = 0;
+//		if (root)
+//		{
+//			q.push(root);
+//			leaveSize = 1;
+//		}
+//		while (!q.empty())
+//		{
+//			vector<int> v;
+//			while (leaveSize--)
+//			{
+//				TreeNode* cur = q.front();
+//				q.pop();
+//				v.push_back(cur->val);
+//				if (cur->left)
+//					q.push(cur->left);
+//				if (cur->right)
+//					q.push(cur->right);
+//			}
+//			vv.push_back(v);
+//			leaveSize = q.size();
+//		}
+//		return vv;
+//	}
+//};
 
 
+//二叉树的最近公共祖先
+//方法一：
+class Solution {
+public:
+	bool findTress(TreeNode* root, TreeNode*x)
+	{
+		if (root == nullptr)
+			return false;
+		return root == x || findTress(root->left, x)
+			|| findTress(root->right, x);
+	}
+	TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+		if (!root)
+			return root;
+		if (root == p || root == q)
+			return root;
+
+		bool pInleft = findTress(root->left, p);
+		bool pInright = !pInleft;
+		bool qInleft = findTress(root->left, q);
+		bool qInright = !qInleft;
+
+		if (qInleft &&pInleft)
+			return lowestCommonAncestor(root->left, p, q);
+		else if (qInright&& pInright)
+			return lowestCommonAncestor(root->right, p, q);
+		else
+			return root;
+	}
+};
+
+//方法二：
+class Solution {
+public:
+	bool findPah(TreeNode* root, TreeNode* x, stack<TreeNode*>& st)
+	{
+		if (root == nullptr)
+			return false;
+		st.push(root);
+		if (root == x)
+			return true;
+		if (findPah(root->left, x, st))
+			return true;
+		if (findPah(root->right, x, st))
+			return true;
+		st.pop();
+		return false;
+	}
+
+	TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+		if (root == nullptr)
+			return root;
+		stack<TreeNode*> p_st;
+		stack<TreeNode*> q_st;
+		//找p的路径
+		findPah(root, p, p_st);
+		//栈q的路径
+		findPah(root, q, q_st);
+		while (q_st.size() != p_st.size())
+		{
+			if (q_st.size()>p_st.size())
+			{
+				q_st.pop();
+			}
+			else
+			{
+				p_st.pop();
+			}
+		}
+
+		while (q_st.top() != p_st.top())
+		{
+			q_st.pop();
+			p_st.pop();
+		}
+		return q_st.top();
+	}
+};
+
+//三
+class Solution {
+public:
+	TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+		if (root == nullptr)
+			return root;
+		if (root == q || root == p)
+			return root;
+
+		TreeNode* leftleave = lowestCommonAncestor(root->left, p, q);
+		TreeNode* rightleave = lowestCommonAncestor(root->right, p, q);
+
+		if (leftleave && rightleave)
+			return root;
+		if (leftleave == nullptr && rightleave)
+			return rightleave;
+		if (rightleave == nullptr && leftleave)
+			return leftleave;
+		return nullptr;
+	}
+};
