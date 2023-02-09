@@ -885,103 +885,313 @@ public:
 //};
 
 
-//二叉树的最近公共祖先
-//方法一：
+////二叉树的最近公共祖先
+////方法一：
+//class Solution {
+//public:
+//	bool findTress(TreeNode* root, TreeNode*x)
+//	{
+//		if (root == nullptr)
+//			return false;
+//		return root == x || findTress(root->left, x)
+//			|| findTress(root->right, x);
+//	}
+//	TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+//		if (!root)
+//			return root;
+//		if (root == p || root == q)
+//			return root;
+//
+//		bool pInleft = findTress(root->left, p);
+//		bool pInright = !pInleft;
+//		bool qInleft = findTress(root->left, q);
+//		bool qInright = !qInleft;
+//
+//		if (qInleft &&pInleft)
+//			return lowestCommonAncestor(root->left, p, q);
+//		else if (qInright&& pInright)
+//			return lowestCommonAncestor(root->right, p, q);
+//		else
+//			return root;
+//	}
+//};
+//
+////方法二：
+//class Solution {
+//public:
+//	bool findPah(TreeNode* root, TreeNode* x, stack<TreeNode*>& st)
+//	{
+//		if (root == nullptr)
+//			return false;
+//		st.push(root);
+//		if (root == x)
+//			return true;
+//		if (findPah(root->left, x, st))
+//			return true;
+//		if (findPah(root->right, x, st))
+//			return true;
+//		st.pop();
+//		return false;
+//	}
+//
+//	TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+//		if (root == nullptr)
+//			return root;
+//		stack<TreeNode*> p_st;
+//		stack<TreeNode*> q_st;
+//		//找p的路径
+//		findPah(root, p, p_st);
+//		//栈q的路径
+//		findPah(root, q, q_st);
+//		while (q_st.size() != p_st.size())
+//		{
+//			if (q_st.size()>p_st.size())
+//			{
+//				q_st.pop();
+//			}
+//			else
+//			{
+//				p_st.pop();
+//			}
+//		}
+//
+//		while (q_st.top() != p_st.top())
+//		{
+//			q_st.pop();
+//			p_st.pop();
+//		}
+//		return q_st.top();
+//	}
+//};
+//
+////三
+//class Solution {
+//public:
+//	TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+//		if (root == nullptr)
+//			return root;
+//		if (root == q || root == p)
+//			return root;
+//
+//		TreeNode* leftleave = lowestCommonAncestor(root->left, p, q);
+//		TreeNode* rightleave = lowestCommonAncestor(root->right, p, q);
+//
+//		if (leftleave && rightleave)
+//			return root;
+//		if (leftleave == nullptr && rightleave)
+//			return rightleave;
+//		if (rightleave == nullptr && leftleave)
+//			return leftleave;
+//		return nullptr;
+//	}
+//};
+
+//class A
+//{
+//public:
+//	virtual void test(int a) = 0;
+//};
+//
+//int main()
+//{
+//	//A a;
+//	A fun(int);
+//	return 0;
+//}
+
+
+//二叉搜索树与双向链表
+//class Solution {
+//public:
+//	void _Convert(TreeNode* root, TreeNode* &prev)
+//	{
+//		if (root == nullptr)
+//			return;
+//
+//		_Convert(root->left, prev);
+//		root->left = prev;
+//		if (prev != nullptr)
+//		{
+//			prev->right = root;
+//		}
+//		prev = root;
+//		_Convert(root->right, prev);
+//	}
+//	TreeNode* Convert(TreeNode* pRootOfTree) {
+//		if (pRootOfTree == nullptr)
+//			return nullptr;
+//		TreeNode* cur = pRootOfTree;
+//		while (cur->left)
+//		{
+//			cur = cur->left;
+//		}
+//		TreeNode* prev = nullptr;
+//		_Convert(pRootOfTree, prev);
+//		return cur;
+//	}
+//};
+
+//从前序与中序遍历序列构造二叉树
+//class Solution {
+//public:
+//	TreeNode* _buildTree(vector<int>& preorder, vector<int>& inorder, int &previ, int inbegin, int inend)
+//	{
+//		if (inbegin>inend)
+//			return nullptr;
+//		TreeNode* newNode = new TreeNode(preorder[previ]);
+//		int rooti = inbegin;
+//		while (preorder[previ] != inorder[rooti])
+//		{
+//			++rooti;
+//		}
+//		previ++;
+//		//[inbegin ,rooti-1]rooti[rooti+1,inend]
+//		newNode->left = _buildTree(preorder, inorder, previ, inbegin, rooti - 1);
+//		newNode->right = _buildTree(preorder, inorder, previ, rooti + 1, inend);
+//		return newNode;
+//	}
+//	TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+//		int previ = 0;
+//		return _buildTree(preorder, inorder, previ, 0, inorder.size() - 1);
+//	}
+//};
+//#include <vector>
+//struct TreeNode {
+//	int val;
+//	TreeNode *left;
+//	TreeNode *right;
+//	TreeNode() : val(0), left(nullptr), right(nullptr) {}
+//	TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+//	TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+//	
+//};
+//
+//
+//
+//class Solution {
+//public:
+//	TreeNode* _buildTree(vector<int>& preorder, vector<int>& inorder, int &posti, int inbegin, int inend)
+//	{
+//		if (inbegin>inend)
+//			return nullptr;
+//		TreeNode* newNode = new TreeNode(preorder[posti]);
+//		int rooti = inbegin;
+//		while (preorder[previ] != inorder[rooti])
+//		{
+//			++rooti;
+//		}
+//		posti--;
+//		//[inbegin ,rooti-1]rooti[rooti+1,inend]
+//		newNode->right = _buildTree(preorder, inorder, posti, rooti + 1, inend);
+//		newNode->left = _buildTree(preorder, inorder, posti, inbegin, rooti - 1);
+//		return newNode;
+//	}
+//	TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+//		int posti = postorder.size() - 1;
+//		return _buildTree(postorder, inorder, posti, 0, inorder.size() - 1);
+//	}
+//};
+
+#include <map>
+#include <string>
+int main()
+{
+	// 统计水果出现的次数
+	string arr[] = { "苹果", "西瓜", "香蕉", "草莓", "苹果", "西瓜", "苹果", "苹果", "西瓜", "苹果", "香蕉", "苹果", "香蕉" };;
+	map<string, int> m;
+	for (auto& e : arr)
+	{
+		m[e]++;
+	}
+	for (const auto& kv : m)
+	{
+		cout << kv.first << ":" << kv.second << endl;
+	}
+	return 0;
+}
+
+
+//二叉树的前序遍历  非递归
 class Solution {
 public:
-	bool findTress(TreeNode* root, TreeNode*x)
-	{
-		if (root == nullptr)
-			return false;
-		return root == x || findTress(root->left, x)
-			|| findTress(root->right, x);
-	}
-	TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-		if (!root)
-			return root;
-		if (root == p || root == q)
-			return root;
+	vector<int> preorderTraversal(TreeNode* root) {
+		stack<TreeNode*> st;
+		vector<int> v;
+		TreeNode* cur = root;
+		while (cur || !st.empty())
+		{
+			while (cur)
+			{
+				st.push(cur);
+				v.push_back(cur->val);
+				cur = cur->left;
+			}
 
-		bool pInleft = findTress(root->left, p);
-		bool pInright = !pInleft;
-		bool qInleft = findTress(root->left, q);
-		bool qInright = !qInleft;
+			TreeNode* tmp = st.top();
+			st.pop();
+			cur = tmp->right;
+		}
 
-		if (qInleft &&pInleft)
-			return lowestCommonAncestor(root->left, p, q);
-		else if (qInright&& pInright)
-			return lowestCommonAncestor(root->right, p, q);
-		else
-			return root;
+		return v;
 	}
 };
 
-//方法二：
+
+//二叉树的中序遍历  -- 非递归
 class Solution {
 public:
-	bool findPah(TreeNode* root, TreeNode* x, stack<TreeNode*>& st)
-	{
-		if (root == nullptr)
-			return false;
-		st.push(root);
-		if (root == x)
-			return true;
-		if (findPah(root->left, x, st))
-			return true;
-		if (findPah(root->right, x, st))
-			return true;
-		st.pop();
-		return false;
-	}
-
-	TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-		if (root == nullptr)
-			return root;
-		stack<TreeNode*> p_st;
-		stack<TreeNode*> q_st;
-		//找p的路径
-		findPah(root, p, p_st);
-		//栈q的路径
-		findPah(root, q, q_st);
-		while (q_st.size() != p_st.size())
+	vector<int> inorderTraversal(TreeNode* root) {
+		stack<TreeNode*> st;
+		vector<int> v;
+		TreeNode* cur = root;
+		while (cur || !st.empty())
 		{
-			if (q_st.size()>p_st.size())
+			while (cur)
 			{
-				q_st.pop();
+				st.push(cur);
+				cur = cur->left;
+			}
+
+			TreeNode* tmp = st.top();
+			v.push_back(tmp->val);
+			st.pop();
+			cur = tmp->right;
+
+		}
+		return v;
+	}
+};
+
+
+
+//二叉树的后序遍历  --非递归
+class Solution {
+public:
+	vector<int> postorderTraversal(TreeNode* root) {
+		stack<TreeNode*> st;
+		vector<int> v;
+		TreeNode* cur = root;
+		TreeNode* prev = nullptr;
+		while (cur || !st.empty())
+		{
+			while (cur)
+			{
+				st.push(cur);
+				cur = cur->left;
+			}
+
+			TreeNode* tmp = st.top();
+			if (tmp->right == nullptr || tmp->right == prev)
+			{
+				v.push_back(tmp->val);
+				st.pop();
+				prev = tmp;
 			}
 			else
 			{
-				p_st.pop();
+				cur = tmp->right;
 			}
 		}
-
-		while (q_st.top() != p_st.top())
-		{
-			q_st.pop();
-			p_st.pop();
-		}
-		return q_st.top();
-	}
-};
-
-//三
-class Solution {
-public:
-	TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-		if (root == nullptr)
-			return root;
-		if (root == q || root == p)
-			return root;
-
-		TreeNode* leftleave = lowestCommonAncestor(root->left, p, q);
-		TreeNode* rightleave = lowestCommonAncestor(root->right, p, q);
-
-		if (leftleave && rightleave)
-			return root;
-		if (leftleave == nullptr && rightleave)
-			return rightleave;
-		if (rightleave == nullptr && leftleave)
-			return leftleave;
-		return nullptr;
+		return v;
 	}
 };
