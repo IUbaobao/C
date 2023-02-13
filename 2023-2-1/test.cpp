@@ -1092,106 +1092,117 @@ public:
 //	}
 //};
 
-#include <map>
-#include <string>
+//#include <map>
+//#include <string>
+//int main()
+//{
+//	// 统计水果出现的次数
+//	string arr[] = { "苹果", "西瓜", "香蕉", "草莓", "苹果", "西瓜", "苹果", "苹果", "西瓜", "苹果", "香蕉", "苹果", "香蕉" };;
+//	map<string, int> m;
+//	for (auto& e : arr)
+//	{
+//		m[e]++;
+//	}
+//	for (const auto& kv : m)
+//	{
+//		cout << kv.first << ":" << kv.second << endl;
+//	}
+//	return 0;
+//}
+#include "AVLTree.h"
+
 int main()
 {
-	// 统计水果出现的次数
-	string arr[] = { "苹果", "西瓜", "香蕉", "草莓", "苹果", "西瓜", "苹果", "苹果", "西瓜", "苹果", "香蕉", "苹果", "香蕉" };;
-	map<string, int> m;
-	for (auto& e : arr)
-	{
-		m[e]++;
-	}
-	for (const auto& kv : m)
-	{
-		cout << kv.first << ":" << kv.second << endl;
-	}
+	TestAVLTree();
 	return 0;
 }
 
 
-//二叉树的前序遍历  非递归
-class Solution {
-public:
-	vector<int> preorderTraversal(TreeNode* root) {
-		stack<TreeNode*> st;
-		vector<int> v;
-		TreeNode* cur = root;
-		while (cur || !st.empty())
-		{
-			while (cur)
-			{
-				st.push(cur);
-				v.push_back(cur->val);
-				cur = cur->left;
-			}
-
-			TreeNode* tmp = st.top();
-			st.pop();
-			cur = tmp->right;
-		}
-
-		return v;
-	}
-};
-
-
-//二叉树的中序遍历  -- 非递归
-class Solution {
-public:
-	vector<int> inorderTraversal(TreeNode* root) {
-		stack<TreeNode*> st;
-		vector<int> v;
-		TreeNode* cur = root;
-		while (cur || !st.empty())
-		{
-			while (cur)
-			{
-				st.push(cur);
-				cur = cur->left;
-			}
-
-			TreeNode* tmp = st.top();
-			v.push_back(tmp->val);
-			st.pop();
-			cur = tmp->right;
-
-		}
-		return v;
-	}
-};
 
 
 
-//二叉树的后序遍历  --非递归
-class Solution {
-public:
-	vector<int> postorderTraversal(TreeNode* root) {
-		stack<TreeNode*> st;
-		vector<int> v;
-		TreeNode* cur = root;
-		TreeNode* prev = nullptr;
-		while (cur || !st.empty())
-		{
-			while (cur)
-			{
-				st.push(cur);
-				cur = cur->left;
-			}
 
-			TreeNode* tmp = st.top();
-			if (tmp->right == nullptr || tmp->right == prev)
-			{
-				v.push_back(tmp->val);
-				st.pop();
-				prev = tmp;
-			}
-			else
-			{
-				cur = tmp->right;
-			}
-		}
-		return v;
-	}
-};
+////二叉树的前序遍历  非递归
+//class Solution {
+//public:
+//	vector<int> preorderTraversal(TreeNode* root) {
+//		stack<TreeNode*> st;
+//		vector<int> v;
+//		TreeNode* cur = root;
+//		while (cur || !st.empty())
+//		{
+//			while (cur)
+//			{
+//				st.push(cur);
+//				v.push_back(cur->val);
+//				cur = cur->left;
+//			}
+//
+//			TreeNode* tmp = st.top();
+//			st.pop();
+//			cur = tmp->right;
+//		}
+//
+//		return v;
+//	}
+//};
+//
+//
+////二叉树的中序遍历  -- 非递归
+//class Solution {
+//public:
+//	vector<int> inorderTraversal(TreeNode* root) {
+//		stack<TreeNode*> st;
+//		vector<int> v;
+//		TreeNode* cur = root;
+//		while (cur || !st.empty())
+//		{
+//			while (cur)
+//			{
+//				st.push(cur);
+//				cur = cur->left;
+//			}
+//
+//			TreeNode* tmp = st.top();
+//			v.push_back(tmp->val);
+//			st.pop();
+//			cur = tmp->right;
+//
+//		}
+//		return v;
+//	}
+//};
+//
+//
+//
+////二叉树的后序遍历  --非递归
+//class Solution {
+//public:
+//	vector<int> postorderTraversal(TreeNode* root) {
+//		stack<TreeNode*> st;
+//		vector<int> v;
+//		TreeNode* cur = root;
+//		TreeNode* prev = nullptr;
+//		while (cur || !st.empty())
+//		{
+//			while (cur)
+//			{
+//				st.push(cur);
+//				cur = cur->left;
+//			}
+//
+//			TreeNode* tmp = st.top();
+//			if (tmp->right == nullptr || tmp->right == prev)
+//			{
+//				v.push_back(tmp->val);
+//				st.pop();
+//				prev = tmp;
+//			}
+//			else
+//			{
+//				cur = tmp->right;
+//			}
+//		}
+//		return v;
+//	}
+//};

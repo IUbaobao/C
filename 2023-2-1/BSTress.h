@@ -15,11 +15,11 @@ public:
 
 
 template<class T>
-class BSTress
+class BSTrees
 {
 	typedef BSTNode<T> Node;
 public:
-	BSTress() :_root(nullptr){}
+	BSTrees() :_root(nullptr){}
 
 	BSTress(const BSTress& t)
 	{
