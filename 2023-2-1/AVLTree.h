@@ -339,20 +339,21 @@ private:
 //	cout << t.IsBalance() << endl;
 //}
 
+//
+//void TestAVLTree()
+//{
+//	srand(time(0));
+//	const size_t N = 10000;
+//	AVLTree<int, int> t;
+//	for (size_t i = 0; i < N; ++i)
+//	{
+//		size_t x = rand();
+//		t.Insert(make_pair(x, x));
+//		//cout << t.IsBalance() << endl;
+//	}
+//
+//	t.Inorder();
+//
+//	cout << t.IsBalance() << endl;
+//}
 
-void TestAVLTree()
-{
-	srand(time(0));
-	const size_t N = 10000;
-	AVLTree<int, int> t;
-	for (size_t i = 0; i < N; ++i)
-	{
-		size_t x = rand();
-		t.Insert(make_pair(x, x));
-		//cout << t.IsBalance() << endl;
-	}
-
-	t.Inorder();
-
-	cout << t.IsBalance() << endl;
-}

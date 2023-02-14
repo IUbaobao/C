@@ -1110,10 +1110,11 @@ public:
 //	return 0;
 //}
 #include "AVLTree.h"
-
+#include "RBTree.h"
 int main()
 {
-	TestAVLTree();
+	//TestAVLTree();
+	TestRBTree2();
 	return 0;
 }
 
