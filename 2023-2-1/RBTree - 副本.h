@@ -11,122 +11,45 @@ enum Color
 	BLACK,
 };
 
-template <class T>
+template <class K, class V>
 struct RBTreeNode
 {
-	RBTreeNode<T> *_parent;
-	RBTreeNode<T>*_left;
-	RBTreeNode<T>* _right;
-	T _data;
+	RBTreeNode<K, V> *_parent;
+	RBTreeNode<K, V>*_left;
+	RBTreeNode<K, V>* _right;
+	pair<K, V> _kv;
 	Color _col;
 
-	RBTreeNode(const T& data)
-		:_data(data), _parent(nullptr), _left(nullptr), _right(nullptr), _col(RED)
+	RBTreeNode(const pair<K, V>& kv)
+		:_kv(kv), _parent(nullptr), _left(nullptr), _right(nullptr), _col(RED)
 	{}
 };
 
-template<class T>
-class _RBTreeIterator
-{
-public:
-	typedef RBTreeNode<T> Node;
-	typedef _RBTreeIterator<T> Self;
-	_RBTreeIterator( Node* ptr)
-		:_node(ptr)
-	{}
 
-	T& operator*()
-	{
-		return _node->_data;
-	}
-
-	T* operator->()
-	{
-		return &_node->_data;
-	}
-
-	bool operator!=(const Self& s)
-	{
-		return _node != s._node;
-	}
-
-	Self& operator++()
-	{
-		//如果右孩子存在，返回右孩子的最左节点
-		if (_node->_right)
-		{
-			Node* cur = _node->_right;
-			while (cur->_left)
-			{
-				cur = cur->_left;
-			}
-			_node = cur;
-		}
-		else//右孩子不存则要找，孩子是父亲的左节点
-		{
-			Node* parent = _node->_parent;
-			Node* cur = _node;
-			while (parent && parent->_right == cur)
-			{
-				cur = parent;
-				parent = cur->_parent;
-			}
-			_node = parent;
-		}
-		return *this;
-	}
-	
-private:
-	Node* _node;
-};
-
-
-template <class K, class T,class KeyOfT>
+template <class K, class V>
 class RBTree
 {
 public:
-	typedef RBTreeNode<T> Node;
-	typedef _RBTreeIterator<T> iterator;
-
-
-	iterator begin()
-	{
-		Node* cur = _root;
-		while (cur->_left)
-		{
-			cur = cur->_left;
-		}
-		return iterator(cur);
-	}
-
-	iterator end()
-	{
-		return iterator(nullptr);
-	}
-
-
-	bool Insert(const T& data)
+	typedef RBTreeNode<K, V> Node;
+	bool Insert(const pair<K, V>& kv)
 	{
 		if (_root == nullptr)
 		{
-			_root = new Node(data);
+			_root = new Node(kv);
 			_root->_col = BLACK;
 			return true;
 		}
-		KeyOfT kot;
 		Node* cur = _root;
 		Node* parent = _root;
 		//找合适位置插入
 		while (cur)
 		{
-			//if (cur->_kv.first > kv.first)
-			if (kot(cur->_data)> kot(data))
+			if (cur->_kv.first > kv.first)
 			{
 				parent = cur;
 				cur = cur->_left;
 			}
-			//else if (cur->_kv.first < kv.first)
-			else if (kot(cur->_data) < kot(data))
+			else if (cur->_kv.first < kv.first)
 			{
 				parent = cur;
 				cur = cur->_right;
@@ -136,11 +59,10 @@ public:
 				return false;
 			}
 		}
-		cur = new Node(data);
+		cur = new Node(kv);
 		cur->_col = RED;//默认插入红色节点
 		//判断往哪个子树插入
-		//if (parent->_kv.first > kv.first)
-		if (kot(parent->_data) > kot(data))
+		if (parent->_kv.first > kv.first)
 		{
 			parent->_left = cur;
 		}
@@ -386,19 +308,19 @@ private:
 //}
 //
 //
-//void TestRBTree2()
-//{
-//	srand(time(0));
-//	const size_t N = 10000;
-//	RBTree<int, int> t;
-//	for (size_t i = 0; i < N; ++i)
-//	{
-//		size_t x = rand();
-//		t.Insert(make_pair(x, x));
-//		//cout << t.IsBalance() << endl;
-//	}
-//
-//	t.Inorder();
-//
-//	cout << t.IsValidRBTree() << endl;
-//}
+void TestRBTree2()
+{
+	srand(time(0));
+	const size_t N = 10000;
+	RBTree<int, int> t;
+	for (size_t i = 0; i < N; ++i)
+	{
+		size_t x = rand();
+		t.Insert(make_pair(x, x));
+		//cout << t.IsBalance() << endl;
+	}
+
+	t.Inorder();
+
+	cout << t.IsValidRBTree() << endl;
+}

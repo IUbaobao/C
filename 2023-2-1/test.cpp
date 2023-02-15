@@ -1109,15 +1109,15 @@ public:
 //	}
 //	return 0;
 //}
-#include "AVLTree.h"
-#include "RBTree.h"
-int main()
-{
-	//TestAVLTree();
-	TestRBTree2();
-	return 0;
-}
-
+//#include "AVLTree.h"
+//#include "RBTree.h"
+//int main()
+//{
+//	//TestAVLTree();
+//	TestRBTree2();
+//	return 0;
+//}
+//
 
 
 
@@ -1207,3 +1207,89 @@ int main()
 //		return v;
 //	}
 //};
+
+//前K个高频单词
+//class Solution {
+//public:
+//	class Compare
+//	{
+//	public:
+//		bool operator()(const pair<string, int>& l, const pair<string, int>& r)
+//		{
+//			//return l.second>r.second || ( l.second==r.second&&l.first<r.first);
+//			return l.second>r.second;
+//
+//		}
+//	};
+//
+//	vector<string> topKFrequent(vector<string>& words, int k) {
+//		map<string, int> mapcount;
+//		for (auto& e : words)
+//		{
+//			mapcount[e]++;
+//		}
+//		vector<pair<string, int>> v;
+//		for (auto& e : mapcount)
+//		{
+//			v.push_back(make_pair(e.first, e.second));
+//		}
+//		//sort(v.begin(),v.end(),Compare());
+//		stable_sort(v.begin(), v.end(), Compare());
+//
+//		vector<string> result;
+//		for (int i = 0; i<k; ++i)
+//		{
+//			result.push_back(v[i].first);
+//		}
+//
+//		return result;
+//	}
+//};
+//
+////单词识别
+//#include <iostream>
+//#include <string>
+//#include <vector>
+//#include <map>
+//
+//#include <algorithm>
+//using namespace std;
+//
+//int main()
+//{
+//	string s;
+//	getline(cin, s);
+//	map<string, int>  mapcount;
+//	vector<string> vs;
+//	string tmp;
+//	for (int i = 0; i <= s.size(); ++i)
+//	{
+//		if (i == s.size() || s[i] == ' ')
+//		{
+//			vs.push_back(tmp);
+//			tmp.clear();
+//		}
+//		else if (isalpha(s[i]))
+//		{
+//			tmp += s[i];
+//		}
+//	}
+//	for (auto& e : vs)
+//	{
+//		transform(e.begin(), e.end(), e.begin(), ::tolower);
+//		mapcount[e]++;
+//	}
+//	for (auto& e : mapcount)
+//	{
+//		cout << e.first << ":" << e.second << endl;
+//	}
+//	return 0;
+//}
+
+#include "Set.h"
+#include "Map.h"
+int main()
+{
+	hdm::test_map();
+	return 0;
+}
