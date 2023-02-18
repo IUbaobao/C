@@ -1,7 +1,7 @@
-#include <iostream>
-#include <string>
-#include <vector>
-using namespace std;
+//#include <iostream>
+//#include <string>
+//#include <vector>
+//using namespace std;
 
 //class Person
 //{
@@ -40,41 +40,41 @@ using namespace std;
 //	s.Print();
 //	return 0;
 //}
-
-//字符串压缩
-class Solution {
-public:
-	string compressString(string S) {
-		if (S.size() == 0)
-			return S;
-		string ret;
-		char c = S[0];
-		char prev;
-		int count = 0;
-		for (auto e : S)
-		{
-			if (c == e)
-			{
-				count++;
-				prev = e;
-			}
-			else
-			{
-				ret += prev;
-				ret += to_string(count);
-				count = 1;
-				c = e;
-				prev = e;
-			}
-		}
-		ret += S[S.size() - 1];
-		ret += to_string(count);
-		if (ret.size() >= S.size())
-			return S;
-		return ret;
-
-	}
-};
+//
+////字符串压缩
+//class Solution {
+//public:
+//	string compressString(string S) {
+//		if (S.size() == 0)
+//			return S;
+//		string ret;
+//		char c = S[0];
+//		char prev;
+//		int count = 0;
+//		for (auto e : S)
+//		{
+//			if (c == e)
+//			{
+//				count++;
+//				prev = e;
+//			}
+//			else
+//			{
+//				ret += prev;
+//				ret += to_string(count);
+//				count = 1;
+//				c = e;
+//				prev = e;
+//			}
+//		}
+//		ret += S[S.size() - 1];
+//		ret += to_string(count);
+//		if (ret.size() >= S.size())
+//			return S;
+//		return ret;
+//
+//	}
+//};
 
 //int main()
 //{
@@ -141,7 +141,7 @@ public:
 //};
 
 
-#include <stack>
+//#include <stack>
 //int main() 
 //{
 //	//创建栈容器 栈容器必须符合先进后出
@@ -186,8 +186,8 @@ public:
 //	return 0;
 //}
 
-#include <queue>
-#include <functional> // greater算法的头文件
+//#include <queue>
+//#include <functional> // greater算法的头文件
 //int main()
 //{
 //	// 默认情况下，创建的是大堆，其底层按照小于号比较
@@ -224,95 +224,95 @@ public:
 //}
 
 
-class Date
-{
-public:
-	Date(int year = 1900, int month = 1, int day = 1)
-		: _year(year)
-		, _month(month)
-		, _day(day)
-	{}
-	bool operator<(const Date& d)const
-	{
-		return (_year < d._year) ||
-			(_year == d._year && _month < d._month) ||
-			(_year == d._year && _month == d._month && _day < d._day);
-	}
-	bool operator>(const Date& d)const
-	{
-		return (_year > d._year) ||
-			(_year == d._year && _month > d._month) ||
-			(_year == d._year && _month == d._month && _day > d._day);
-	}
-	friend ostream& operator<<(ostream& _cout, const Date& d)
-	{
-		_cout << d._year << "-" << d._month << "-" << d._day;
-		return _cout;
-	}
-private:
-	int _year;
-	int _month;
-	int _day;
-};
-void TestPriorityQueue()
-{
-	// 大堆，需要用户在自定义类型中提供<的重载
-	//因为编译器并不知道用户自定义类型的比较方式是怎么样的
-	priority_queue<Date> q1;
-	q1.push(Date(2018, 10, 29));
-	q1.push(Date(2018, 10, 28));
-	q1.push(Date(2018, 10, 30));
-	cout << q1.top() << endl;
-	// 如果要创建小堆，需要用户提供>的重载
-	priority_queue<Date, vector<Date>, greater<Date>> q2;
-	q2.push(Date(2018, 10, 29));
-	q2.push(Date(2018, 10, 28));
-	q2.push(Date(2018, 10, 30));
-	cout << q2.top() << endl;
-
-}
-
-#include "priority_queue.h"
-
-//螺旋矩阵II
-class Solution1 {
-public:
-	vector<vector<int>> generateMatrix(int n) {
-		vector<vector<int> > vv(n, vector<int>(n, 0));
-		int startx = 0, starty = 0;
-		int mid = n / 2;
-		int i = 0, j = 0;
-		int offset = 1;
-		int count = 1;
-		while (mid--)
-		{
-			for (j = starty; j<n - offset; ++j)
-			{
-				vv[startx][j] = count++;
-			}
-			for (i = startx; i<n - offset; ++i)
-			{
-				vv[i][j] = count++;
-			}
-			for (j; j>starty; --j)
-			{
-				vv[i][j] = count++;
-			}
-			for (i; i>startx; --i)
-			{
-				vv[i][j] = count++;
-			}
-			offset++;
-			startx++;
-			starty++;
-		}
-		if (n % 2 == 1)
-		{
-			vv[n / 2][n / 2] = count++;
-		}
-		return vv;
-	}
-};
+//class Date
+//{
+//public:
+//	Date(int year = 1900, int month = 1, int day = 1)
+//		: _year(year)
+//		, _month(month)
+//		, _day(day)
+//	{}
+//	bool operator<(const Date& d)const
+//	{
+//		return (_year < d._year) ||
+//			(_year == d._year && _month < d._month) ||
+//			(_year == d._year && _month == d._month && _day < d._day);
+//	}
+//	bool operator>(const Date& d)const
+//	{
+//		return (_year > d._year) ||
+//			(_year == d._year && _month > d._month) ||
+//			(_year == d._year && _month == d._month && _day > d._day);
+//	}
+//	friend ostream& operator<<(ostream& _cout, const Date& d)
+//	{
+//		_cout << d._year << "-" << d._month << "-" << d._day;
+//		return _cout;
+//	}
+//private:
+//	int _year;
+//	int _month;
+//	int _day;
+//};
+//void TestPriorityQueue()
+//{
+//	// 大堆，需要用户在自定义类型中提供<的重载
+//	//因为编译器并不知道用户自定义类型的比较方式是怎么样的
+//	priority_queue<Date> q1;
+//	q1.push(Date(2018, 10, 29));
+//	q1.push(Date(2018, 10, 28));
+//	q1.push(Date(2018, 10, 30));
+//	cout << q1.top() << endl;
+//	// 如果要创建小堆，需要用户提供>的重载
+//	priority_queue<Date, vector<Date>, greater<Date>> q2;
+//	q2.push(Date(2018, 10, 29));
+//	q2.push(Date(2018, 10, 28));
+//	q2.push(Date(2018, 10, 30));
+//	cout << q2.top() << endl;
+//
+//}
+//
+//#include "priority_queue.h"
+//
+////螺旋矩阵II
+//class Solution1 {
+//public:
+//	vector<vector<int>> generateMatrix(int n) {
+//		vector<vector<int> > vv(n, vector<int>(n, 0));
+//		int startx = 0, starty = 0;
+//		int mid = n / 2;
+//		int i = 0, j = 0;
+//		int offset = 1;
+//		int count = 1;
+//		while (mid--)
+//		{
+//			for (j = starty; j<n - offset; ++j)
+//			{
+//				vv[startx][j] = count++;
+//			}
+//			for (i = startx; i<n - offset; ++i)
+//			{
+//				vv[i][j] = count++;
+//			}
+//			for (j; j>starty; --j)
+//			{
+//				vv[i][j] = count++;
+//			}
+//			for (i; i>startx; --i)
+//			{
+//				vv[i][j] = count++;
+//			}
+//			offset++;
+//			startx++;
+//			starty++;
+//		}
+//		if (n % 2 == 1)
+//		{
+//			vv[n / 2][n / 2] = count++;
+//		}
+//		return vv;
+//	}
+//};
 
 //int main()
 //{
@@ -1286,10 +1286,97 @@ public:
 //	return 0;
 //}
 
-#include "Set.h"
-#include "Map.h"
+//#include "Set.h"
+//#include "Map.h"
+//int main()
+//{
+//	hdm::test_map();
+//	return 0;
+//}
+
+//两数相加
+#include <iostream>
+#include <vector>
+using namespace std;
+struct ListNode 
+{
+     int val;
+     ListNode *next;
+     ListNode() : val(0), next(nullptr) {}
+     ListNode(int x) : val(x), next(nullptr) {}
+     ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
+
+
+ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+	ListNode* newhead = nullptr, *cur = nullptr;
+	ListNode* cur1 = l1, *cur2 = l2;
+	int flag = 0;
+	int tmp = 0;
+	while (cur1 || cur2)
+	{
+		if (cur1&& cur2)
+		{
+			tmp = cur1->val + cur2->val+flag;
+			cur1 = cur1->next;
+			cur2 = cur2->next;
+		}
+		else if (cur1)
+		{
+			tmp = cur1->val + flag;
+			cur1 = cur1->next;
+		}
+		else
+		{
+			tmp = cur2->val + flag;
+			cur2 = cur2->next;
+		}
+		if (newhead == nullptr)
+		{
+			newhead = cur = new ListNode(tmp % 10);
+		}
+		else
+		{
+			cur->next = new ListNode(tmp % 10 );
+			cur = cur->next;
+		}
+		flag = tmp / 10;
+	}
+	if (flag != 0)
+	{
+		cur->next = new ListNode(flag);
+	}
+
+	return newhead;
+
+}
+
 int main()
 {
-	hdm::test_map();
+	int arr1[] = { 9, 9, 9, 9, 9, 9, 9 };
+	int arr2[] = { 9, 9, 9, 9 };
+	ListNode* newhead1 = new ListNode(arr1[0]);
+	ListNode* newhead2 = new ListNode(arr2[0]);
+	int i = 1, j = 1;
+	ListNode* cur1 = newhead1;
+	ListNode* cur2 = newhead2;
+
+	while (j<sizeof(arr1) / sizeof(int))
+	{
+		cur1->next = new ListNode(arr1[j++]);
+		cur1 = cur1->next;
+	}
+	while (i<sizeof(arr2) / sizeof(int))
+	{
+		cur2->next = new ListNode(arr2[i++]);
+		cur2 = cur2->next;
+	}
+	ListNode*cur =addTwoNumbers(newhead1, newhead2);
+	while (cur)
+	{
+		cout << cur->val << " ";
+		cur = cur->next;
+	}
 	return 0;
 }
