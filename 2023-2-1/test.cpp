@@ -1293,90 +1293,163 @@
 //	hdm::test_map();
 //	return 0;
 //}
+//
+////两数相加
+//#include <iostream>
+//#include <vector>
+//using namespace std;
+//struct ListNode 
+//{
+//     int val;
+//     ListNode *next;
+//     ListNode() : val(0), next(nullptr) {}
+//     ListNode(int x) : val(x), next(nullptr) {}
+//     ListNode(int x, ListNode *next) : val(x), next(next) {}
+//};
+//
+//
+//
+//ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+//	ListNode* newhead = nullptr, *cur = nullptr;
+//	ListNode* cur1 = l1, *cur2 = l2;
+//	int flag = 0;
+//	int tmp = 0;
+//	while (cur1 || cur2)
+//	{
+//		if (cur1&& cur2)
+//		{
+//			tmp = cur1->val + cur2->val+flag;
+//			cur1 = cur1->next;
+//			cur2 = cur2->next;
+//		}
+//		else if (cur1)
+//		{
+//			tmp = cur1->val + flag;
+//			cur1 = cur1->next;
+//		}
+//		else
+//		{
+//			tmp = cur2->val + flag;
+//			cur2 = cur2->next;
+//		}
+//		if (newhead == nullptr)
+//		{
+//			newhead = cur = new ListNode(tmp % 10);
+//		}
+//		else
+//		{
+//			cur->next = new ListNode(tmp % 10 );
+//			cur = cur->next;
+//		}
+//		flag = tmp / 10;
+//	}
+//	if (flag != 0)
+//	{
+//		cur->next = new ListNode(flag);
+//	}
+//
+//	return newhead;
+//
+//}
+//
+//int main()
+//{
+//	int arr1[] = { 9, 9, 9, 9, 9, 9, 9 };
+//	int arr2[] = { 9, 9, 9, 9 };
+//	ListNode* newhead1 = new ListNode(arr1[0]);
+//	ListNode* newhead2 = new ListNode(arr2[0]);
+//	int i = 1, j = 1;
+//	ListNode* cur1 = newhead1;
+//	ListNode* cur2 = newhead2;
+//
+//	while (j<sizeof(arr1) / sizeof(int))
+//	{
+//		cur1->next = new ListNode(arr1[j++]);
+//		cur1 = cur1->next;
+//	}
+//	while (i<sizeof(arr2) / sizeof(int))
+//	{
+//		cur2->next = new ListNode(arr2[i++]);
+//		cur2 = cur2->next;
+//	}
+//	ListNode*cur =addTwoNumbers(newhead1, newhead2);
+//	while (cur)
+//	{
+//		cout << cur->val << " ";
+//		cur = cur->next;
+//	}
+//	return 0;
+//}
 
-//两数相加
-#include <iostream>
-#include <vector>
-using namespace std;
-struct ListNode 
-{
-     int val;
-     ListNode *next;
-     ListNode() : val(0), next(nullptr) {}
-     ListNode(int x) : val(x), next(nullptr) {}
-     ListNode(int x, ListNode *next) : val(x), next(next) {}
-};
+//无重复字符的最长子串
+//class Solution {
+//public:
+//	int lengthOfLongestSubstring(string s) {
+//		set<char> s1;
+//		int j = 0, maxcount = 0, count = 0;
+//		for (int i = 0; i<s.size(); ++i)
+//		{
+//			if (s1.count(s[i]) == 0)
+//			{
+//				s1.insert(s[i]);
+//				count++;
+//				if (count>maxcount)
+//				{
+//					maxcount = count;
+//				}
+//			}
+//			else
+//			{
+//				while (s1.count(s[i]) != 0)
+//				{
+//					s1.erase(s[j++]);
+//					count--;
+//				}
+//				s1.insert(s[i]);
+//				count++;
+//			}
+//		}
+//		return maxcount;
+//	}
+//};
+//
 
 
 
-ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-	ListNode* newhead = nullptr, *cur = nullptr;
-	ListNode* cur1 = l1, *cur2 = l2;
-	int flag = 0;
-	int tmp = 0;
-	while (cur1 || cur2)
-	{
-		if (cur1&& cur2)
-		{
-			tmp = cur1->val + cur2->val+flag;
-			cur1 = cur1->next;
-			cur2 = cur2->next;
-		}
-		else if (cur1)
-		{
-			tmp = cur1->val + flag;
-			cur1 = cur1->next;
-		}
-		else
-		{
-			tmp = cur2->val + flag;
-			cur2 = cur2->next;
-		}
-		if (newhead == nullptr)
-		{
-			newhead = cur = new ListNode(tmp % 10);
-		}
-		else
-		{
-			cur->next = new ListNode(tmp % 10 );
-			cur = cur->next;
-		}
-		flag = tmp / 10;
-	}
-	if (flag != 0)
-	{
-		cur->next = new ListNode(flag);
-	}
-
-	return newhead;
-
-}
-
-int main()
-{
-	int arr1[] = { 9, 9, 9, 9, 9, 9, 9 };
-	int arr2[] = { 9, 9, 9, 9 };
-	ListNode* newhead1 = new ListNode(arr1[0]);
-	ListNode* newhead2 = new ListNode(arr2[0]);
-	int i = 1, j = 1;
-	ListNode* cur1 = newhead1;
-	ListNode* cur2 = newhead2;
-
-	while (j<sizeof(arr1) / sizeof(int))
-	{
-		cur1->next = new ListNode(arr1[j++]);
-		cur1 = cur1->next;
-	}
-	while (i<sizeof(arr2) / sizeof(int))
-	{
-		cur2->next = new ListNode(arr2[i++]);
-		cur2 = cur2->next;
-	}
-	ListNode*cur =addTwoNumbers(newhead1, newhead2);
-	while (cur)
-	{
-		cout << cur->val << " ";
-		cur = cur->next;
-	}
-	return 0;
-}
+//寻找两个正序数组的中位数
+//class Solution {
+//public:
+//	double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+//		vector<int> v;
+//		int i = 0, j = 0;
+//		while (i<nums1.size() && j<nums2.size())
+//		{
+//			if (nums1[i]>nums2[j])
+//			{
+//				v.push_back(nums2[j++]);
+//			}
+//			else
+//			{
+//				v.push_back(nums1[i++]);
+//			}
+//		}
+//		while (i<nums1.size())
+//		{
+//			v.push_back(nums1[i++]);
+//		}
+//		while (j<nums2.size())
+//		{
+//			v.push_back(nums2[j++]);
+//		}
+//		if (v.size() % 2 == 1)
+//		{
+//			return v[v.size() / 2];
+//		}
+//		else
+//		{
+//			return ((double)v[v.size() / 2 - 1] + v[v.size() / 2]) / 2;
+//		}
+//
+//	}
+//};
+//
