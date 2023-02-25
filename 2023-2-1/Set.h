@@ -17,18 +17,20 @@ namespace hdm
 			}
 		};
 
-		typedef typename  RBTree<K, K, SetKeyOfT>::iterator iterator;
+		typedef typename  RBTree<K, K, SetKeyOfT>::const_iterator iterator;
+		typedef typename  RBTree<K, K, SetKeyOfT>::const_iterator const_iterator;
 
-		iterator begin()
+
+		iterator begin()const 
 		{
 			return _t.begin();
 		}
 		
-		iterator end()
+		iterator end()const
 		{
 			return _t.end();
 		}
-		bool insert(const K&key)
+		pair<iterator,bool> insert(const K&key)
 		{
 			return _t.Insert(key);
 		}
@@ -49,6 +51,8 @@ namespace hdm
 		set<int>::iterator it = s.begin();
 		while (it != s.end())
 		{
+			//(*it)++;
+			//++(*it);
 			cout << *it << " ";
 			++it;
 		}

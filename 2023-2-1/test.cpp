@@ -1453,3 +1453,12 @@
 //	}
 //};
 //
+
+
+#include "Set.h"
+#include "Map.h"
+int main()
+{
+	hdm::TestMap();
+	return 0;
+}

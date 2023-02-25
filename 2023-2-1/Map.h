@@ -1,7 +1,7 @@
 #pragma once 
 
 #include "RBTree.h"
-
+#include <string>
 
 namespace hdm
 {
@@ -28,11 +28,15 @@ namespace hdm
 			return _t.end();
 		}
 
-		bool insert(const pair<K, V>& kv)
+		pair<iterator,bool> insert(const pair<K, V>& kv)
 		{
 			return _t.Insert(kv);
 		}
-
+		V& operator[](K& key)
+		{
+			pair<iterator, bool> ret = insert(make_pair(key, V()));
+			return ret.first->second;
+		}
 	private:
 		RBTree<K, pair<const K, V>, MapKeyOfV> _t;
 	};
@@ -55,6 +59,22 @@ namespace hdm
 		{
 			cout << it->first << ":" << it->second << endl;
 			++it;
+		}
+	}
+
+	void TestMap()
+	{
+		//统计水果出现的次数
+		std::string arr[] = { "苹果", "西瓜", "香蕉", "草莓", "苹果", "西瓜", "苹果", "苹果", "西瓜", "苹果", "香蕉", "苹果", "香蕉" };
+		map<string, int> mapcount;
+		for (auto& e : arr)
+		{
+			mapcount[e]++;
+		}
+
+		for (auto& e : mapcount)
+		{
+			cout << e.first << ":" << e.second << endl;
 		}
 	}
 }

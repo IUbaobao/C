@@ -25,30 +25,32 @@ struct RBTreeNode
 	{}
 };
 
-template<class T>
+template<class T,class Ptr,class Ref>
 class _RBTreeIterator
 {
 public:
 	typedef RBTreeNode<T> Node;
-	typedef _RBTreeIterator<T> Self;
+	typedef _RBTreeIterator<T,Ptr,Ref> Self;
+	typedef _RBTreeIterator<T, T*, T&> iterator;
+
 	_RBTreeIterator( Node* ptr)
 		:_node(ptr)
 	{}
 
-	T& operator*()
+	_RBTreeIterator(const iterator& it)
+		:_node(it._node)
+	{}
+
+	Ref operator*()
 	{
 		return _node->_data;
 	}
 
-	T* operator->()
+	Ptr operator->()
 	{
 		return &_node->_data;
 	}
 
-	bool operator!=(const Self& s)
-	{
-		return _node != s._node;
-	}
 
 	Self& operator++()
 	{
@@ -76,7 +78,41 @@ public:
 		return *this;
 	}
 	
-private:
+	Self& operator--()
+	{
+		//如果左孩子存在，返回左孩子的最右节点
+		if (_node->_left)
+		{
+			Node* cur = _node->_left;
+			while (cur->_right)
+			{
+				cur=cur->_right
+			}
+			_node = cur;
+		}
+		else//左孩子不存则要找，孩子是父亲的右节点
+		{
+			Node* parent = _node->_parent;
+			Node* cur = _node;
+			while (parent && parent->_left==cur)
+			{
+				cur = parent;
+				parent=cur->_parent
+			}
+			_node = parent;
+		}
+		return *this;
+	}
+
+	bool operator!=(const Self& it)const
+	{
+		return _node != it._node;
+	}
+
+	bool operator==(const Self& it)const
+	{
+		return _node == it._node;
+	}
 	Node* _node;
 };
 
@@ -86,8 +122,8 @@ class RBTree
 {
 public:
 	typedef RBTreeNode<T> Node;
-	typedef _RBTreeIterator<T> iterator;
-
+	typedef _RBTreeIterator<T,T*,T&> iterator;
+	typedef _RBTreeIterator<T, const T*, const T&> const_iterator;
 
 	iterator begin()
 	{
@@ -104,14 +140,28 @@ public:
 		return iterator(nullptr);
 	}
 
+	const_iterator begin() const
+	{
+		Node* cur = _root;
+		while (cur->_left)
+		{
+			cur = cur->_left;
+		}
+		return const_iterator(cur);
+	}
 
-	bool Insert(const T& data)
+	const_iterator end()const
+	{
+		return const_iterator(nullptr);
+	}
+
+	pair<iterator,bool> Insert(const T& data)
 	{
 		if (_root == nullptr)
 		{
 			_root = new Node(data);
 			_root->_col = BLACK;
-			return true;
+			return make_pair(iterator(_root),true);
 		}
 		KeyOfT kot;
 		Node* cur = _root;
@@ -133,10 +183,11 @@ public:
 			}
 			else//相等不插入
 			{
-				return false;
+				return make_pair(iterator(cur),false);
 			}
 		}
 		cur = new Node(data);
+		Node* newNode = cur;
 		cur->_col = RED;//默认插入红色节点
 		//判断往哪个子树插入
 		//if (parent->_kv.first > kv.first)
@@ -227,7 +278,7 @@ public:
 			}
 		}
 		_root->_col = BLACK;
-		return true;
+		return make_pair(iterator(newNode),true);
 	}
 
 	void RotateL(Node* parent)
