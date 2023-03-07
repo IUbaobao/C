@@ -1,6 +1,5 @@
 #pragma once 
 #include <iostream>
-#include <string>
 #include <vector>
 using namespace std;
 
@@ -81,7 +80,7 @@ namespace hdm
 
 			while (_tables[hashi]._state == EXIST)
 			{
-				++hashi;//线性探测
+				++hashi;
 				hashi %= _tables.size();
 			}
 			_tables[hashi]._kv = kv;
@@ -149,118 +148,36 @@ namespace hdm
 
 namespace buckethash
 {
-	template <class T>
+	template <class K,class V>
 	struct hashNode
 	{
-		T _data;
+		std::pair<K,V> _kv;
 		hashNode* _next;
 
-		hashNode(const T& data)
-			:_data(data), _next(nullptr)
+		hashNode(const pair<K,V>& kv)
+			:_kv(kv), _next(nullptr)
 		{}
 	}; 
-	template <class K, class T, class hash, class KeyOfT>
-	class hashtable;
-
-	template <class K,class T,class hash,class KeyOfT>
-	class _HTiterator
-	{
-	public:
-		typedef hashtable<K, T, hash,KeyOfT> HT;
-		typedef hashNode<T> Node;
-		typedef _HTiterator<K, T, hash, KeyOfT> Self;
-		Node* _node;
-		HT* _ht;
-
-		_HTiterator(Node* node,HT* ht)
-			:_node(node), _ht(ht)
-		{}
-
-		T& operator*()
-		{
-			return _node->_data;
-		}
-		T* operator->()
-		{
-			return &_node->_data;
-		}
-
-		bool operator!=(const Self& s) const 
-		{
-			return _node != s._node;
-		}
-
-		Self operator++()
-		{
-			if (_node->_next)
-			{
-				_node = _node->_next;
-			}
-			else
-			{
-				size_t n = hash()(KeyOfT()(_node->_data)) % _ht->_tables.size();
-				++n;
-				while (n<_ht->_tables.size())
-				{
-					if (_ht->_tables[n])
-					{
-						_node = _ht->_tables[n];
-						break;
-					}
-					else
-					{
-						++n;
-					}
-				}
-				//后面没有桶了
-				if (n == _ht->_tables.size())
-					_node = nullptr;
-			}
-			return *this;
-
-		}
-
-	};
 
 
-	template <class K,class T,class hash,class KeyOfT>
+
+
+	template <class K,class V,class hash=hashFunc<K> >
 	class hashtable
 	{
 	public:
-		 
-		template <class K, class T, class hash, class KeyOfT> 
-		friend 	class _HTiterator;
+		typedef hashNode<K,V> Node;
 
-			
-		typedef hashNode<T> Node;
-		typedef _HTiterator<K, T, hash, KeyOfT> iterator;
 		hashtable()
 		{
 			_tables.resize(10,nullptr);
 			_n = 0;
 		}
 
-		iterator begin()
+		bool Insert(const pair<K, V>& kv)
 		{
-			for (auto cur : _tables)
-			{
-				if (cur)
-				{
-					return iterator(cur, this);
-				}
-			}
-			return iterator(nullptr, this);
-		}
-
-		iterator end()
-		{
-			return iterator(nullptr, this);
-		}
-
-		pair<iterator,bool> Insert(const T& data)
-		{
-			if (Find(KeyOfT()(data) ))
-				return make_pair(iterator(Find(KeyOfT()(data)), this), false);
+			if (Find(kv.first))
+				return false;
 			if (_n==_tables.size())
 			{
 				//扩容
@@ -287,7 +204,7 @@ namespace buckethash
 					while (cur)
 					{
 						Node* next = cur->_next;
-						size_t hashi = hash()(KeyOfT()(cur->_data)) % newtables.size();
+						size_t hashi = hash()(cur->_kv.first) % newtables.size();
 						cur->_next = newtables[hashi];
 						newtables[hashi] = cur;
 						cur = next;
@@ -297,12 +214,12 @@ namespace buckethash
 				std::swap(_tables, newtables);
 			}
 
-			size_t hashi = hash()(KeyOfT()(data)) % _tables.size();
-			Node* newNode = new Node(data);
+			size_t hashi = hash()(kv.first) % _tables.size();
+			Node* newNode = new Node(kv);
 			newNode->_next = _tables[hashi];
 			_tables[hashi] = newNode;
 			_n++;
-			return make_pair(iterator(newNode,this),true);
+			return true;
 		}
 
 		Node* Find(const K& key)
@@ -311,7 +228,7 @@ namespace buckethash
 			{
 				while (cur)
 				{
-					if (KeyOfT()(cur->_data) == key)
+					if (cur->_kv.first == key)
 					{
 						return cur;
 					}
@@ -330,7 +247,7 @@ namespace buckethash
 				Node* prev = nullptr;
 				while (cur)
 				{
-					if (KeyOfT()(cur->_data) == key)
+					if (cur->_kv.first == key)
 					{
 						if (cur == _tables[i])
 						{
@@ -393,40 +310,42 @@ namespace buckethash
 		}
 	};
 
-	//void TestBuckethash1()
-	//{
-	//	string arr[] = { "苹果", "西瓜", "香蕉", "草莓", "苹果", "西瓜", 
-	//		"苹果", "苹果", "西瓜", "苹果", "香蕉", "苹果", "香蕉" };
-	//	hashtable<string, int> countmap;
+	void TestBuckethash1()
+	{
+		string arr[] = { "苹果", "西瓜", "香蕉", "草莓", "苹果", "西瓜", 
+			"苹果", "苹果", "西瓜", "苹果", "香蕉", "苹果", "香蕉" };
+		hashtable<string, int> countmap;
 
-	//	for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); ++i)
-	//	{
-	//		auto tmp = countmap.Find(arr[i]);
-	//		if (tmp)
-	//		{
-	//			tmp->_kv.second++;
-	//		}
-	//		else
-	//		{
-	//			countmap.Insert(make_pair(arr[i], 1));
-	//		}
-	//	}
-	//	int i = 0;
-	//}
+		for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); ++i)
+		{
+			auto tmp = countmap.Find(arr[i]);
+			if (tmp)
+			{
+				tmp->_kv.second++;
+			}
+			else
+			{
+				countmap.Insert(make_pair(arr[i], 1));
+			}
+		}
+		int i = 0;
+	}
 
-	//void TestBuckethash2()
-	//{
-	//	hashtable<int, int > table;
-	//	int arr[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0,12,13,14,15,156};
-	//	for (auto e : arr)
-	//	{
-	//		table.Insert(make_pair(e, e));
-	//	}
-	//	table.Insert(make_pair(61, 31));
-	//	table.Insert(make_pair(21, 21));
-	//	table.Insert(make_pair(41, 41));
-	//	table.Erase(1);
-	//	table.Erase(41);
-	//}
+	void TestBuckethash2()
+	{
+		hashtable<int, int > table;
+		int arr[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0,12,13,14,15,156};
+		for (auto e : arr)
+		{
+			table.Insert(make_pair(e, e));
+		}
+		table.Insert(make_pair(61, 31));
+		table.Insert(make_pair(21, 21));
+		table.Insert(make_pair(41, 41));
+		table.Erase(1);
+		table.Erase(41);
+
+
+	}
 
 }
