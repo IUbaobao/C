@@ -19,12 +19,23 @@ namespace hdm
 	{
 	public:
 		typedef typename buckethash::hashtable<K, pair<const K, V>, hash, keyofT>::iterator iterator;
+		typedef typename buckethash::hashtable<K, pair<const K, V>, hash, keyofT>::const_iterator const_iterator;
 
 		iterator begin()
 		{
 			return _ht.begin();
 		}
 		iterator end()
+		{
+			return _ht.end();
+		}
+
+
+		const_iterator begin()const 
+		{
+			return _ht.begin();
+		}
+		const_iterator end()const
 		{
 			return _ht.end();
 		}

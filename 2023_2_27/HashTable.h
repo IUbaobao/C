@@ -217,23 +217,91 @@ namespace buckethash
 					_node = nullptr;
 			}
 			return *this;
-
 		}
 
 	};
 
+	//const迭代器
+	template <class K, class T,class hash, class KeyOfT>
+	class const_HTiterator
+	{
+	public:
+		typedef hashtable<K, T, hash, KeyOfT> HT;
+		typedef hashNode<T> Node;
+		typedef const_HTiterator<K, T, hash, KeyOfT> Self;
+		const Node* _node;
+		const HT* _ht;
+
+		const_HTiterator(const Node* node, const HT* ht)
+			:_node(node), _ht(ht)
+		{}
+
+		const_HTiterator()
+		{}
+		const_HTiterator(const Self&it)
+			:_node(it._node), _ht(it._ht)
+		{}
+
+		const T* operator*()
+		{
+			return _node->_data;
+		}
+		const T& operator->()
+		{
+			return &_node->_data;
+		}
+
+		bool operator!=(const Self& s) const
+		{
+			return _node != s._node;
+		}
+
+		Self operator++()
+		{
+			if (_node->_next)
+			{
+				_node = _node->_next;
+			}
+			else
+			{
+				size_t n = hash()(KeyOfT()(_node->_data)) % _ht->_tables.size();
+				++n;
+				while (n<_ht->_tables.size())
+				{
+					if (_ht->_tables[n])
+					{
+						_node = _ht->_tables[n];
+						break;
+					}
+					else
+					{
+						++n;
+					}
+				}
+				//后面没有桶了
+				if (n == _ht->_tables.size())
+					_node = nullptr;
+			}
+			return *this;
+
+		}
+
+	};
 
 	template <class K,class T,class hash,class KeyOfT>
 	class hashtable
 	{
 	public:
 		 
-		template <class K, class T, class hash, class KeyOfT> 
-		friend 	class _HTiterator;
-
+		template <class K, class T, class hash, class KeyOfT>
+		friend class _HTiterator;
+		template <class K, class T, class hash, class KeyOfT>
+		friend class const_HTiterator;
 			
 		typedef hashNode<T> Node;
 		typedef _HTiterator<K, T, hash, KeyOfT> iterator;
+		typedef const_HTiterator<K, T ,hash, KeyOfT> const_iterator;
+
 		hashtable()
 		{
 			_tables.resize(10,nullptr);
@@ -255,6 +323,23 @@ namespace buckethash
 		iterator end()
 		{
 			return iterator(nullptr, this);
+		}
+
+		const_iterator begin() const 
+		{
+			for (auto cur : _tables)
+			{
+				if (cur)
+				{
+					return const_iterator(cur, this);
+				}
+			}
+			return const_iterator(nullptr, this);
+		}
+
+		const_iterator end()const 
+		{
+			return const_iterator(nullptr, this);
 		}
 
 		pair<iterator,bool> Insert(const T& data)

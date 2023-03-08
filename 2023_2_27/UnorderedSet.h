@@ -18,11 +18,21 @@ namespace hdm
 	{
 	public:
 		typedef typename buckethash::hashtable<K, K, hash, KeyofK>::iterator iterator;
-		iterator begin()
+		typedef typename buckethash::hashtable<K, K, hash, KeyofK>::const_iterator const_iterator;
+		iterator begin()  
 		{
 			return _ht.begin();
 		}
-		iterator end()
+		iterator end() 
+		{
+			return _ht.end();
+		}
+
+		const_iterator begin() const
+		{
+			return _ht.begin();
+		}
+		const_iterator end()const
 		{
 			return _ht.end();
 		}
@@ -31,6 +41,7 @@ namespace hdm
 		{
 			return _ht.Insert(key);
 		}
+
 
 	private:
 		buckethash::hashtable<K, K, hash, KeyofK> _ht;
