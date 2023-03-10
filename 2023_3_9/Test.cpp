@@ -1,7 +1,9 @@
 #include "bit_set.h"
+#include "BloomFilter.h"
 
 int main()
 {
-	hdm::test_bit_set();
+	//test_twobitset();
+	hdm::test_bloomfilter2();
 	return 0;
 }
