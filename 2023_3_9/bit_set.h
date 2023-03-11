@@ -123,3 +123,6 @@ void test_twobitset()
 
 	tbs.PirntOnce();
 }
+
+
+
