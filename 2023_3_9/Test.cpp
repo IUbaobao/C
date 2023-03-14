@@ -268,191 +268,254 @@ int repeatedNTimes1(vector<int>& nums) {
 //}
 
 
-//三数之和
-#include <algorithm>
-#include <vector>
-vector<vector<int>> threeSum(vector<int>& nums) {
-	int left, right;
-	vector<vector<int>> reslut;
-	sort(nums.begin(), nums.end());
-	for (int i = 0; i<nums.size(); ++i)
-	{
-		if (nums[i]>0)
-			break;
-		if (i>0 && nums[i - 1] == nums[i])
-			continue;
-		left = i + 1;
-		right = nums.size() - 1;
-		while (left<right)
-		{
-			int sum = nums[i] + nums[left] + nums[right];
-			if (sum>0) right--;
-			else if (sum<0) left++;
-			else
-			{
-				reslut.push_back(vector<int> {nums[i], nums[left], nums[right]});
-				while (left<right && nums[right] == nums[right - 1])
-					right--;
-				while (left<right && nums[left] == nums[left + 1])
-					left++;
-				left++;
-				right--;
-			}
-		}
-	}
-	return reslut;
-}
+////三数之和
+//#include <algorithm>
+//#include <vector>
+//vector<vector<int>> threeSum(vector<int>& nums) {
+//	int left, right;
+//	vector<vector<int>> reslut;
+//	sort(nums.begin(), nums.end());
+//	for (int i = 0; i<nums.size(); ++i)
+//	{
+//		if (nums[i]>0)
+//			break;
+//		if (i>0 && nums[i - 1] == nums[i])
+//			continue;
+//		left = i + 1;
+//		right = nums.size() - 1;
+//		while (left<right)
+//		{
+//			int sum = nums[i] + nums[left] + nums[right];
+//			if (sum>0) right--;
+//			else if (sum<0) left++;
+//			else
+//			{
+//				reslut.push_back(vector<int> {nums[i], nums[left], nums[right]});
+//				while (left<right && nums[right] == nums[right - 1])
+//					right--;
+//				while (left<right && nums[left] == nums[left + 1])
+//					left++;
+//				left++;
+//				right--;
+//			}
+//		}
+//	}
+//	return reslut;
+//}
+//
+//int main()
+//{
+//	vector<int>v = { 0, 0, 0, 0 };
+//	vector<vector<int>> t = threeSum(v);
+//	return 0;
+//}
+//
+//
+//
+//
+////四数之和
+//vector<vector<int>> fourSum(vector<int>& nums, int target) {
+//	vector<vector<int>> result;
+//	int left, right;
+//	sort(nums.begin(), nums.end());
+//	for (int i = 0; i<nums.size(); ++i)
+//	{
+//		if ((target >= 0 && nums[i]>target))
+//			break;
+//		if (i>0 && nums[i] == nums[i - 1])
+//			continue;
+//		for (int j = nums.size() - 1; j>i; --j)
+//		{
+//			if (j<nums.size() - 1 && nums[j] == nums[j + 1])
+//				continue;
+//			right = j - 1;
+//			left = i + 1;
+//			while (left<right)
+//			{
+//				long long  sum = (nums[i] + (long long)nums[j] + nums[left] + nums[right]);
+//				if (sum>target) right--;
+//				else if (sum<target) left++;
+//				else
+//				{
+//					result.push_back(vector<int>{nums[i], nums[left], nums[right], nums[j]});
+//					while (left<right && nums[right] == nums[right - 1])
+//						right--;
+//					while (left<right && nums[left] == nums[left + 1])
+//						left++;
+//					left++;
+//					right--;
+//				}
+//			}
+//		}
+//	}
+//	return result;
+//}
+//
+//
+////四数相加 II
+//int fourSumCount(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3, vector<int>& nums4) {
+//	unordered_map<int, int > map1;
+//
+//	for (auto e1 : nums1)
+//	{
+//		for (auto e2 : nums2)
+//		{
+//			map1[e1 + e2]++;
+//		}
+//	}
+//	int count = 0;
+//	for (auto e3 : nums3)
+//	{
+//		for (auto e4 : nums4)
+//		{
+//			int sum = e3 + e4;
+//			auto it = map1.find(-sum);
+//			if (it != map1.end())
+//			{
+//				count += it->second;
+//			}
+//		}
+//	}
+//	return count;
+//
+//}
+//
+////赎金信
+//bool canConstruct(string ransomNote, string magazine) {
+//	unordered_map<char, int> countmap;
+//
+//	for (auto e : magazine)
+//	{
+//		countmap[e]++;
+//	}
+//	for (auto e : ransomNote)
+//	{
+//		auto it = countmap.find(e);
+//		if (it != countmap.end())
+//		{
+//			--it->second;
+//			if (it->second<0)
+//				return false;
+//		}
+//		else
+//		{
+//			return false;
+//		}
+//	}
+//	return true;
+//}
+//
+//
+//
+//
+////滑动窗口最大值---单调队列
+//class Solution {
+//public:
+//	deque<int> dq;
+//	vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+//		vector<int> v;
+//		int n = 0;
+//		//先进k个元素
+//		while (n<k)
+//		{
+//			push(nums[n++]);
+//		}
+//
+//		for (int i = k; i<nums.size(); ++i)
+//		{
+//			v.push_back(getmax());
+//			pop(nums[i - k]);
+//			push(nums[i]);
+//		}
+//		//求最后一组窗口的max
+//		v.push_back(getmax());
+//		return v;
+//	}
+//
+//	void pop(int val)
+//	{
+//		//要删的元素与单调队列头相等才pop
+//		if (val == dq.front())
+//		{
+//			dq.pop_front();
+//		}
+//	}
+//
+//	void push(int val)
+//	{
+//		//保证最大元素在队首，比val小的全部pop
+//		while (!dq.empty() && val>dq.back())
+//		{
+//			dq.pop_back();
+//		}
+//		dq.push_back(val);
+//	}
+//	int getmax()
+//	{
+//		return dq.front();
+//	}
+//
+//};
 
-int main()
-{
-	vector<int>v = { 0, 0, 0, 0 };
-	vector<vector<int>> t = threeSum(v);
-	return 0;
-}
+
+//解析参数
+//#include <iostream>
+//#include <string>
+//#include <vector>
+//
+//using namespace std;
+//
+//int main()
+//{
+//	string s;
+//	getline(cin, s);
+//	vector<string> vs;
+//	string str;
+//	int i = 0;
+//	while (i <= s.size())
+//	{
+//		if (s[i] == ' ')
+//		{
+//			vs.push_back(str);
+//			str.clear();
+//			while (s[i] == ' ')
+//			{
+//				i++;
+//			}
+//		}
+//		else if (s[i] == '"')
+//		{
+//			while (i<s.size() && s[++i] != '"')
+//			{
+//				str += s[i];
+//			}
+//			//处理空格和"相邻的情况
+//			while (s[i] == ' ' || s[i] == '"')
+//			{
+//				i++;
+//			}
+//			vs.push_back(str);
+//			str.clear();
+//		}
+//		else
+//		{
+//			str += s[i];
+//			++i;
+//		}
+//		if (i == s.size() && str.size()!=0)
+//		{
+//			vs.push_back(str);
+//		}
+//
+//	}
+//	cout << vs.size() << endl;
+//	for (auto& e : vs)
+//	{
+//		cout << e << endl;
+//	}
+//	return 0;
+//}
+//
+//
 
 
-
-
-//四数之和
-vector<vector<int>> fourSum(vector<int>& nums, int target) {
-	vector<vector<int>> result;
-	int left, right;
-	sort(nums.begin(), nums.end());
-	for (int i = 0; i<nums.size(); ++i)
-	{
-		if ((target >= 0 && nums[i]>target))
-			break;
-		if (i>0 && nums[i] == nums[i - 1])
-			continue;
-		for (int j = nums.size() - 1; j>i; --j)
-		{
-			if (j<nums.size() - 1 && nums[j] == nums[j + 1])
-				continue;
-			right = j - 1;
-			left = i + 1;
-			while (left<right)
-			{
-				long long  sum = (nums[i] + (long long)nums[j] + nums[left] + nums[right]);
-				if (sum>target) right--;
-				else if (sum<target) left++;
-				else
-				{
-					result.push_back(vector<int>{nums[i], nums[left], nums[right], nums[j]});
-					while (left<right && nums[right] == nums[right - 1])
-						right--;
-					while (left<right && nums[left] == nums[left + 1])
-						left++;
-					left++;
-					right--;
-				}
-			}
-		}
-	}
-	return result;
-}
-
-
-//四数相加 II
-int fourSumCount(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3, vector<int>& nums4) {
-	unordered_map<int, int > map1;
-
-	for (auto e1 : nums1)
-	{
-		for (auto e2 : nums2)
-		{
-			map1[e1 + e2]++;
-		}
-	}
-	int count = 0;
-	for (auto e3 : nums3)
-	{
-		for (auto e4 : nums4)
-		{
-			int sum = e3 + e4;
-			auto it = map1.find(-sum);
-			if (it != map1.end())
-			{
-				count += it->second;
-			}
-		}
-	}
-	return count;
-
-}
-
-//赎金信
-bool canConstruct(string ransomNote, string magazine) {
-	unordered_map<char, int> countmap;
-
-	for (auto e : magazine)
-	{
-		countmap[e]++;
-	}
-	for (auto e : ransomNote)
-	{
-		auto it = countmap.find(e);
-		if (it != countmap.end())
-		{
-			--it->second;
-			if (it->second<0)
-				return false;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	return true;
-}
-
-
-
-
-//滑动窗口最大值---单调队列
-class Solution {
-public:
-	deque<int> dq;
-	vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-		vector<int> v;
-		int n = 0;
-		//先进k个元素
-		while (n<k)
-		{
-			push(nums[n++]);
-		}
-
-		for (int i = k; i<nums.size(); ++i)
-		{
-			v.push_back(getmax());
-			pop(nums[i - k]);
-			push(nums[i]);
-		}
-		//求最后一组窗口的max
-		v.push_back(getmax());
-		return v;
-	}
-
-	void pop(int val)
-	{
-		//要删的元素与单调队列头相等才pop
-		if (val == dq.front())
-		{
-			dq.pop_front();
-		}
-	}
-
-	void push(int val)
-	{
-		//保证最大元素在队首，比val小的全部pop
-		while (!dq.empty() && val>dq.back())
-		{
-			dq.pop_back();
-		}
-		dq.push_back(val);
-	}
-	int getmax()
-	{
-		return dq.front();
-	}
-
-};
