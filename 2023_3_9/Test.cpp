@@ -519,3 +519,110 @@ int repeatedNTimes1(vector<int>& nums) {
 //
 
 
+
+//跳石板---动态规划
+#include <iostream>
+#include <vector>
+#include <limits.h>
+#include <math.h>
+using namespace std;
+
+void getdivisor(vector<int>& v, int n)
+{
+	for (int i = 2; i <= sqrt(n); ++i)
+	{
+		if (n%i == 0)
+		{
+			v.push_back(i);
+			if (n / i != i)
+			{
+				v.push_back(n / i);
+			}
+		}
+	}
+}
+
+int jump(int n, int m)
+{
+	vector<int> step(m + 1, INT_MAX);//INT_MAX表示不可到达的位置
+	step[n] = 0;//初始化原位
+	for (int i = n; i <= m; ++i)
+	{
+		if (step[i] == INT_MAX)
+			continue;
+		vector<int> divisor;
+		getdivisor(divisor, i);
+		for (int j = 0; j<divisor.size(); ++j)
+		{
+			//该位置存在就要较小值
+			if (divisor[j] + i <= m && step[i + divisor[j]] != INT_MAX)
+			{
+				step[i + divisor[j]] = step[i] + 1< step[i + divisor[j]] ? step[i] + 1 : step[i + divisor[j]];
+			}
+			else if (i + divisor[j] <= m)
+			{
+				step[i + divisor[j]] = step[i] + 1;
+			}
+
+		}
+	}
+	return step[m] == INT_MAX ? -1 : step[m];
+
+}
+
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+	cout << jump(n, m) << endl;
+	return 0;
+}
+
+
+//幸运的袋子--回溯
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int Backtracking(vector<int>& v, int n, int index, int sum, int multi)
+{
+	int count = 0;
+	for (int i = index; i<n; ++i)
+	{
+		sum += v[i];
+		multi *= v[i];
+		if (sum>multi)
+		{
+			count += 1 + Backtracking(v, n, i + 1, sum, multi);
+		}
+		else if (v[i] == 1)
+		{
+			count += Backtracking(v, n, i + 1, sum, multi);
+		}
+		else//后面没1
+		{
+			break;
+		}
+		//回溯
+		sum -= v[i];
+		multi /= v[i];
+		//去重
+		while (i<n && v[i] == v[i + 1])
+			++i;
+	}
+	return count;
+}
+int main()
+{
+	int n;
+	cin >> n;
+	vector<int> v(n);
+	for (int i = 0; i<n; ++i)
+	{
+		cin >> v[i];
+	}
+	sort(v.begin(), v.end());
+	cout << Backtracking(v, n, 0, 0, 1) << endl;
+	return 0;
+}
