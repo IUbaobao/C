@@ -521,108 +521,460 @@ int repeatedNTimes1(vector<int>& nums) {
 
 
 //跳石板---动态规划
+//#include <iostream>
+//#include <vector>
+//#include <limits.h>
+//#include <math.h>
+//using namespace std;
+//
+//void getdivisor(vector<int>& v, int n)
+//{
+//	for (int i = 2; i <= sqrt(n); ++i)
+//	{
+//		if (n%i == 0)
+//		{
+//			v.push_back(i);
+//			if (n / i != i)
+//			{
+//				v.push_back(n / i);
+//			}
+//		}
+//	}
+//}
+//
+//int jump(int n, int m)
+//{
+//	vector<int> step(m + 1, INT_MAX);//INT_MAX表示不可到达的位置
+//	step[n] = 0;//初始化原位
+//	for (int i = n; i <= m; ++i)
+//	{
+//		if (step[i] == INT_MAX)
+//			continue;
+//		vector<int> divisor;
+//		getdivisor(divisor, i);
+//		for (int j = 0; j<divisor.size(); ++j)
+//		{
+//			//该位置存在就要较小值
+//			if (divisor[j] + i <= m && step[i + divisor[j]] != INT_MAX)
+//			{
+//				step[i + divisor[j]] = step[i] + 1< step[i + divisor[j]] ? step[i] + 1 : step[i + divisor[j]];
+//			}
+//			else if (i + divisor[j] <= m)
+//			{
+//				step[i + divisor[j]] = step[i] + 1;
+//			}
+//
+//		}
+//	}
+//	return step[m] == INT_MAX ? -1 : step[m];
+//
+//}
+//
+//int main()
+//{
+//	int n, m;
+//	cin >> n >> m;
+//	cout << jump(n, m) << endl;
+//	return 0;
+//}
+//
+//
+////幸运的袋子--回溯
+//#include <iostream>
+//#include <vector>
+//#include <algorithm>
+//using namespace std;
+//
+//int Backtracking(vector<int>& v, int n, int index, int sum, int multi)
+//{
+//	int count = 0;
+//	for (int i = index; i<n; ++i)
+//	{
+//		sum += v[i];
+//		multi *= v[i];
+//		if (sum>multi)
+//		{
+//			count += 1 + Backtracking(v, n, i + 1, sum, multi);
+//		}
+//		else if (v[i] == 1)
+//		{
+//			count += Backtracking(v, n, i + 1, sum, multi);
+//		}
+//		else//后面没1
+//		{
+//			break;
+//		}
+//		//回溯
+//		sum -= v[i];
+//		multi /= v[i];
+//		//去重
+//		while (i<n && v[i] == v[i + 1])
+//			++i;
+//	}
+//	return count;
+//}
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	vector<int> v(n);
+//	for (int i = 0; i<n; ++i)
+//	{
+//		cin >> v[i];
+//	}
+//	sort(v.begin(), v.end());
+//	cout << Backtracking(v, n, 0, 0, 1) << endl;
+//	return 0;
+//}
+//
+//class A
+//{
+//public:
+//	A()
+//	{
+//		cout << "A()" << endl;
+//	}
+//	~A()
+//	{
+//		cout << "~A()" << endl;
+//	}
+//};
+//
+//class B :public A
+//{
+//public:
+//	B()
+//	{
+//		cout << "B()" << endl;
+//	}
+//	~B()
+//	{
+//		cout << "~B()" << endl;
+//	}
+//};
+//
+//int main()
+//{
+//	B* a = new B();
+//	delete a;
+//	return 0;
+//}
+
+
+
+
+//#include <iostream>
+//#include <list>
+//#include <vector>
+//using namespace std;
+////3 1 2 6 4 5 
+//int main()
+//{
+//	int n, m, x = -1, t = 0, k; //注意因为数组下标，x 要-1
+//	int a[6] = { 0 };  //用数组判断是否出列
+//	scanf("%d %d", &n, &m);
+//	while (t != n){  //输出n个值
+//		k = m;
+//		while (k){
+//			x = (x + 1) % n;
+//			while (a[x] != 0)
+//				x = (x + 1) % n; //每出列一个，都要+1
+//			k--;
+//		}
+//		printf("%d ", x + 1);
+//		a[x] = 1; //标记已经出列
+//		m++;
+//		t++;
+//	}
+//	return 0;
+//}
+
+//
+//#include <iostream>
+//#include <string>
+//#include <vector>
+//#include <unordered_map>
+//#include <map>
+//using namespace std;
+//class myless
+//{
+//public:
+//	bool operator()(const string& s1, const string &s2)
+//	{
+//		size_t left = atoi(s1.c_str());
+//		size_t right = atoi(s2.c_str());
+//		return left < right;
+//	}
+//};
+//
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	for (int t = 0; t < n; ++t)
+//	{
+//		fflush(stdin);
+//		int k;
+//		cin >> k;
+//		map<string, string, myless> ssmap;
+//		fflush(stdin);
+//		for (int i = 0; i < k; ++i)
+//		{
+//			string str1, str2;
+//			cin >> str1 >> str2;
+//			ssmap[str1] = str2;
+//		}
+//		int x;
+//		cin >> x;
+//		unordered_map<int, int> countmap;
+//		for (int i = 0; i < x; ++i)
+//		{
+//			int y;
+//			cin >> y;
+//			countmap[y]++;
+//		}
+//		int i = 1;
+//		vector<string> vs;
+//		if (t != 0)
+//			cout << endl;
+//		cout << "Case " << t + 1 << ":" << endl;
+//		for (auto e : ssmap)
+//		{
+//			if (countmap[i] != 0)
+//			{
+//				vs.push_back(e.first + " " + e.second);
+//			}
+//			else
+//			{
+//				printf("%03d:", i);
+//				cout << e.first << " " << e.second << endl;
+//			}
+//			++i;
+//		}
+//		for (auto e : vs)
+//		{
+//			if (countmap[i] == 0)
+//			{
+//				printf("%03d:", i);
+//				cout << e;
+//				if (t != n - 1)
+//					cout << endl;
+//			}
+//			++i;
+//		}
+//
+//	}
+//	return 0;
+//}
+
+
+
+//#include <iostream>
+//#include <string>
+//#include <map>
+//#include <vector>
+//
+//using namespace std;
+//
+//int main()
+//{
+//	int n;//表示多少行数据
+//	cin >> n;
+//	for (int i = 0; i<n; ++i)
+//	{
+//		map<string, string> map_;
+//		map<int, int> countmap;
+//		int k;//
+//		cin >> k;
+//		for (int j = 0; j<k; ++j)
+//		{
+//			string tmp1, tmp2;
+//			cin >> tmp1 >> tmp2;
+//			map_[tmp1] = tmp2;
+//		}
+//		int m;
+//		cin >> m;
+//		for (int j = 0; j<m; ++j)
+//		{
+//			int tmp;
+//			cin >> tmp;
+//			countmap[tmp]++;
+//		}
+//		//处理数据
+//		vector<string> reslut1;//可以直接坐的
+//		vector<string> reslut2;//存滞后的
+//		int j = 1;
+//		auto it = map_.begin();
+//		while (it != map_.end())
+//		{
+//			if (countmap[j] == 0)
+//			{
+//				reslut1.push_back(it->first + " " + it->second);
+//			}
+//			else
+//			{
+//				reslut2.push_back(it->first + " " + it->second);
+//			}
+//			j++;
+//			it++;
+//		}
+//		for (auto& e : reslut2)
+//		{
+//			reslut1.push_back(e);
+//		}
+//		j = 1;
+//		if (i != 0)
+//			cout << endl;
+//		cout << "Case " << i + 1 << ":" << endl;
+//		int x = 0;
+//		while (x<reslut1.size())
+//		{
+//			if (countmap[j] == 0)
+//			{
+//				if (j<10)
+//					cout << "00" << j << ":";
+//				else if (j<100)
+//					cout << "0" << j << ":";
+//				else
+//					cout << j << ":";
+//				cout << reslut1[x];
+//				if (!(x == reslut1.size() - 1 && i == n - 1))
+//					cout << endl;
+//				x++;
+//			}
+//			j++;
+//		}
+//	}
+//	return 0;
+//}
+
+
+//
+//#include<iostream>
+//#include <vector>
+//#include <map>
+//using namespace std;
+//
+//int main()
+//{
+//	int n;
+//	cin >> n;
+//	map<int, int >countmap1, countmap2;
+//	vector<int> v(n);
+//	for (int i = 0; i<n; ++i)
+//	{
+//		cin >> v[i];
+//		countmap1[v[i]]++;
+//		countmap2[v[i]]++;
+//	}
+//	auto it = countmap1.begin();
+//	it++;
+//	while (it != countmap1.end())
+//	{
+//		auto tmp = it;
+//		--tmp;
+//		it->second += (tmp)->second;
+//		it++;
+//	}
+//	for (int i = 0; i<n; ++i)
+//	{
+//		cout << countmap1[v[i]] - countmap2[v[i]] << " ";
+//	}
+//
+//	return 0;
+//}
+
+
+
+
 #include <iostream>
+#include <string>
 #include <vector>
-#include <limits.h>
-#include <math.h>
-using namespace std;
-
-void getdivisor(vector<int>& v, int n)
-{
-	for (int i = 2; i <= sqrt(n); ++i)
-	{
-		if (n%i == 0)
-		{
-			v.push_back(i);
-			if (n / i != i)
-			{
-				v.push_back(n / i);
-			}
-		}
-	}
-}
-
-int jump(int n, int m)
-{
-	vector<int> step(m + 1, INT_MAX);//INT_MAX表示不可到达的位置
-	step[n] = 0;//初始化原位
-	for (int i = n; i <= m; ++i)
-	{
-		if (step[i] == INT_MAX)
-			continue;
-		vector<int> divisor;
-		getdivisor(divisor, i);
-		for (int j = 0; j<divisor.size(); ++j)
-		{
-			//该位置存在就要较小值
-			if (divisor[j] + i <= m && step[i + divisor[j]] != INT_MAX)
-			{
-				step[i + divisor[j]] = step[i] + 1< step[i + divisor[j]] ? step[i] + 1 : step[i + divisor[j]];
-			}
-			else if (i + divisor[j] <= m)
-			{
-				step[i + divisor[j]] = step[i] + 1;
-			}
-
-		}
-	}
-	return step[m] == INT_MAX ? -1 : step[m];
-
-}
-
-int main()
-{
-	int n, m;
-	cin >> n >> m;
-	cout << jump(n, m) << endl;
-	return 0;
-}
-
-
-//幸运的袋子--回溯
-#include <iostream>
-#include <vector>
+#include <unordered_map>
 #include <algorithm>
 using namespace std;
 
-int Backtracking(vector<int>& v, int n, int index, int sum, int multi)
+
+//int main()
+//{
+//	cout << ("6666" < "Lisi" )<< endl;
+//}
+
+bool compare(const pair<string, string>& s1, const pair<string, string> &s2)
 {
-	int count = 0;
-	for (int i = index; i<n; ++i)
-	{
-		sum += v[i];
-		multi *= v[i];
-		if (sum>multi)
-		{
-			count += 1 + Backtracking(v, n, i + 1, sum, multi);
-		}
-		else if (v[i] == 1)
-		{
-			count += Backtracking(v, n, i + 1, sum, multi);
-		}
-		else//后面没1
-		{
-			break;
-		}
-		//回溯
-		sum -= v[i];
-		multi /= v[i];
-		//去重
-		while (i<n && v[i] == v[i + 1])
-			++i;
-	}
-	return count;
+	size_t left = atoi(s1.second.c_str());
+	size_t right = atoi(s2.second.c_str());
+	if (s1.first < s2.first)
+		return true;
+	else if (s1.first == s2.first && left < right)
+		return true;
+	else
+		return false;
 }
+
+
 int main()
 {
 	int n;
 	cin >> n;
-	vector<int> v(n);
-	for (int i = 0; i<n; ++i)
+	for (int t = 0; t < n; ++t)
 	{
-		cin >> v[i];
+		fflush(stdin);
+		int k;
+		cin >> k;
+		vector<pair<string,string>> vs1(k);
+		fflush(stdin);
+		for (int i = 0; i < k; ++i)
+		{
+			string str1, str2;
+			cin >> str1 >> str2;
+			vs1[i] = make_pair(str2, str1);
+		}
+		sort(vs1.begin(), vs1.end(), compare);
+		int x;
+		cin >> x;
+		unordered_map<int, int> countmap;
+		for (int i = 0; i < x; ++i)
+		{
+			int y;
+			cin >> y;
+			countmap[y]++;
+		}
+		int i = 1;
+		vector<string> vs;
+
+		int count = 0;
+		if (t != 0)
+			cout << endl << endl;;
+		cout << "Case " << t + 1 << ":" << endl;
+		for (auto e : vs1)
+		{
+			if (countmap[i] != 0)
+			{
+				vs.push_back(e.second + " " + e.first);
+			}
+			else
+			{
+				printf("%03d:", i);
+				cout << e.second << " " << e.first << endl;
+				count++;
+			}
+			++i;
+		}
+		for (auto e : vs)
+		{
+			if (countmap[i] == 0)
+			{
+				printf("%03d:", i);
+				count++;
+				cout << e;
+				if (count != k)
+					cout << endl;
+
+			}
+			++i;
+		}
+
 	}
-	sort(v.begin(), v.end());
-	cout << Backtracking(v, n, 0, 0, 1) << endl;
 	return 0;
 }
