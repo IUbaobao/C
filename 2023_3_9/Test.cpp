@@ -1496,21 +1496,208 @@ int repeatedNTimes1(vector<int>& nums) {
 //	Derive* p3 = &d;
 //	return 0;
 //}
-class A
+//class A
+//{
+//public:
+//	void func(int val = 1){ std::cout << "A->" << val << std::endl; }
+//	virtual void test(){ func(); }
+//};
+//class B : public A
+//{
+//public:
+//	void func(int val = 0){ std::cout << "B->" << val << std::endl; }
+//};
+//int main(int argc, char* argv[])
+//{
+//	A*p = new B;
+//	p->test();
+//	return 0;
+//}
+//
+//公共子串计算
+//#include <iostream>
+//#include <string>
+//using namespace std;
+//
+//int main()
+//{
+//	string s1, s2;
+//	cin >> s1 >> s2;
+//	int maxcount = 0;
+//
+//	int i = 0, j = 0, previ = 0, prevj = 0;
+//	while (i < s1.size())
+//	{
+//		previ = i;
+//		j = 0;
+//		while (j < s2.size())
+//		{
+//			prevj = j;
+//			i = previ;
+//			int count = 0;
+//			while (j < s2.size())
+//			{
+//				if (s1[i] == s2[j])
+//				{
+//					count++;
+//					++i;
+//					++j;
+//				}
+//				else
+//					break;
+//			}
+//			if (count > maxcount)
+//				maxcount = count;
+//			j = prevj + 1;
+//		}
+//		i = previ + 1;
+//	}
+//	cout << maxcount << endl;
+//	return 0;
+//}
+
+
+
+//
+//#include <iostream>
+//#include <string>
+//#include <deque>
+//using namespace std;
+//
+//int main()
+//{
+//	int n;
+//	deque<int> dq;
+//	cin >> n;
+//
+//	for (int i = 0; i < n; ++i)
+//	{
+//		dq.push_back(i + 1);
+//	}
+//	string s;
+//	cin >> s;
+//	int k = 1;
+//	for (size_t i = 0; i<s.size(); ++i)
+//	{
+//		if (s[i] == 'U')
+//		{
+//			if (k == 1)
+//			{
+//				if (n>4)
+//				{
+//					dq.clear();
+//					dq = { n - 3, n - 2, n - 1, n };
+//
+//				}
+//				k = n;
+//			}
+//			else
+//			{
+//				if (k==dq.front())
+//				{
+//					dq.pop_back();
+//					dq.push_front(dq.front() - 1);
+//				}
+//				k -= 1;
+//
+//
+//			}
+//		}
+//		else//D
+//		{
+//			if (k == n)
+//			{
+//				if (n>4)
+//				{
+//					dq.clear();
+//					dq = { 1, 2, 3, 4 };
+//				}
+//				k = 1;
+//			}
+//			else
+//			{
+//				if (k==dq.back())
+//				{
+//					dq.pop_front();
+//					dq.push_back(dq.back() + 1);
+//				}
+//				k += 1;
+//			}
+//		}
+//	}
+//	while (!dq.empty())
+//	{
+//		cout << dq.front() << " ";
+//		dq.pop_front();
+//	}
+//	cout << endl;
+//	cout << k << endl;
+//	return 0;
+//}
+//洗牌
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+void shuffle(vector<int>& left, vector<int>& right, int k, int n)
 {
-public:
-	void func(int val = 1){ std::cout << "A->" << val << std::endl; }
-	virtual void test(){ func(); }
-};
-class B : public A
+	if (k == 0)
+		return;
+	vector<int> sum(left.size() + right.size());
+	int i = left.size() - 1, j = right.size() - 1, z = 0;
+	while (i >= 0 && j >= 0)
+	{
+		sum[z++] = right[j--];
+		sum[z++] = left[i--];
+	}
+	if (k == 1)
+	{
+		for (int i = sum.size() - 1; i >= 0; --i)
+		{
+			cout << sum[i] << " ";
+		}
+		cout << endl;
+	}
+	i = 0;
+	left.clear();
+	right.clear();
+	while (i<sum.size())
+	{
+		if (i<n)
+			right.push_back(sum[i]);
+		else
+			left.push_back(sum[i]);
+		++i;
+	}
+	reverse(left.begin(), left.end());
+	reverse(right.begin(), right.end());
+	shuffle(left, right, k - 1, n);
+}
+
+int main()
 {
-public:
-	void func(int val = 0){ std::cout << "B->" << val << std::endl; }
-};
-int main(int argc, char* argv[])
-{
-	A*p = new B;
-	p->test();
+	int t;
+	cin >> t;
+	for (int i = 0; i<t; ++i)
+	{
+		int n, k;
+		cin >> n >> k;
+		vector<int> left(n), right(n);
+		for (int j = 0; j<n; ++j)
+			cin >> left[j];
+		for (int j = 0; j<n; ++j)
+			cin >> right[j];
+		shuffle(left, right, k, n);
+	}
 	return 0;
 }
+
+
+
+
+
+
+
+
 
