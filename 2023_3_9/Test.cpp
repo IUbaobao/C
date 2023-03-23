@@ -1635,69 +1635,363 @@ int repeatedNTimes1(vector<int>& nums) {
 //	return 0;
 //}
 //洗牌
-#include <iostream>
-#include <vector>
-#include <algorithm>
-using namespace std;
+//#include <iostream>
+//#include <vector>
+//#include <algorithm>
+//using namespace std;
+//
+//void shuffle(vector<int>& left, vector<int>& right, int k, int n)
+//{
+//	if (k == 0)
+//		return;
+//	vector<int> sum(left.size() + right.size());
+//	int i = left.size() - 1, j = right.size() - 1, z = 0;
+//	while (i >= 0 && j >= 0)
+//	{
+//		sum[z++] = right[j--];
+//		sum[z++] = left[i--];
+//	}
+//	if (k == 1)
+//	{
+//		for (int i = sum.size() - 1; i >= 0; --i)
+//		{
+//			cout << sum[i] << " ";
+//		}
+//		cout << endl;
+//	}
+//	i = 0;
+//	left.clear();
+//	right.clear();
+//	while (i<sum.size())
+//	{
+//		if (i<n)
+//			right.push_back(sum[i]);
+//		else
+//			left.push_back(sum[i]);
+//		++i;
+//	}
+//	reverse(left.begin(), left.end());
+//	reverse(right.begin(), right.end());
+//	shuffle(left, right, k - 1, n);
+//}
+//
+//int main()
+//{
+//	int t;
+//	cin >> t;
+//	for (int i = 0; i<t; ++i)
+//	{
+//		int n, k;
+//		cin >> n >> k;
+//		vector<int> left(n), right(n);
+//		for (int j = 0; j<n; ++j)
+//			cin >> left[j];
+//		for (int j = 0; j<n; ++j)
+//			cin >> right[j];
+//		shuffle(left, right, k, n);
+//	}
+//	return 0;
+//}
 
-void shuffle(vector<int>& left, vector<int>& right, int k, int n)
+
+
+
+
+
+
+
+
+//#include <iostream>
+//#include <unordered_map>
+//using namespace std;
+//
+//int main()
+//{
+//	string s;
+//	cin >> s;
+//	unordered_map<char, int> countmap;
+//	for (const auto& e : s)
+//	{
+//		countmap[e]++;
+//	}
+//	for (const auto& e : s)
+//	{
+//		if (countmap[e] == 1)
+//		{
+//			cout << e << endl;
+//			return 0;
+//		}
+//	}
+//	cout << "-1" << endl;
+//	return 0;
+//}
+
+
+//int getMaxdivisor(int x, int y)
+//{
+//	int tmp = 0;
+//	while (x%y)
+//	{
+//		tmp = x%y;
+//		x= y;
+//		y = tmp;
+//	}
+//	return y;
+//}
+//
+//int main()
+//{
+//	cout << getMaxdivisor(45, 15) << endl;
+//	return 0;
+//}
+//
+//
+
+
+struct TreeNode
 {
-	if (k == 0)
-		return;
-	vector<int> sum(left.size() + right.size());
-	int i = left.size() - 1, j = right.size() - 1, z = 0;
-	while (i >= 0 && j >= 0)
-	{
-		sum[z++] = right[j--];
-		sum[z++] = left[i--];
+	int val;
+	TreeNode *left;
+	TreeNode *right;
+	TreeNode() 
+		: val(0), left(nullptr), right(nullptr) 
+	{}
+	TreeNode(int x) 
+		: val(x), left(nullptr), right(nullptr) 
+	{}
+	TreeNode(int x, TreeNode *left, TreeNode *right) 
+		: val(x), left(left), right(right) 
+	{}
+};
+
+//路径总和
+//bool _hasPathSum(TreeNode* root, int targetSum, int sum)
+//{
+//	if (root == nullptr)
+//		return false;
+//	if (root->left == nullptr && root->right == nullptr)
+//	{
+//		if (sum + root->val == targetSum)
+//			return true;
+//	}
+//
+//	return _hasPathSum(root->left, targetSum, sum + root->val) ||
+//		_hasPathSum(root->right, targetSum, sum + root->val);
+//}
+//
+//bool hasPathSum(TreeNode* root, int targetSum) {
+//	return _hasPathSum(root, targetSum, 0);
+//}
+//
+//
+//bool _hasPathSum(TreeNode* root, int targetSum, int sum)
+//{
+//	if (root == nullptr)
+//		return false;
+//	if (root->left == nullptr && root->right == nullptr)
+//	{
+//		if (sum + root->val == targetSum)
+//			return true;
+//		else
+//			return false;
+//	}
+//	if (_hasPathSum(root->left, targetSum, sum + root->val))
+//		return true;
+//	if (_hasPathSum(root->right, targetSum, sum + root->val))
+//		return true;
+//
+//	return false;
+//}
+//
+//bool hasPathSum(TreeNode* root, int targetSum) {
+//
+//	return _hasPathSum(root, targetSum, 0);
+//}
+//int main()
+//{
+//	TreeNode n1, n2, n3;
+//	n1.val = 1;
+//	n1.left = &n2;
+//	n1.right = &n3;
+//	n2.val = 2;
+//	n3.val = 3;
+//	cout << hasPathSum(&n1, 5) << endl;
+//	return  0;
+//}
+
+
+
+//int maxDepth(TreeNode* root)
+//{
+//	if (root == nullptr)
+//		return 0;
+//	int left = maxDepth(root->left);
+//	int right = maxDepth(root->right);
+//
+//	return left>right ? left + 1 : right + 1;
+//}
+//bool isBalanced(TreeNode* root) {
+//	if (root == nullptr)
+//		return true;
+//	int left = maxDepth(root->left);
+//	int right = maxDepth(root->right);
+//
+//	return abs(left - right) <= 1
+//		&& isBalanced(root->left)
+//		&& isBalanced(root - right);
+//}
+//
+//
+////合并二叉树
+//TreeNode* mergeTrees(TreeNode* root1, TreeNode* root2) {
+//	if (root1 == nullptr && root2)
+//		return root2;
+//	if (root1 && root2 == nullptr)
+//		return root1;
+//	if (!root1 && !root2)
+//		return root1;
+//	root1->val += root2->val;
+//	root1->left = mergeTrees(root1->left, root2->left);
+//	root1->right = mergeTrees(root1->right, root2->right);
+//	return root1;
+//}
+//
+////二叉搜索树中的搜索
+//TreeNode* searchBST(TreeNode* root, int val) {
+//	if (root == nullptr || root->val == val)
+//		return root;
+//	if (root->val>val) return searchBST(root->left, val);
+//	if (root->val<val) return searchBST(root->right, val);
+//	return nullptr;
+//}
+//
+////验证二叉搜索树
+//TreeNode* prev = nullptr;
+//bool isValidBST(TreeNode* root) {
+//	if (!root)
+//		return true;
+//	bool left = isValidBST(root->left);
+//	if (prev != nullptr&& prev->val >= root->val)
+//		return false;
+//	prev = root;
+//	bool right = isValidBST(root->right);
+//	return left&&right;
+//
+//}
+//
+////二叉树的所有路径
+//vector<string> reslut;
+//vector<string> binaryTreePaths(TreeNode* root) {
+//	string v;
+//	_binaryTreePaths(root, v);
+//	return reslut;
+//}
+//void _binaryTreePaths(TreeNode* root, string str)
+//{
+//	if (root == nullptr)
+//	{
+//		return;
+//	}
+//	if (root->left == nullptr && root->right == nullptr)
+//	{
+//		str += to_string(root->val);
+//		reslut.push_back(str);
+//		return;
+//	}
+//	str += to_string(root->val);
+//	str += "->";
+//
+//	_binaryTreePaths(root->left, str);
+//	_binaryTreePaths(root->right, str);
+//}
+//
+//
+////左叶子之和
+//int sumOfLeftLeaves(TreeNode* root) {
+//	if (root == nullptr)
+//		return 0;
+//	int sum = 0;
+//	if (root->left && root->left->left == nullptr &&root->left->right == nullptr)
+//		sum = root->left->val;
+//	return sum + sumOfLeftLeaves(root->left) + sumOfLeftLeaves(root->right);
+//}
+//
+//
+////找树左下角的值
+//int Maxdepth = INT_MIN, reslut;
+//int findBottomLeftValue(TreeNode* root) {
+//
+//	_findBottomLeftValue(root, 0);
+//	return reslut;
+//
+//}
+//void _findBottomLeftValue(TreeNode* root, int depth)
+//{
+//	if (root->left == nullptr && root->right == nullptr)
+//	{
+//		if (depth>Maxdepth)
+//		{
+//			Maxdepth = depth;
+//			reslut = root->val;
+//		}
+//		return;
+//	}
+//	if (root->left)
+//		_findBottomLeftValue(root->left, depth + 1);
+//	if (root->right)
+//		_findBottomLeftValue(root->right, depth + 1);
+//}
+
+
+
+//从前序与中序遍历序列构造二叉树
+class Solution {
+public:
+	TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+		int previ = 0;
+		return _buildTree(preorder, inorder, previ, 0, inorder.size() - 1);
 	}
-	if (k == 1)
+	TreeNode* _buildTree(vector<int>& preorder, vector<int>& inorder, int& previ, int inbegin, int inend)
 	{
-		for (int i = sum.size() - 1; i >= 0; --i)
+		if (inbegin>inend)
+			return nullptr;
+
+		TreeNode* root = new TreeNode(preorder[previ]);
+		int rooti = inbegin;
+		while (preorder[previ] != inorder[rooti])
 		{
-			cout << sum[i] << " ";
+			++rooti;
 		}
-		cout << endl;
+		//[inbegin,rooti-1] rooti [rooti+1,inend]
+		++previ;
+		root->left = _buildTree(preorder, inorder, previ, inbegin, rooti - 1);
+		root->right = _buildTree(preorder, inorder, previ, rooti + 1, inend);
+
+		return root;
 	}
-	i = 0;
-	left.clear();
-	right.clear();
-	while (i<sum.size())
+};
+
+//从中序与后序遍历序列构造二叉树
+class Solution {
+public:
+	TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+		int posti = postorder.size() - 1;
+		return _buildTree(inorder, postorder, posti, 0, inorder.size() - 1);
+	}
+
+	TreeNode* _buildTree(vector<int>& inorder, vector<int>& postorder, int& posti, int inbegin, int inend)
 	{
-		if (i<n)
-			right.push_back(sum[i]);
-		else
-			left.push_back(sum[i]);
-		++i;
+		if (inbegin>inend)
+			return nullptr;
+		TreeNode* root = new TreeNode(postorder[posti]);
+		int rooti = inbegin;
+		while (postorder[posti] != inorder[rooti])
+		{
+			++rooti;
+		}
+		--posti;
+		root->right = _buildTree(inorder, postorder, posti, rooti + 1, inend);
+		root->left = _buildTree(inorder, postorder, posti, inbegin, rooti - 1);
+		return root;
 	}
-	reverse(left.begin(), left.end());
-	reverse(right.begin(), right.end());
-	shuffle(left, right, k - 1, n);
-}
-
-int main()
-{
-	int t;
-	cin >> t;
-	for (int i = 0; i<t; ++i)
-	{
-		int n, k;
-		cin >> n >> k;
-		vector<int> left(n), right(n);
-		for (int j = 0; j<n; ++j)
-			cin >> left[j];
-		for (int j = 0; j<n; ++j)
-			cin >> right[j];
-		shuffle(left, right, k, n);
-	}
-	return 0;
-}
-
-
-
-
-
-
-
-
-
+};
