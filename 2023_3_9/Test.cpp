@@ -1,5 +1,5 @@
-#include "bit_set.h"
-#include "BloomFilter.h"
+//#include "bit_set.h"
+//#include "BloomFilter.h"
 
 //int main()
 //{
@@ -12,20 +12,20 @@
 
 
 //在长度 2N 的数组中找出重复 N 次的元素
-int repeatedNTimes1(vector<int>& nums) {
-	for (int gap = 1; gap <= 3; gap++)
-	{
-		for (int i = 0; i<nums.size() - gap; i++)
-		{
-			if (nums[i] == nums[i + gap])
-			{
-				return nums[i];
-			}
-		}
-	}
-	return -1;
-
-}
+//int repeatedNTimes1(vector<int>& nums) {
+//	for (int gap = 1; gap <= 3; gap++)
+//	{
+//		for (int i = 0; i<nums.size() - gap; i++)
+//		{
+//			if (nums[i] == nums[i + gap])
+//			{
+//				return nums[i];
+//			}
+//		}
+//	}
+//	return -1;
+//
+//}
 //
 //int repeatedNTimes2(vector<int>& nums) {
 //	unordered_set<int > s;
@@ -1746,23 +1746,23 @@ int repeatedNTimes1(vector<int>& nums) {
 //}
 //
 //
-
-
-struct TreeNode
-{
-	int val;
-	TreeNode *left;
-	TreeNode *right;
-	TreeNode() 
-		: val(0), left(nullptr), right(nullptr) 
-	{}
-	TreeNode(int x) 
-		: val(x), left(nullptr), right(nullptr) 
-	{}
-	TreeNode(int x, TreeNode *left, TreeNode *right) 
-		: val(x), left(left), right(right) 
-	{}
-};
+//
+//
+//struct TreeNode
+//{
+//	int val;
+//	TreeNode *left;
+//	TreeNode *right;
+//	TreeNode() 
+//		: val(0), left(nullptr), right(nullptr) 
+//	{}
+//	TreeNode(int x) 
+//		: val(x), left(nullptr), right(nullptr) 
+//	{}
+//	TreeNode(int x, TreeNode *left, TreeNode *right) 
+//		: val(x), left(left), right(right) 
+//	{}
+//};
 
 //路径总和
 //bool _hasPathSum(TreeNode* root, int targetSum, int sum)
@@ -1943,55 +1943,143 @@ struct TreeNode
 //}
 
 
+//
+////从前序与中序遍历序列构造二叉树
+//class Solution {
+//public:
+//	TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+//		int previ = 0;
+//		return _buildTree(preorder, inorder, previ, 0, inorder.size() - 1);
+//	}
+//	TreeNode* _buildTree(vector<int>& preorder, vector<int>& inorder, int& previ, int inbegin, int inend)
+//	{
+//		if (inbegin>inend)
+//			return nullptr;
+//
+//		TreeNode* root = new TreeNode(preorder[previ]);
+//		int rooti = inbegin;
+//		while (preorder[previ] != inorder[rooti])
+//		{
+//			++rooti;
+//		}
+//		//[inbegin,rooti-1] rooti [rooti+1,inend]
+//		++previ;
+//		root->left = _buildTree(preorder, inorder, previ, inbegin, rooti - 1);
+//		root->right = _buildTree(preorder, inorder, previ, rooti + 1, inend);
+//
+//		return root;
+//	}
+//};
+//
+////从中序与后序遍历序列构造二叉树
+//class Solution {
+//public:
+//	TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+//		int posti = postorder.size() - 1;
+//		return _buildTree(inorder, postorder, posti, 0, inorder.size() - 1);
+//	}
+//
+//	TreeNode* _buildTree(vector<int>& inorder, vector<int>& postorder, int& posti, int inbegin, int inend)
+//	{
+//		if (inbegin>inend)
+//			return nullptr;
+//		TreeNode* root = new TreeNode(postorder[posti]);
+//		int rooti = inbegin;
+//		while (postorder[posti] != inorder[rooti])
+//		{
+//			++rooti;
+//		}
+//		--posti;
+//		root->right = _buildTree(inorder, postorder, posti, rooti + 1, inend);
+//		root->left = _buildTree(inorder, postorder, posti, inbegin, rooti - 1);
+//		return root;
+//	}
+//};
 
-//从前序与中序遍历序列构造二叉树
-class Solution {
-public:
-	TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-		int previ = 0;
-		return _buildTree(preorder, inorder, previ, 0, inorder.size() - 1);
-	}
-	TreeNode* _buildTree(vector<int>& preorder, vector<int>& inorder, int& previ, int inbegin, int inend)
-	{
-		if (inbegin>inend)
-			return nullptr;
+#include <iostream>
+#include <vector>
+using namespace std;
 
-		TreeNode* root = new TreeNode(preorder[previ]);
-		int rooti = inbegin;
-		while (preorder[previ] != inorder[rooti])
-		{
-			++rooti;
-		}
-		//[inbegin,rooti-1] rooti [rooti+1,inend]
-		++previ;
-		root->left = _buildTree(preorder, inorder, previ, inbegin, rooti - 1);
-		root->right = _buildTree(preorder, inorder, previ, rooti + 1, inend);
-
-		return root;
-	}
+struct pos
+{
+	int _x;
+	int _y;
+	pos(int x, int y) :_x(x), _y(y){}
 };
+vector<vector<pos*>> vvpos;
 
-//从中序与后序遍历序列构造二叉树
-class Solution {
-public:
-	TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
-		int posti = postorder.size() - 1;
-		return _buildTree(inorder, postorder, posti, 0, inorder.size() - 1);
-	}
-
-	TreeNode* _buildTree(vector<int>& inorder, vector<int>& postorder, int& posti, int inbegin, int inend)
+void Backtracking(vector<pos*>& vpos, vector<vector<int>>&vv, int x, int y)
+{
+	if (x == vv.size() - 1 && y == vv[0].size() - 1)
 	{
-		if (inbegin>inend)
-			return nullptr;
-		TreeNode* root = new TreeNode(postorder[posti]);
-		int rooti = inbegin;
-		while (postorder[posti] != inorder[rooti])
-		{
-			++rooti;
-		}
-		--posti;
-		root->right = _buildTree(inorder, postorder, posti, rooti + 1, inend);
-		root->left = _buildTree(inorder, postorder, posti, inbegin, rooti - 1);
-		return root;
+		vpos.push_back(new pos(x, y));
+		vvpos.push_back(vpos);
+		vpos.pop_back();
+		return;
 	}
-};
+	if (vv[x][y] == 1)
+		return;
+	pos* newPos = new pos(x, y);
+	vpos.push_back(newPos);
+	//向左
+	if (y >= 1 && vv[x][y - 1] != 1 && vv[x][y - 1] != -1)
+	{
+		vv[x][y] = -1;
+		Backtracking(vpos, vv, x, y - 1);
+		vv[x][y] = 0;
+	}
+	//向右
+	if (x == 1 && y == 3)
+	{
+		int j = 0;
+	}
+	if (y + 1 < vv[x].size() && vv[x][y + 1] != 1 && vv[x][y + 1] != -1)
+	{
+		vv[x][y] = -1;
+		Backtracking(vpos, vv, x, y + 1);
+		vv[x][y] = 0;
+	}
+	//向上
+	if (x>0 && vv[x - 1][y] != 1 && vv[x - 1][y] != -1)
+	{
+		vv[x][y] = -1;
+		Backtracking(vpos, vv, x - 1, y);
+		vv[x][y] = 0;
+	}
+	//向下
+	if (x + 1 < vv.size() && vv[x + 1][y] != 1 && vv[x + 1][y] != -1)
+	{
+		vv[x][y] = -1;
+		Backtracking(vpos, vv, x + 1, y);
+		vv[x][y] = 0;
+	}
+	vpos.pop_back();
+}
+
+int main()
+{
+	int n, m;
+	cin >> n >> m;
+	vector<vector<int>> vv(n, vector<int>(m));
+	for (int i = 0; i<n; ++i)
+	{
+		for (int j = 0; j<m; ++j)
+		{
+			cin >> vv[i][j];
+		}
+	}
+	vector<pos*> vpos;
+	Backtracking(vpos, vv, 0, 0);
+	size_t mini = -1;
+	for (int i = 0; i<vvpos.size(); ++i)
+	{
+		if (mini>vvpos[i].size())
+			mini = i;
+	}
+	for (int j = 0; j<vvpos[mini].size(); ++j)
+	{
+		cout << "(" << vvpos[mini][j]->_x << "," << vvpos[mini][j]->_y << ")" << endl;
+	}
+	//cout<<"("<<vvpos[i][j]->_x<<","<<vvpos[i][j]->_y<<")"<<endl;
+	return 0;
+}
