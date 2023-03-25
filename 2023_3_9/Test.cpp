@@ -1996,70 +1996,163 @@
 //	}
 //};
 
+//#include <iostream>
+//#include <vector>
+//using namespace std;
+//
+//struct pos
+//{
+//	int _x;
+//	int _y;
+//	pos(int x, int y) :_x(x), _y(y){}
+//};
+//vector<vector<pos*>> vvpos;
+//
+//void Backtracking(vector<pos*>& vpos, vector<vector<int>>&vv, int x, int y)
+//{
+//	if (x == vv.size() - 1 && y == vv[0].size() - 1)
+//	{
+//		vpos.push_back(new pos(x, y));
+//		vvpos.push_back(vpos);
+//		vpos.pop_back();
+//		return;
+//	}
+//	if (vv[x][y] == 1)
+//		return;
+//	pos* newPos = new pos(x, y);
+//	vpos.push_back(newPos);
+//	//向左
+//	if (y >= 1 && vv[x][y - 1] != 1 && vv[x][y - 1] != -1)
+//	{
+//		vv[x][y] = -1;
+//		Backtracking(vpos, vv, x, y - 1);
+//		vv[x][y] = 0;
+//	}
+//	//向右
+//	if (y + 1 < vv[x].size() && vv[x][y + 1] != 1 && vv[x][y + 1] != -1)
+//	{
+//		vv[x][y] = -1;
+//		Backtracking(vpos, vv, x, y + 1);
+//		vv[x][y] = 0;
+//	}
+//	//向上
+//	if (x>0 && vv[x - 1][y] != 1 && vv[x - 1][y] != -1)
+//	{
+//		vv[x][y] = -1;
+//		Backtracking(vpos, vv, x - 1, y);
+//		vv[x][y] = 0;
+//	}
+//	//向下
+//	if (x + 1 < vv.size() && vv[x + 1][y] != 1 && vv[x + 1][y] != -1)
+//	{
+//		vv[x][y] = -1;
+//		Backtracking(vpos, vv, x + 1, y);
+//		vv[x][y] = 0;
+//	}
+//	vpos.pop_back();
+//}
+//
+//int main()
+//{
+//	int n, m;
+//	cin >> n >> m;
+//	vector<vector<int>> vv(n, vector<int>(m));
+//	for (int i = 0; i<n; ++i)
+//	{
+//		for (int j = 0; j<m; ++j)
+//		{
+//			cin >> vv[i][j];
+//		}
+//	}
+//	vector<pos*> vpos;
+//	Backtracking(vpos, vv, 0, 0);
+//	size_t mini = -1;
+//	for (int i = 0; i<vvpos.size(); ++i)
+//	{
+//		if (mini>vvpos[i].size())
+//			mini = i;
+//	}
+//	for (int j = 0; j<vvpos[mini].size(); ++j)
+//	{
+//		cout << "(" << vvpos[mini][j]->_x << "," << vvpos[mini][j]->_y << ")" << endl;
+//	}
+//	//cout<<"("<<vvpos[i][j]->_x<<","<<vvpos[i][j]->_y<<")"<<endl;
+//	return 0;
+//}
+
+
+
+
+
+
+
+
+
 #include <iostream>
 #include <vector>
 using namespace std;
 
-struct pos
+bool isMax(vector<int>&v, int x)
 {
-	int _x;
-	int _y;
-	pos(int x, int y) :_x(x), _y(y){}
-};
-vector<vector<pos*>> vvpos;
+	for (auto& e : v)
+	{
+		if (e >= x)
+			return false;
+	}
+	return true;
+}
 
-void Backtracking(vector<pos*>& vpos, vector<vector<int>>&vv, int x, int y)
+long long  count = 0;
+void Backtracking(int&k, vector<int> vk, vector<vector<int>>&vv, int x, int y, int sumk)
 {
-	if (x == vv.size() - 1 && y == vv[0].size() - 1)
+	if (x == vv.size() - 1 && y == vv[x].size() - 1)
 	{
-		vpos.push_back(new pos(x, y));
-		vvpos.push_back(vpos);
-		vpos.pop_back();
+		if (isMax(vk, vv[x][y]) && k == sumk + 1)//拿了符合k就++
+			::count = (::count + 1) % (1000000000 + 7);
+		else if (k == sumk)//不拿直接符合k++
+			::count = (::count + 1) % (1000000000 + 7);
 		return;
 	}
-	if (vv[x][y] == 1)
-		return;
-	pos* newPos = new pos(x, y);
-	vpos.push_back(newPos);
-	//向左
-	if (y >= 1 && vv[x][y - 1] != 1 && vv[x][y - 1] != -1)
+	if (isMax(vk, vv[x][y]))
 	{
-		vv[x][y] = -1;
-		Backtracking(vpos, vv, x, y - 1);
-		vv[x][y] = 0;
+		vk.push_back(vv[x][y]);
+		//向右拿
+		if (y + 1 < vv[x].size())
+		{
+			Backtracking(k, vk, vv, x, y + 1, sumk + 1);
+		}
+
+		//向下拿
+		if (x + 1 < vv.size())
+		{
+			Backtracking(k, vk, vv, x + 1, y, sumk + 1);
+		}
+		vk.pop_back();
 	}
-	//向右
-	if (x == 1 && y == 3)
+
+	//向右不拿
+	if (y + 1 < vv[x].size())
 	{
-		int j = 0;
+		Backtracking(k, vk, vv, x, y + 1, sumk);
 	}
-	if (y + 1 < vv[x].size() && vv[x][y + 1] != 1 && vv[x][y + 1] != -1)
+
+	if (x == 0 && y == 1)
 	{
-		vv[x][y] = -1;
-		Backtracking(vpos, vv, x, y + 1);
-		vv[x][y] = 0;
+		int i = 0;
 	}
-	//向上
-	if (x>0 && vv[x - 1][y] != 1 && vv[x - 1][y] != -1)
+	//向下不拿
+	if (x + 1 < vv.size())
 	{
-		vv[x][y] = -1;
-		Backtracking(vpos, vv, x - 1, y);
-		vv[x][y] = 0;
+		Backtracking(k, vk, vv, x + 1, y, sumk);
 	}
-	//向下
-	if (x + 1 < vv.size() && vv[x + 1][y] != 1 && vv[x + 1][y] != -1)
-	{
-		vv[x][y] = -1;
-		Backtracking(vpos, vv, x + 1, y);
-		vv[x][y] = 0;
-	}
-	vpos.pop_back();
+
+
 }
 
 int main()
 {
-	int n, m;
-	cin >> n >> m;
+	int n, m, k;
+	cin >> n >> m >> k;
 	vector<vector<int>> vv(n, vector<int>(m));
 	for (int i = 0; i<n; ++i)
 	{
@@ -2068,18 +2161,314 @@ int main()
 			cin >> vv[i][j];
 		}
 	}
-	vector<pos*> vpos;
-	Backtracking(vpos, vv, 0, 0);
-	size_t mini = -1;
-	for (int i = 0; i<vvpos.size(); ++i)
-	{
-		if (mini>vvpos[i].size())
-			mini = i;
-	}
-	for (int j = 0; j<vvpos[mini].size(); ++j)
-	{
-		cout << "(" << vvpos[mini][j]->_x << "," << vvpos[mini][j]->_y << ")" << endl;
-	}
-	//cout<<"("<<vvpos[i][j]->_x<<","<<vvpos[i][j]->_y<<")"<<endl;
+	vector<int>vk(1, 0);//记录拿了什么宝
+
+	Backtracking(k, vk, vv, 0, 0, 0);
+	cout << ::count << endl;
 	return 0;
+}
+
+
+
+//最大二叉树
+TreeNode* _constructMaximumBinaryTree(vector<int>&nums, int begin, int end)
+{
+	if (begin>end)
+		return nullptr;
+	//找最大值
+	int rooti = begin;
+	for (int i = begin; i <= end; ++i)
+	{
+		if (nums[i]>nums[rooti])
+			rooti = i;
+	}
+	TreeNode*root = new TreeNode(nums[rooti]);
+	//[begin,rooti-1] rooti [rooti+1, end]
+	root->left = _constructMaximumBinaryTree(nums, begin, rooti - 1);
+	root->right = _constructMaximumBinaryTree(nums, rooti + 1, end);
+
+	return root;
+
+}
+TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
+
+	return _constructMaximumBinaryTree(nums, 0, nums.size() - 1);
+}
+
+
+//二叉搜索树的最小绝对差
+int min = INT_MAX;
+TreeNode* prev = nullptr;
+void _getMinimumDifference(TreeNode*root)
+{
+	if (root == nullptr)
+		return;
+	_getMinimumDifference(root->left);
+	//中间逻辑
+	if (prev != nullptr)
+	{
+		int abs_ = abs(prev->val - root->val);
+		if (abs_<min)
+			min = abs_;
+	}
+	prev = root;
+	_getMinimumDifference(root->right);
+
+}
+int getMinimumDifference(TreeNode* root) {
+	_getMinimumDifference(root);
+	return min;
+}
+
+
+//二叉搜索树中的众数
+vector<int> reslut;
+TreeNode* prev = nullptr;
+int count = 1, maxcount = INT_MIN;
+void _findMode(TreeNode* root)
+{
+	if (root == nullptr)
+		return;
+	_findMode(root->left);
+	if (prev != nullptr&& prev->val == root->val)
+	{
+		count++;
+	}
+	else
+	{
+		count = 1;
+	}
+	prev = root;
+	if (count>maxcount)
+	{
+		reslut.clear();
+		reslut.push_back(root->val);
+		maxcount = count;
+	}
+	else if (count == maxcount)
+	{
+		reslut.push_back(root->val);
+	}
+
+	_findMode(root->right);
+}
+vector<int> findMode(TreeNode* root) {
+	_findMode(root);
+	return reslut;
+}
+
+
+//二叉树的最近公共祖先
+bool getPath(vector<TreeNode*>&path, TreeNode* root, TreeNode*x)
+{
+	if (root == nullptr)
+		return false;
+	if (root == x)
+	{
+		path.push_back(root);
+		return true;
+	}
+	path.push_back(root);
+	if (getPath(path, root->left, x))
+		return true;
+	if (getPath(path, root->right, x))
+		return true;
+	path.pop_back();
+	return false;
+}
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+	if (root == nullptr)
+		return root;
+	vector<TreeNode*> p_path;
+	vector<TreeNode*> q_path;
+	getPath(p_path, root, p);
+	getPath(q_path, root, q);
+	//转换成链表相交问题
+	while (p_path.size() != q_path.size())
+	{
+		if (p_path.size()>q_path.size())
+		{
+			p_path.pop_back();
+		}
+		else
+		{
+			q_path.pop_back();
+		}
+	}
+	int i = p_path.size() - 1;
+	while (p_path[i] != q_path[i])
+	{
+		--i;
+	}
+	return p_path[i];
+}
+
+
+
+//二叉搜索树的最近公共祖先
+//递归法
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+	if (root == nullptr)
+		return root;
+	if (root->val>p->val&& root->val<q->val)
+		return root;
+	if (root->val<p->val && root->val>q->val)
+		return root;
+
+	if (root->val>q->val && root->val > p->val)
+		return lowestCommonAncestor(root->left, p, q);
+	if (root->val<q->val && root->val < p->val)
+		return lowestCommonAncestor(root->right, p, q);
+	return root;
+}
+
+//迭代法
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+	if (root == nullptr)
+		return root;
+	TreeNode* cur = root;
+	while (cur)
+	{
+		if (cur->val>p->val && cur->val>q->val)
+			cur = cur->left;
+		else if (cur->val< p->val && cur->val < q->val)
+			cur = cur->right;
+		else
+			return cur;
+	}
+	return root;
+}
+
+
+//二叉搜索树中的插入操作
+//迭代
+TreeNode* insertIntoBST(TreeNode* root, int val) {
+	if (root == nullptr)
+	{
+		root = new TreeNode(val);
+		return root;
+	}
+
+	TreeNode* prev = nullptr, *cur = root;
+	while (cur)
+	{
+		prev = cur;
+		if (cur->val>val) cur = cur->left;
+		else if (cur->val <val) cur = cur->right;
+		else return nullptr;
+	}
+	if (prev->val>val)
+		prev->left = new TreeNode(val);
+	else
+		prev->right = new TreeNode(val);
+	return root;
+}
+
+//递归
+class Solution {
+public:
+	TreeNode* insertIntoBST(TreeNode* root, int val) {
+
+		_insertIntoBST(root, val);
+		return root;
+	}
+	bool _insertIntoBST(TreeNode*& root, int val)
+	{
+		if (root == nullptr)
+		{
+			root = new TreeNode(val);
+			return true;
+		}
+		if (root->val>val)
+			return _insertIntoBST(root->left, val);
+		if (root->val<val)
+			return _insertIntoBST(root->right, val);
+		return false;
+	}
+};
+
+
+
+
+//删除二叉搜索树中的节点
+TreeNode* deleteNode(TreeNode* root, int val) {
+	if (root == nullptr)
+	{
+		return root;
+	}
+	TreeNode* cur = root;
+	TreeNode*prev = root;
+	while (cur)
+	{
+		if (cur->val>val)
+		{
+			prev = cur;
+			cur = cur->left;
+		}
+		else if (cur->val<val)
+		{
+			prev = cur;
+			cur = cur->right;
+		}
+		else//找到相等的
+		{
+			//1.左为空
+			//2.右为空
+			//3.左右都不为空
+			if (cur->left == nullptr)
+			{
+				if (root == cur)
+				{
+					root = root->right;
+				}
+				else
+				{
+					if (prev->left == cur) prev->left = cur->right;
+					else prev->right = cur->right;
+				}
+				//判断是父亲的哪一个节点
+
+				delete cur;
+				cur = nullptr;
+			}
+			else if (cur->right == nullptr)
+			{
+				if (root == cur)
+				{
+					root = cur->left;
+				}
+				else
+				{
+					//判断是父亲的哪一个节点
+					if (prev->left == cur) prev->left = cur->left;
+					else prev->right = cur->left;
+				}
+				delete cur;
+				cur = nullptr;
+			}
+			else//左右都不为空
+			{
+				//右子树找最小值
+				TreeNode* rightMin = cur->right;
+				TreeNode* parentRight = cur;//右子树的最小值左子树一定为空，但右子树不一定
+				while (rightMin->left)
+				{
+					parentRight = rightMin;
+					rightMin = rightMin->left;
+				}
+				cur->val = rightMin->val;
+				if (parentRight->left == rightMin)//连接右子树
+				{
+					parentRight->left = rightMin->right;
+				}
+				else
+				{
+					parentRight->right = rightMin->right;
+				}
+				delete rightMin;
+				rightMin = nullptr;
+			}
+		}
+	}
+	return root;
 }
