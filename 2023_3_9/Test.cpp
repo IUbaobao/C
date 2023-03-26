@@ -2472,3 +2472,36 @@ TreeNode* deleteNode(TreeNode* root, int val) {
 	}
 	return root;
 }
+
+
+
+//将有序数组转换为二叉搜索树
+TreeNode* sortedArrayToBST(vector<int>& nums) {
+	return _sortedArrayToBST(nums, 0, nums.size() - 1);
+}
+TreeNode* _sortedArrayToBST(vector<int>& nums, int begin, int end)
+{
+	if (begin>end)
+		return nullptr;
+	int index = (begin + end) / 2;//因为数组本身就有序，所以每一次取中间位置当头结点即可
+	TreeNode* root = new TreeNode(nums[index]);
+	root->left = _sortedArrayToBST(nums, begin, index - 1);
+	root->right = _sortedArrayToBST(nums, index + 1, end);
+	return root;
+}
+
+
+//把二叉搜索树转换为累加树
+TreeNode* prev = nullptr;
+TreeNode* convertBST(TreeNode* root) {
+	if (root == nullptr)
+		return nullptr;
+	convertBST(root->right);
+	if (prev != nullptr)
+	{
+		root->val += prev->val;
+	}
+	prev = root;
+	convertBST(root->left);
+	return root;
+}
